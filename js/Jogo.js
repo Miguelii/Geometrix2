@@ -92,7 +92,12 @@ class Jogo extends Phaser.Scene {
 
         var point2 = new Phaser.Geom.Point(x, y);
         var point3 = new Phaser.Geom.Point(x1, y1);// point at 400/300
-
+        this.add.text(x,y, 'A',{
+            fontFamily: 'font1',
+        });
+        this.add.text(x1,y1, 'B',{
+            fontFamily: 'font1',
+        });
         //this.ponto1 = this.add.sprite(x,y, "ponto");
         //this.ponto2 = this.add.sprite(x1,y1, "ponto");
         //this.ponto1.setScale(0.5);
