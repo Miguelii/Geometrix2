@@ -8,7 +8,8 @@ var j = 0;
 var um = false;
 var dois = false; 
 var timer;
-
+var score = 0; 
+var textScore;
 
 class Jogo extends Phaser.Scene {
 
@@ -31,7 +32,6 @@ class Jogo extends Phaser.Scene {
         this.background = this.add.sprite(0.5 * game.config.width, 0.5 *game.config.height, 'background');
         this.background.setScale(0.79);
         var color =  0xffffff;
-        var score = 0; 
         var contador = 0;
         var certas = 0; 
         var level = 1; 
@@ -66,9 +66,14 @@ class Jogo extends Phaser.Scene {
         this.scene.transition({ target: 'Menu', duration: 100 });
         }, this);
 
-        timer = this.add.text(0.065 * game.config.width, 40, segundos + ' s',{
+        timer = this.add.text(0.065 * game.config.width, 55, segundos + ' s',{
             fontFamily: 'font1',
         });
+
+        textScore = this.add.text(0.88 * game.config.width, 55, 'Score: ' + score,{
+            fontFamily: 'font1',
+        });
+
 
         let x = Math.random()*(800 - 300) + 300;
         let y = Math.random()*(600 - 300) + 300;
@@ -605,6 +610,8 @@ class Jogo extends Phaser.Scene {
 
     update(){
         timer.setText([segundos + ' s' ]);
+        textScore.setText(['Score: ' + score ]);
+
     }
 }
 
