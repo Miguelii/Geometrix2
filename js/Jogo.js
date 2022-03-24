@@ -611,7 +611,6 @@ class Jogo extends Phaser.Scene {
     update(){
         timer.setText([segundos + ' s' ]);
         textScore.setText(['Score: ' + score ]);
-
     }
 }
 
