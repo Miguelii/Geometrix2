@@ -9,12 +9,13 @@ var um = false;
 var dois = false; 
 var timer;
 
+
 class Jogo extends Phaser.Scene {
 
     constructor() {
         super('Jogo');
     }
-
+    
     preload() {
         this.load.image('background', 'assets/background.png');
         this.load.image('btHome','assets/btHome.png');
@@ -22,16 +23,19 @@ class Jogo extends Phaser.Scene {
         this.load.image('base2','assets/base2.png');
         this.load.image('base3','assets/base3.png');
         this.load.image('base4','assets/base4.png');
+        this.load.image('ponto', 'assets/ponto.png');
     }
         
     create (){
+        
         this.background = this.add.sprite(0.5 * game.config.width, 0.5 *game.config.height, 'background');
         this.background.setScale(0.79);
-
+        var color =  0xffffff;
         var score = 0; 
         var contador = 0;
         var certas = 0; 
         var level = 1; 
+
         var text = this.add.text(400, 100, '', { font: '12px Courier', fill: '#00ff00' });
         var aceita = false; 
         var graphics = this.add.graphics({fillStyle: { color: 0x2266aa } });
@@ -61,11 +65,10 @@ class Jogo extends Phaser.Scene {
         this.btHome.once('pointerdown', function (event) {
         this.scene.transition({ target: 'Menu', duration: 100 });
         }, this);
-    
 
-
-        timer = this.add.text(0.065 * game.config.width, 50, '', { font: '12px Courier', fill: '#00ff00' });
-        timer.setText(['Timer: ' + segundos]);
+        timer = this.add.text(0.065 * game.config.width, 40, segundos + ' s',{
+            fontFamily: 'font1',
+        });
 
         let x = Math.random()*(800 - 300) + 300;
         let y = Math.random()*(600 - 300) + 300;
@@ -84,6 +87,12 @@ class Jogo extends Phaser.Scene {
 
         var point2 = new Phaser.Geom.Point(x, y);
         var point3 = new Phaser.Geom.Point(x1, y1);// point at 400/300
+
+        //this.ponto1 = this.add.sprite(x,y, "ponto");
+        //this.ponto2 = this.add.sprite(x1,y1, "ponto");
+        //this.ponto1.setScale(0.5);
+        //this.ponto2.setScale(0.5);
+
         var line = new Phaser.Geom.Line(); 
         var midlePoint = null;
         var posto = false;
@@ -227,14 +236,14 @@ class Jogo extends Phaser.Scene {
                         graphics.fillPointShape(midlePoint, 10);
                         graphics.fillPointShape(point3, 15);
                         graphics.fillPointShape(point2, 10);
-                        graphics.lineStyle(4, 0xaa00aa);
+                        graphics.lineStyle(4, color);
                         graphics.strokeLineShape(line);
                     }
                     else{
                         graphics.clear();
                         graphics.fillPointShape(point3, 15);
                         graphics.fillPointShape(point2, 10);
-                        graphics.lineStyle(4, 0xaa00aa);
+                        graphics.lineStyle(4, color);
                         graphics.strokeLineShape(line);
                     }
                 }
@@ -242,14 +251,14 @@ class Jogo extends Phaser.Scene {
                     graphics.clear();
                     graphics.fillPointShape(point3, 15);
                     graphics.fillPointShape(point2, 10);
-                    graphics.lineStyle(4, 0xaa00aa);
+                    graphics.lineStyle(4, color);
                     graphics.strokeLineShape(line);
                 }
             }
             else{
                 graphics.clear();
                 for(var i= 0;i<lines.length;i++){
-                    graphics.lineStyle(4, 0xaa00aa);
+                    graphics.lineStyle(4, color);
                     graphics.strokeLineShape(lines[i]);
                 }
                 graphics.fillPointShape(point, 12);
@@ -310,14 +319,14 @@ class Jogo extends Phaser.Scene {
                         graphics.fillPointShape(midlePoint, 10);
                         graphics.fillPointShape(point3, 15);
                         graphics.fillPointShape(point2, 10);
-                        graphics.lineStyle(4, 0xaa00aa);
+                        graphics.lineStyle(4, color);
                         graphics.strokeLineShape(line);
                     }
                     else{
                         graphics.clear();
                         graphics.fillPointShape(point3, 15);
                         graphics.fillPointShape(point2, 10);
-                        graphics.lineStyle(4, 0xaa00aa);
+                        graphics.lineStyle(4, color);
                         graphics.strokeLineShape(line);
                     }
                 }
@@ -325,14 +334,14 @@ class Jogo extends Phaser.Scene {
                     graphics.clear();
                     graphics.fillPointShape(point3, 15);
                     graphics.fillPointShape(point2, 10);
-                    graphics.lineStyle(4, 0xaa00aa);
+                    graphics.lineStyle(4, color);
                     graphics.strokeLineShape(line);
                 }
             }
             else{
                 graphics.clear();
                 for(var i= 0;i<lines.length;i++){
-                    graphics.lineStyle(4, 0xaa00aa);
+                    graphics.lineStyle(4, color);
                     graphics.strokeLineShape(lines[i]);
                 }
                 graphics.fillPointShape(point3, 15);
@@ -352,7 +361,7 @@ class Jogo extends Phaser.Scene {
                         posto = true;
                         graphics.fillPointShape(point3, 15);
                         graphics.fillPointShape(point2, 10);
-                        graphics.lineStyle(4, 0xaa00aa);
+                        graphics.lineStyle(4, color);
                         graphics.strokeLineShape(line);
                     }
                     else{
@@ -360,15 +369,30 @@ class Jogo extends Phaser.Scene {
                         posto = false;
                         graphics.fillPointShape(point3, 15);
                         graphics.fillPointShape(point2, 10);
-                        graphics.lineStyle(4, 0xaa00aa);
+                        graphics.lineStyle(4, color);
                         graphics.strokeLineShape(line);
+                    }
+                    if(aceitaMidle && sgm){
+                        aceita = true;
+                    }
+                    else{
+                        if(!aceitaMidle){
+                            midlePoint = null;
+                            posto = false;
+                        }
+                        if(!sgm){
+                            graphics.clear();
+                            graphics.fillPointShape(point3, 15);
+                            graphics.fillPointShape(point2, 10);
+                            line = new Phaser.Geom.Line();
+                        }
                     }
                 }
                 else{
                     graphics.clear();
                     graphics.fillPointShape(point3, 15);
                     graphics.fillPointShape(point2, 10);
-                    graphics.lineStyle(4, 0xaa00aa);
+                    graphics.lineStyle(4, color);
                     graphics.strokeLineShape(line);
                 }
             }
@@ -410,23 +434,7 @@ class Jogo extends Phaser.Scene {
                 aceita = true; 
             }
             else{
-                if(level==7){
-                    if(aceitaMidle && sgm){
-                        aceita = true;
-                    }
-                    else{
-                        if(!aceitaMidle){
-                            midlePoint = null;
-                            posto = false;
-                        }
-                        if(!sgm){
-                            line = new Phaser.Geom.Line();
-                        }
-                    }
-                }
-                else{
-                    line = new Phaser.Geom.Line();
-                }
+                line = new Phaser.Geom.Line(); 
             }
     
                     
@@ -520,7 +528,7 @@ class Jogo extends Phaser.Scene {
                     a = Math.random()*(800 - 300) + 300;
                     b = Math.random()*(600 - 300) + 300;
     
-                    while (b>450 || a==x || a==x1 || b==y || b==y1 || dist(a,b,x,y)<=150 || dist(x,y,x1,y1)<=150 ){
+                    while (b>450 ||a==x || a==x1 || b==y || b==y1 || dist(a,b,x,y)<=150 || dist(x,y,x1,y1)<=150 ){
                         a = Math.random()*(800 - 300) + 300;
                         b = Math.random()*(600 - 300) + 300;
                     }
@@ -559,7 +567,7 @@ class Jogo extends Phaser.Scene {
                             posto = true;
                             graphics.fillPointShape(point3, 15);
                             graphics.fillPointShape(point2, 10);
-                            graphics.lineStyle(4, 0xaa00aa);
+                            graphics.lineStyle(4, color);
                             graphics.strokeLineShape(line);
                         }
                         else{
@@ -567,7 +575,7 @@ class Jogo extends Phaser.Scene {
                             posto = false;
                             graphics.fillPointShape(point3, 15);
                             graphics.fillPointShape(point2, 10);
-                            graphics.lineStyle(4, 0xaa00aa);
+                            graphics.lineStyle(4, color);
                             graphics.strokeLineShape(line);
                         }
                     }
@@ -575,13 +583,13 @@ class Jogo extends Phaser.Scene {
                         graphics.clear();
                         graphics.fillPointShape(point3, 15);
                         graphics.fillPointShape(point2, 10);
-                        graphics.lineStyle(4, 0xaa00aa);
+                        graphics.lineStyle(4, color);
                         graphics.strokeLineShape(line);
                     }
                 }
                 else{
                     for(var i= 0;i<lines.length;i++){
-                        graphics.lineStyle(4, 0xaa00aa);
+                        graphics.lineStyle(4, color);
                         graphics.strokeLineShape(lines[i]);
                     }
                     graphics.fillPointShape(point2, 10);
@@ -596,7 +604,7 @@ class Jogo extends Phaser.Scene {
     }
 
     update(){
-        timer.setText(['Timer: ' + segundos]);
+        timer.setText([segundos + ' s' ]);
     }
 }
 

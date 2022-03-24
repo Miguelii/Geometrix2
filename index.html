@@ -16,6 +16,15 @@
         }
     </style>
 
+    <style media='screen' type='text/css'>
+        @font-face {
+          font-family: font1;
+          src: url('font/HoboStd.otf');
+          font-weight:400;
+          font-weight:normal;
+        }
+  </style>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, target-densityDpi=device-dpi">
     <meta name="HandheldFriendly" content="true" />
@@ -27,21 +36,22 @@
     
 </head>
     <body >
+        <div style="font-family:font1; position:absolute; left:-1000px; visibility:hidden;">.</div>
 
-        <div >
-            <script>
-            var PleaseRotateOptions = {
-                onlyMobile: true,
-                forcePortrait: false,
-                message: "Por Favor Rode o Ecrã",
-                subMessage: "(ou clique para continuar)",
-                allowClickBypass: true
-            }
-            </script> 
-            <script src="js/pleaserotate.js"></script> 
-            <script src="js/Menu.js"></script>
-            <script src="js/Jogo.js"></script>
-        </div>
+            <div >
+                <script>
+                var PleaseRotateOptions = {
+                    onlyMobile: true,
+                    forcePortrait: false,
+                    message: "Por Favor Rode o Ecrã",
+                    subMessage: "(ou clique para continuar)",
+                    allowClickBypass: true
+                }
+                </script> 
+                <script src="js/pleaserotate.js"></script> 
+                <script src="js/Menu.js"></script>
+                <script src="js/Jogo.js"></script>
+            </div>
     </body>
 </html>
 
