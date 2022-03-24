@@ -34,7 +34,7 @@ class Jogo extends Phaser.Scene {
         var color =  0xffffff;
         var contador = 0;
         var certas = 0; 
-        var level = 1; 
+        var level = 6; 
 
         var text = this.add.text(400, 100, '', { font: '12px Courier', fill: '#00ff00' });
         var aceita = false; 
@@ -155,12 +155,8 @@ class Jogo extends Phaser.Scene {
             line = lines[j];
             var a = Math.random()*(800 - 300) + 300;
             var b = Math.random()*(600 - 300) + 300;
-            while (b > 450 || a==x || a==x1 || b==y || b==y1 || dist(a,b,x,y)<=150 || dist(x,y,x1,y1)<=150 ){
-                a = Math.random()*(800 - 300) + 300;
-                b = Math.random()*(600 - 300) + 300;
-            }
             for(var i =0;i<pointsLine.length;i++){
-                if(a<=pointsLine[i].x+50 && a>=pointsLine[i].x-50 && b<=pointsLine[i].y+50 && b>=pointsLine[i].y-50 ){
+                while((a<=pointsLine[i].x+50 && a>=pointsLine[i].x-50 && b<=pointsLine[i].y+50 && b>=pointsLine[i].y-50)||(b>450 ||a==x || a==x1 || b==y || b==y1 || dist(a,b,x,y)<=150 || dist(x,y,x1,y1)<=150) ){
                     a = Math.random()*(800 - 300) + 300;
                     b = Math.random()*(600 - 300) + 300;
                 }
@@ -318,7 +314,6 @@ class Jogo extends Phaser.Scene {
                     if (segmentoReta(point2,point3,line)){
                         sgm = true;
                     }
-
                     if(midlePoint!=null){
                         graphics.clear();
                         graphics.fillPointShape(midlePoint, 10);
@@ -352,13 +347,14 @@ class Jogo extends Phaser.Scene {
                 graphics.fillPointShape(point3, 15);
                 graphics.fillPointShape(point, 12);
                 graphics.fillPointShape(point2, 10);
+                graphics.lineStyle(4, color);
                 graphics.strokeLineShape(line);
                 }
             }
         });
 
         this.input.on('pointerup', function (pointer) {
-            
+
             if(level != 6){
                  if (level==7){
                     if(midlePoint!=null){
@@ -377,21 +373,7 @@ class Jogo extends Phaser.Scene {
                         graphics.lineStyle(4, color);
                         graphics.strokeLineShape(line);
                     }
-                    if(aceitaMidle && sgm){
-                        aceita = true;
-                    }
-                    else{
-                        if(!aceitaMidle){
-                            midlePoint = null;
-                            posto = false;
-                        }
-                        if(!sgm){
-                            graphics.clear();
-                            graphics.fillPointShape(point3, 15);
-                            graphics.fillPointShape(point2, 10);
-                            line = new Phaser.Geom.Line();
-                        }
-                    }
+                    
                 }
                 else{
                     graphics.clear();
@@ -439,11 +421,28 @@ class Jogo extends Phaser.Scene {
                 aceita = true; 
             }
             else{
+                if(level==7){
+                    if(aceitaMidle && sgm){
+                        aceita = true;
+                    }
+                    else{
+                        if(!aceitaMidle){
+                            midlePoint = null;
+                            posto = false;
+                        }
+                        if(!sgm){
+                            line = new Phaser.Geom.Line();
+                        }
+                    }
+                }
+            else{
                 line = new Phaser.Geom.Line(); 
+                }
             }
     
                     
             if (aceita){
+                
                 contador = 0;
                 sgm = false;
                 aceitaMidle = false;
@@ -476,7 +475,9 @@ class Jogo extends Phaser.Scene {
                     level += 1; 
                     certas = 0;
                 }
-    
+                if(level == 8){
+                    this.scene.transition({ target: 'Menu', duration: 100 });
+                }
                 if (level==1){
                     text.setText([
                         'Level: ' + level,
@@ -533,12 +534,8 @@ class Jogo extends Phaser.Scene {
                     a = Math.random()*(800 - 300) + 300;
                     b = Math.random()*(600 - 300) + 300;
     
-                    while (b>450 ||a==x || a==x1 || b==y || b==y1 || dist(a,b,x,y)<=150 || dist(x,y,x1,y1)<=150 ){
-                        a = Math.random()*(800 - 300) + 300;
-                        b = Math.random()*(600 - 300) + 300;
-                    }
                     for(var i =0;i<pointsLine.length;i++){
-                        if(a<=pointsLine[i].x+50 && a>=pointsLine[i].x-50 && b<=pointsLine[i].y+50 && b>=pointsLine[i].y-50 ){
+                        while((a<=pointsLine[i].x+50 && a>=pointsLine[i].x-50 && b<=pointsLine[i].y+50 && b>=pointsLine[i].y-50)||(b>450 ||a==x || a==x1 || b==y || b==y1 || dist(a,b,x,y)<=150 || dist(x,y,x1,y1)<=150) ){
                             a = Math.random()*(800 - 300) + 300;
                             b = Math.random()*(600 - 300) + 300;
                         }
