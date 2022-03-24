@@ -34,7 +34,7 @@ class Jogo extends Phaser.Scene {
         var color =  0xffffff;
         var contador = 0;
         var certas = 0; 
-        var level = 6; 
+        var level = 1; 
 
         var text = this.add.text(400, 100, '', { font: '12px Courier', fill: '#00ff00' });
         var aceita = false; 
@@ -209,6 +209,9 @@ class Jogo extends Phaser.Scene {
                         if(sgm){
                             aceitaMidle = true;
                             posto=true;
+                            graphics.fillPointShape(midlePoint, 10);
+                        }
+                        else{
                             graphics.fillPointShape(midlePoint, 10);
                         }
                     }
