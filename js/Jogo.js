@@ -34,7 +34,7 @@ class Jogo extends Phaser.Scene {
         var color =  0xffffff;
         var contador = 0;
         var certas = 0; 
-        var level = 6; 
+        var level = 1; 
 
         var text = this.add.text(400, 100, '', { font: '12px Courier', fill: '#00ff00' });
         var aceita = false; 
@@ -148,7 +148,7 @@ class Jogo extends Phaser.Scene {
         if(level==6){
             text.setText([
                 'Level: ' + level,
-                'Reta: Pequeno para Maior; Medio para Maior ',
+                'Reta: Pequeno para Maior',
                 'Score: ' + score
             ]);
             lines[j] = new Phaser.Geom.Line();
@@ -172,7 +172,7 @@ class Jogo extends Phaser.Scene {
         if(level==7){
             text.setText([
                 'Level: ' + level,
-                'Segmento de reta: Pequeno para Maior e um ponto no meio disto',
+                'Segmento de reta: Pequeno para Maior',
                 'Score: ' + score
             ]);
         }
@@ -195,9 +195,11 @@ class Jogo extends Phaser.Scene {
                     var mid = midpoint(point2,point3);
                     if(pointer.x<=mid.x+50 && pointer.x>=mid.x-50 && pointer.y<=mid.y+50 && pointer.y>=mid.y-50){
                         midlePoint = new Phaser.Geom.Point(mid.x,mid.y);
-                        aceitaMidle = true;
-                        posto=true;
-                        graphics.fillPointShape(midlePoint, 10);
+                        if(sgm){
+                            aceitaMidle = true;
+                            posto=true;
+                            graphics.fillPointShape(midlePoint, 10);
+                        }
 
                     }
                     else{
@@ -357,7 +359,7 @@ class Jogo extends Phaser.Scene {
 
             if(level != 6){
                  if (level==7){
-                    if(midlePoint!=null){
+                    if(midlePoint!=null && sgm==true){
                         graphics.fillPointShape(midlePoint, 10);
                         posto = true;
                         graphics.fillPointShape(point3, 15);
@@ -390,9 +392,14 @@ class Jogo extends Phaser.Scene {
                 contador = 1;
                 if(reta(point2,point3,line)){
                     um = true; 
+                    text.setText([
+                        'Level: ' + level,
+                        'Reta: Medio para Maior',
+                        'Score: ' + score
+                    ]);
                 }
                 else{
-                    if(reta(point,point3,line)){
+                    if(reta(point,point3,line) && um == true){
                         dois = true; 
                     }
                     else{
@@ -422,8 +429,15 @@ class Jogo extends Phaser.Scene {
             }
             else{
                 if(level==7){
-                    if(aceitaMidle && sgm){
-                        aceita = true;
+                    if(sgm){
+                        text.setText([
+                            'Level: ' + level,
+                            'Ponto Medio do segmento de reta',
+                            'Score: ' + score
+                        ]);
+                        if(aceitaMidle){
+                            aceita = true;
+                        }
                     }
                     else{
                         if(!aceitaMidle){
@@ -478,6 +492,7 @@ class Jogo extends Phaser.Scene {
                 if(level == 8){
                     this.scene.transition({ target: 'Menu', duration: 100 });
                 }
+
                 if (level==1){
                     text.setText([
                         'Level: ' + level,
@@ -525,7 +540,7 @@ class Jogo extends Phaser.Scene {
                 if(level==6){
                     text.setText([
                         'Level: ' + level,
-                        'Reta: Pequeno para Maior; Medio para Maior ',
+                        'Reta: Pequeno para Maior',
                         'Score: ' + score
                     ]);
                     graphics.clear();
@@ -551,7 +566,7 @@ class Jogo extends Phaser.Scene {
                 if(level==7){
                     text.setText([
                         'Level: ' + level,
-                        'Segmento de reta: Pequeno para Maior e um ponto no meio disto',
+                        'Segmento de reta: Pequeno para Maior',
                         'Score: ' + score
                     ]);
                 }
@@ -599,7 +614,12 @@ class Jogo extends Phaser.Scene {
                     graphics.fillPointShape(point2, 10);
                     graphics.fillPointShape(point, 12);
                 }
-                score -= 5;
+                if(score>=5){
+                    score -= 5;
+                }
+                else{
+                    score = 0;
+                }
                 line = new Phaser.Geom.Line(); 
             }
         });
