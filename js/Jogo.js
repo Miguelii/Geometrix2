@@ -25,18 +25,24 @@ class Jogo extends Phaser.Scene {
         this.load.image('base3','assets/base3.png');
         this.load.image('base4','assets/base4.png');
         this.load.image('ponto', 'assets/ponto.png');
+        this.load.image('titulo1', 'assets/titulo1.png');
+
     }
         
     create (){
         
         this.background = this.add.sprite(0.5 * game.config.width, 0.5 *game.config.height, 'background');
         this.background.setScale(0.79);
+        this.titulo1 = this.add.sprite(0.5 * game.config.width, 0.15 *game.config.height, 'titulo1');
+        this.titulo1.setScale(0.5);
         var color =  0xffffff;
         var contador = 0;
         var certas = 0; 
         var level = 1; 
 
-        var text = this.add.text(400, 100, '', { font: '12px Courier', fill: '#00ff00' });
+        var text = this.add.text(800, 150, '', { fontFamily: 'font1',align: 'right'});
+        text.setFontSize(15);
+
         var aceita = false; 
         var graphics = this.add.graphics({fillStyle: { color: 0x2266aa } });
 
@@ -117,39 +123,33 @@ class Jogo extends Phaser.Scene {
             text.setText([
                 'Level: ' + level,
                 'Segmento de reta: [AB]',
-                'Score: ' + score
-
-            ]);
+                ]);
         }
         if (level==2){
             text.setText([
                 'Level: ' + level,
-                'Segmento de reta: [BA]',
-                'Score: ' + score
+                'Segmento de reta: [BA]'
             ]);
         }
 
         if (level==3){
             text.setText([
                 'Level: ' + level,
-                'Semi-reta: [AB[',
-                'Score: ' + score
+                'Semi-reta: [AB['
             ]);
         }
 
         if (level==4){
             text.setText([
                 'Level: ' + level,
-                'Semi-reta: ]BA]',               
-                 'Score: ' + score
+                'Semi-reta: ]BA]'
             ]);
         }
 
         if (level==5){
             text.setText([
                 'Level: ' + level,
-                'Reta',
-                'Score: ' + score
+                'Reta'
             ]);
         }
 
@@ -159,8 +159,7 @@ class Jogo extends Phaser.Scene {
         if(level==6){
             text.setText([
                 'Level: ' + level,
-                'Reta: AB',
-                'Score: ' + score
+                'Reta: AB'
             ]);
             lines[j] = new Phaser.Geom.Line();
             line = lines[j];
@@ -186,8 +185,7 @@ class Jogo extends Phaser.Scene {
         if(level==7){
             text.setText([
                 'Level: ' + level,
-                'Segmento de reta: [AB]',
-                'Score: ' + score
+                'Segmento de reta: [AB]'
             ]);
             ponto3.x = 10000;
             ponto3.y = 10000;
@@ -388,8 +386,7 @@ class Jogo extends Phaser.Scene {
                     um = true; 
                     text.setText([
                         'Level: ' + level,
-                        'Reta: BC',
-                        'Score: ' + score
+                        'Reta: BC'
                     ]);
                 }
                 else{
@@ -422,8 +419,7 @@ class Jogo extends Phaser.Scene {
                     if(sgm){
                         text.setText([
                             'Level: ' + level,
-                            'Ponto Medio do segmento de reta',
-                            'Score: ' + score
+                            'Ponto Medio do segmento de reta'
                         ]);
                         if(aceitaMidle){
                             aceita = true;
@@ -494,39 +490,34 @@ class Jogo extends Phaser.Scene {
                 if (level==1){
                     text.setText([
                         'Level: ' + level,
-                        'Segmento de reta: [AB]',
-                        'Score: ' + score
+                        'Segmento de reta: [AB]'
                     ]);
                 }
                 if (level==2){
                     text.setText([
                         'Level: ' + level,
-                        'Segmento de reta: [BA]',
-                        'Score: ' + score
+                        'Segmento de reta: [BA]'
                     ]);
                 }
             
                 if (level==3){
                     text.setText([
                         'Level: ' + level,
-                        'Semi-reta: [AB[',
-                        'Score: ' + score
+                        'Semi-reta: [AB['
                     ]);
                 }
             
                 if (level==4){
                     text.setText([
                         'Level: ' + level,
-                        'Semi-reta: ]BA]',               
-                        'Score: ' + score
+                        'Semi-reta: ]BA]'
                     ]);
                 }
             
                 if (level==5){
                     text.setText([
                         'Level: ' + level,
-                        'Reta',
-                        'Score: ' + score
+                        'Reta'
                     ]);
                 }
     
@@ -538,8 +529,7 @@ class Jogo extends Phaser.Scene {
                 if(level==6){
                     text.setText([
                         'Level: ' + level,
-                        'Reta: AB',
-                        'Score: ' + score
+                        'Reta: AB'
                     ]);
                     graphics.clear();
                     lines[j] = new Phaser.Geom.Line();
@@ -568,8 +558,7 @@ class Jogo extends Phaser.Scene {
                 if(level==7){
                     text.setText([
                         'Level: ' + level,
-                        'Segmento de reta: [AB]',
-                        'Score: ' + score
+                        'Segmento de reta: [AB]'
                     ]);
                     letrac.x = -100000;
                     letrac.y = -100000;
