@@ -25,7 +25,9 @@ class Jogo extends Phaser.Scene {
         this.load.image('base3','assets/base3.png');
         this.load.image('base4','assets/base4.png');
         this.load.image('ponto', 'assets/ponto.png');
-        this.load.image('titulo1', 'assets/titulo1.png');
+        this.load.image('titulo1', 'assets/titulo1.png');        
+        this.load.image('pontoteste', 'assets/pontoteste.png');
+
 
     }
         
@@ -108,12 +110,12 @@ class Jogo extends Phaser.Scene {
         });;
 
         
-        var ponto1 = this.add.sprite(x,y, "ponto");
-        var ponto2 = this.add.sprite(x1,y1, "ponto");
-        var ponto3 = this.add.sprite(10000,10000,"ponto");
-        ponto1.setScale(0.5);
-        ponto2.setScale(0.5);
-        ponto3.setScale(0.5);
+        var ponto1 = this.add.sprite(x,y, "pontoteste");
+        var ponto2 = this.add.sprite(x1,y1, "pontoteste");
+        var ponto3 = this.add.sprite(10000,10000,"pontoteste");
+        ponto1.setScale(0.045);
+        ponto2.setScale(0.045);
+        ponto3.setScale(0.045);
 
         var line = new Phaser.Geom.Line(); 
         var midlePoint = null;
