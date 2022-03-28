@@ -36,7 +36,7 @@ class Jogo extends Phaser.Scene {
         this.background = this.add.sprite(0.5 * game.config.width, 0.5 *game.config.height, 'background');
         this.background.setScale(0.79);
         this.titulo1 = this.add.sprite(0.5 * game.config.width, 0.15 *game.config.height, 'titulo1');
-        this.titulo1.setScale(0.5);
+        this.titulo1.setScale(0.6);
         var color =  0xffffff;
         var contador = 0;
         var certas = 0; 
