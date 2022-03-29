@@ -11,15 +11,16 @@ class Menu extends Phaser.Scene {
         this.load.image('bttop', 'assets/btTop.png');
         this.load.image('nave', 'assets/nave.png');
         this.load.image('btcredittos', 'assets/btCreditos.png');
-
-
+        this.load.image('creditos','assets/creditos.png');
+        this.load.image('creditos','assets/creditos.png');
+        this.load.image('info','assets/quadroinfo.png');
+        this.load.image('close','assets/btClose.png');
     }
 
 
     create() {
         this.background = this.add.sprite(0.5 * game.config.width, 0.5 *game.config.height, 'background');
         this.background.setScale(0.79);
-
 
         this.btplay = this.add.sprite(0.5 * game.config.width, 175, "btplay");
         this.btplay.setScale(0.8);
@@ -89,6 +90,32 @@ class Menu extends Phaser.Scene {
             this.bttop.disableInteractive();
             this.btplay.disableInteractive();
             this.scene.transition({ target: 'Jogo', duration: 100 });
+        }, this);
+
+        this.btcreditos.once('pointerdown', function (event) {
+            var cred = this.add.sprite(0.5 * game.config.width, 300, "creditos");
+            cred.setScale(0.7);
+            this.close = this.add.sprite(0.67 * game.config.width, 165, "close");
+            this.close.setScale(0.2);
+
+            this.close.setInteractive({ useHandCursor: true });
+            this.close.on('pointerover', () => {
+                this.close.displayHeight += 5;
+                this.close.displayWidth += 5;
+
+                });
+                this.close.on('pointerout', () => {
+                this.close.displayHeight -= 5;
+                this.close.displayWidth -= 5;
+                });
+        
+                this.close.once('pointerdown', function (event) {
+                    cred.destroy();
+                    this.close.destroy(); 
+                    this.scene.transition({ target: 'Menu', duration: 100 });
+
+                }, this);
+        
         }, this);
 
     }
