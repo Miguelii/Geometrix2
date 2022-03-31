@@ -34,8 +34,6 @@ class Jogo extends Phaser.Scene {
         this.load.image('ponto', 'assets/ponto.png');
         this.load.image('titulo1', 'assets/titulo1.png');        
         this.load.image('pontoteste', 'assets/pontoteste.png');
-
-
     }
         
     create (){
@@ -503,12 +501,14 @@ class Jogo extends Phaser.Scene {
                         'Level: ' + level,
                         'Segmento de reta: [AB]'
                     ]);
+
                 }
                 if (level==2){
                     text.setText([
                         'Level: ' + level,
                         'Segmento de reta: [BA]'
                     ]);
+                    //this.scene.transition({ target: 'ChangeLevel', duration: 100 });
                 }
             
                 if (level==3){
