@@ -2,14 +2,7 @@ var segundos = 0;
 function segundo(){
     segundos++;
 }
-function sleep(milliseconds) {
-    const date = Date.now();
-    let currentDate = null;
-    do {
-      currentDate = Date.now();
-    } while (currentDate - date < milliseconds);
-  }
-setInterval(function(){ segundo() },1000);
+
 var lines = [];
 var j = 0; 
 var um = false;
@@ -34,14 +27,19 @@ class Jogo extends Phaser.Scene {
         this.load.image('ponto', 'assets/ponto.png');
         this.load.image('titulo1', 'assets/titulo1.png');        
         this.load.image('pontoteste', 'assets/pontoteste.png');
+        this.load.image('info', 'assets/quadroinfo.png');
     }
         
     create (){
+        segundos = 0;
+        setInterval(function(){ segundo() },1000);
         
         this.background = this.add.sprite(0.5 * game.config.width, 0.5 *game.config.height, 'background');
         this.background.setScale(0.79);
         this.titulo1 = this.add.sprite(0.5 * game.config.width, 0.15 *game.config.height, 'titulo1');
         this.titulo1.setScale(0.6);
+        var info = this.add.sprite(-10000,-100000, 'info');
+
         var color =  0xffffff;
         var contador = 0;
         var certas = 0; 
@@ -207,6 +205,7 @@ class Jogo extends Phaser.Scene {
         var sgm = false;
 
         this.input.on('pointerdown', function (pointer) {
+            
             var ultimo = false;
             if(ultimo==false){
                 line.setTo(pointer.x, pointer.y, pointer.x, pointer.y);
@@ -493,7 +492,7 @@ class Jogo extends Phaser.Scene {
                     certas = 0;
                 }
                 if(level == 8){
-                    this.scene.transition({ target: 'Menu', duration: 100 });
+                    this.scene.start({ target: 'Menu', duration: 100 });
                 }
 
                 if (level==1){
@@ -501,14 +500,44 @@ class Jogo extends Phaser.Scene {
                         'Level: ' + level,
                         'Segmento de reta: [AB]'
                     ]);
-
                 }
+                var p = false; 
                 if (level==2){
                     text.setText([
                         'Level: ' + level,
                         'Segmento de reta: [BA]'
                     ]);
-                    //this.scene.transition({ target: 'ChangeLevel', duration: 100 });
+                    info.x = 0.5 * game.config.width;
+                    info.y = 0.5 *game.config.height;
+                    letraa.x = 1000;
+                    letraa.y = 1000;
+                    letrab.x = 1000;
+                    letrab.y = 1000;
+                    letrac.x = 1000;
+                    letrac.y = 1000;
+                    ponto1.x=1000;
+                    ponto1.y=1000;
+                    ponto2.x=1000;
+                    ponto2.y=1000;
+                    ponto3.x=1000;
+                    ponto3.y=1000;  
+                    p = true;
+
+                    setTimeout(() =>{
+                        info.x = -1000;
+                        info.y = -1000;
+                        ponto1.x=x;
+                        ponto1.y=y;
+                        ponto2.x=x1;
+                        ponto2.y=y1;
+                        letraa.x = x+5;
+                        letraa.y = y+5;
+                        letrab.x = x1+5;
+                        letrab.y = y1+5;
+                        
+                    }, 1000);
+
+                    segundos = 0;
                 }
             
                 if (level==3){
@@ -576,17 +605,15 @@ class Jogo extends Phaser.Scene {
                     ponto3.x = 10000;
                     ponto3.y = 10000;
                 }
-                
-                graphics.fillPointShape(point2, 10);
-                graphics.fillPointShape(point3, 15);
-
-                ponto1.x=x;
-                ponto1.y=y;
-                ponto2.x=x1;
-                ponto2.y=y1;
+                if (p==false){  
+                    ponto1.x=x;
+                    ponto1.y=y;
+                    ponto2.x=x1;
+                    ponto2.y=y1;
+                }
 
                 aceita = false;
-                sleep(500);
+
             }
             else{
                 graphics.clear();
