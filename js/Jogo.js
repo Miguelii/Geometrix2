@@ -47,7 +47,7 @@ class Jogo extends Phaser.Scene {
         var color =  0xffffff;
         var contador = 0;
         var certas = 0; 
-        var level = 3; 
+        var level = 1; 
 
         var text = this.add.text(800, 150, '', { fontFamily: 'font1',align: 'right'});
         text.setFontSize(15);
@@ -189,6 +189,8 @@ class Jogo extends Phaser.Scene {
             }
             letrac.x = a+5; 
             letrac.y = b+5;
+            ponto3.x = a; 
+            ponto3.y = b;
         }
         
         if(level==7){
