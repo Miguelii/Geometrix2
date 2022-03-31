@@ -467,7 +467,7 @@ class Jogo extends Phaser.Scene {
                 y = Math.random()*(600 - 300) + 300;
                 x1 = Math.random()*(800 - 300) + 300;
                 y1 = Math.random()*(600 - 300) + 300;
-                
+                var flag = false; 
                 while (y > 450 || y1>450 || x==x1 || x==y || x==y1 || x1==y1 || y==x1 || y==y1 || dist(x,y,x1,y1)<=150 ){
                     x = Math.random()*(800 - 300) + 300;
                     y = Math.random()*(600 - 300) + 300;
@@ -490,6 +490,7 @@ class Jogo extends Phaser.Scene {
                 if (certas == 3){
                     level += 1; 
                     certas = 0;
+                    flag = true;
                 }
                 if(level == 8){
                     this.scene.start({ target: 'Menu', duration: 100 });
@@ -507,37 +508,39 @@ class Jogo extends Phaser.Scene {
                         'Level: ' + level,
                         'Segmento de reta: [BA]'
                     ]);
-                    info.x = 0.5 * game.config.width;
-                    info.y = 0.5 *game.config.height;
-                    letraa.x = 1000;
-                    letraa.y = 1000;
-                    letrab.x = 1000;
-                    letrab.y = 1000;
-                    letrac.x = 1000;
-                    letrac.y = 1000;
-                    ponto1.x=1000;
-                    ponto1.y=1000;
-                    ponto2.x=1000;
-                    ponto2.y=1000;
-                    ponto3.x=1000;
-                    ponto3.y=1000;  
-                    p = true;
+                    if(flag){
+                        info.x = 0.5 * game.config.width;
+                        info.y = 0.5 *game.config.height;
+                        letraa.x = 1000;
+                        letraa.y = 1000;
+                        letrab.x = 1000;
+                        letrab.y = 1000;
+                        letrac.x = 1000;
+                        letrac.y = 1000;
+                        ponto1.x=1000;
+                        ponto1.y=1000;
+                        ponto2.x=1000;
+                        ponto2.y=1000;
+                        ponto3.x=1000;
+                        ponto3.y=1000;  
+                        p = true;
 
-                    setTimeout(() =>{
-                        info.x = -1000;
-                        info.y = -1000;
-                        ponto1.x=x;
-                        ponto1.y=y;
-                        ponto2.x=x1;
-                        ponto2.y=y1;
-                        letraa.x = x+5;
-                        letraa.y = y+5;
-                        letrab.x = x1+5;
-                        letrab.y = y1+5;
-                        
-                    }, 1000);
+                        setTimeout(() =>{
+                            info.x = -1000;
+                            info.y = -1000;
+                            ponto1.x=x;
+                            ponto1.y=y;
+                            ponto2.x=x1;
+                            ponto2.y=y1;
+                            letraa.x = x+5;
+                            letraa.y = y+5;
+                            letrab.x = x1+5;
+                            letrab.y = y1+5;
+                            
+                        }, 1000);
 
                     segundos = 0;
+                    }
                 }
             
                 if (level==3){
@@ -545,6 +548,38 @@ class Jogo extends Phaser.Scene {
                         'Level: ' + level,
                         'Semi-reta: [AB['
                     ]);
+                    if (flag){
+                        info.x = 0.5 * game.config.width;
+                        info.y = 0.5 *game.config.height;
+                        letraa.x = 1000;
+                        letraa.y = 1000;
+                        letrab.x = 1000;
+                        letrab.y = 1000;
+                        letrac.x = 1000;
+                        letrac.y = 1000;
+                        ponto1.x=1000;
+                        ponto1.y=1000;
+                        ponto2.x=1000;
+                        ponto2.y=1000;
+                        ponto3.x=1000;
+                        ponto3.y=1000;  
+                        p = true;
+
+                        setTimeout(() =>{
+                            info.x = -1000;
+                            info.y = -1000;
+                            ponto1.x=x;
+                            ponto1.y=y;
+                            ponto2.x=x1;
+                            ponto2.y=y1;
+                            letraa.x = x+5;
+                            letraa.y = y+5;
+                            letrab.x = x1+5;
+                            letrab.y = y1+5;
+                            
+                        }, 1000);
+                        segundos = 0;
+                    }
                 }
             
                 if (level==4){
@@ -552,6 +587,38 @@ class Jogo extends Phaser.Scene {
                         'Level: ' + level,
                         'Semi-reta: ]BA]'
                     ]);
+                    if(flag){
+                        info.x = 0.5 * game.config.width;
+                        info.y = 0.5 *game.config.height;
+                        letraa.x = 1000;
+                        letraa.y = 1000;
+                        letrab.x = 1000;
+                        letrab.y = 1000;
+                        letrac.x = 1000;
+                        letrac.y = 1000;
+                        ponto1.x=1000;
+                        ponto1.y=1000;
+                        ponto2.x=1000;
+                        ponto2.y=1000;
+                        ponto3.x=1000;
+                        ponto3.y=1000;  
+                        p = true;
+
+                        setTimeout(() =>{
+                            info.x = -1000;
+                            info.y = -1000;
+                            ponto1.x=x;
+                            ponto1.y=y;
+                            ponto2.x=x1;
+                            ponto2.y=y1;
+                            letraa.x = x+5;
+                            letraa.y = y+5;
+                            letrab.x = x1+5;
+                            letrab.y = y1+5;
+                            
+                        }, 1000);
+                        segundos = 0;
+                    }
                 }
             
                 if (level==5){
@@ -559,6 +626,38 @@ class Jogo extends Phaser.Scene {
                         'Level: ' + level,
                         'Reta'
                     ]);
+                    if(flag){
+                        info.x = 0.5 * game.config.width;
+                        info.y = 0.5 *game.config.height;
+                        letraa.x = 1000;
+                        letraa.y = 1000;
+                        letrab.x = 1000;
+                        letrab.y = 1000;
+                        letrac.x = 1000;
+                        letrac.y = 1000;
+                        ponto1.x=1000;
+                        ponto1.y=1000;
+                        ponto2.x=1000;
+                        ponto2.y=1000;
+                        ponto3.x=1000;
+                        ponto3.y=1000;  
+                        p = true;
+
+                        setTimeout(() =>{
+                            info.x = -1000;
+                            info.y = -1000;
+                            ponto1.x=x;
+                            ponto1.y=y;
+                            ponto2.x=x1;
+                            ponto2.y=y1;
+                            letraa.x = x+5;
+                            letraa.y = y+5;
+                            letrab.x = x1+5;
+                            letrab.y = y1+5;
+                            
+                        }, 1000);
+                    segundos = 0;
+                    }
                 }
     
                 graphics.clear();
@@ -589,21 +688,90 @@ class Jogo extends Phaser.Scene {
                     for(var i=0;i<pointsLine2.length;i++){
                         pointsLine.push(pointsLine2[i]);
                     }
-                    letrac.x = a+5; 
-                    letrac.y = b+5;
-                    ponto3.x = a;
-                    ponto3.y = b;
-                    
+                    if(flag){
+                        info.x = 0.5 * game.config.width;
+                        info.y = 0.5 *game.config.height;
+                        letraa.x = 1000;
+                        letraa.y = 1000;
+                        letrab.x = 1000;
+                        letrab.y = 1000;
+                        letrac.x = 1000;
+                        letrac.y = 1000;
+                        ponto1.x=1000;
+                        ponto1.y=1000;
+                        ponto2.x=1000;
+                        ponto2.y=1000;
+                        ponto3.x=1000;
+                        ponto3.y=1000;  
+                        p = true;
+
+                        setTimeout(() =>{
+                            info.x = -1000;
+                            info.y = -1000;
+                            ponto1.x=x;
+                            ponto1.y=y;
+                            ponto2.x=x1;
+                            ponto2.y=y1;
+                            letraa.x = x+5;
+                            letraa.y = y+5;
+                            letrab.x = x1+5;
+                            letrab.y = y1+5;
+                            letrac.x = a+5; 
+                            letrac.y = b+5;
+                            ponto3.x = a;
+                            ponto3.y = b;
+                        }, 1000);
+
+                        segundos = 0;
+                    }
+                    if(!p){
+                        letrac.x = a+5; 
+                        letrac.y = b+5;
+                        ponto3.x = a;
+                        ponto3.y = b;
+                    }
                 }   
                 if(level==7){
                     text.setText([
                         'Level: ' + level,
                         'Segmento de reta: [AB]'
                     ]);
-                    letrac.x = -100000;
-                    letrac.y = -100000;
-                    ponto3.x = 10000;
-                    ponto3.y = 10000;
+                    if(flag){
+                        letrac.x = -100000;
+                        letrac.y = -100000;
+                        ponto3.x = 10000;
+                        ponto3.y = 10000;
+                        info.x = 0.5 * game.config.width;
+                        info.y = 0.5 *game.config.height;
+                        letraa.x = 1000;
+                        letraa.y = 1000;
+                        letrab.x = 1000;
+                        letrab.y = 1000;
+                        letrac.x = 1000;
+                        letrac.y = 1000;
+                        ponto1.x=1000;
+                        ponto1.y=1000;
+                        ponto2.x=1000;
+                        ponto2.y=1000;
+                        ponto3.x=1000;
+                        ponto3.y=1000;  
+                        p = true;
+
+                        setTimeout(() =>{
+                            info.x = -1000;
+                            info.y = -1000;
+                            ponto1.x=x;
+                            ponto1.y=y;
+                            ponto2.x=x1;
+                            ponto2.y=y1;
+                            letraa.x = x+5;
+                            letraa.y = y+5;
+                            letrab.x = x1+5;
+                            letrab.y = y1+5;
+                            
+                        }, 1000);
+                        segundos = 0; 
+                    }
                 }
                 if (p==false){  
                     ponto1.x=x;
