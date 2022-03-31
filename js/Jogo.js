@@ -2,6 +2,13 @@ var segundos = 0;
 function segundo(){
     segundos++;
 }
+function sleep(milliseconds) {
+    const date = Date.now();
+    let currentDate = null;
+    do {
+      currentDate = Date.now();
+    } while (currentDate - date < milliseconds);
+  }
 setInterval(function(){ segundo() },1000);
 var lines = [];
 var j = 0; 
@@ -40,7 +47,7 @@ class Jogo extends Phaser.Scene {
         var color =  0xffffff;
         var contador = 0;
         var certas = 0; 
-        var level = 1; 
+        var level = 3; 
 
         var text = this.add.text(800, 150, '', { fontFamily: 'font1',align: 'right'});
         text.setFontSize(15);
@@ -577,6 +584,7 @@ class Jogo extends Phaser.Scene {
                 ponto2.y=y1;
 
                 aceita = false;
+                sleep(500);
             }
             else{
                 graphics.clear();
