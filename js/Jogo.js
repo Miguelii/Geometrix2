@@ -28,6 +28,9 @@ class Jogo extends Phaser.Scene {
         this.load.image('titulo1', 'assets/titulo1.png');        
         this.load.image('pontoteste', 'assets/pontoteste.png');
         this.load.image('info', 'assets/quadroinfo.png');
+
+        this.load.image('btsim', 'assets/btsim.png');
+        this.load.image('btnao', 'assets/btnao.png');
     }
         
     create (){
@@ -46,6 +49,7 @@ class Jogo extends Phaser.Scene {
         var level = 1; 
 
         var texto = this.add.text(850, 150, '', { fontFamily: 'font1',align: 'right'});
+        
         texto.setFontSize(15);
 
         var aceita = false; 
@@ -61,6 +65,7 @@ class Jogo extends Phaser.Scene {
         this.btHome = this.add.sprite(0.05 * game.config.width, 535, "btHome");
         this.btHome.setScale(0.5);
         this.btHome.setInteractive({ useHandCursor: true });
+        this.btHome.name = 'btHome';
 
 
         this.btHome.on('pointerover', () => {
@@ -73,9 +78,48 @@ class Jogo extends Phaser.Scene {
         this.btHome.displayWidth -= 5;
         });
 
-        this.btHome.once('pointerdown', function (event) {
-            score = 0;
-        this.scene.transition({ target: 'Menu', duration: 100 });
+        //Exit
+        this.infoexit = this.add.sprite(0.5 * game.config.width, 0.55 *game.config.height, "info");
+        this.infoexit.setScale(0.75);
+        this.infoexit.visible = false;
+        this.infoexit.name = 'infoexit';
+
+        this.btsim = this.add.sprite(0.6 * game.config.width, 0.7 * game.config.height, 'btsim');
+        this.btsim.setScale(0.35);
+        this.btsim.visible = false;
+        this.btsim.name = 'btsim';
+
+        this.btnao = this.add.sprite(0.4 * game.config.width, 0.7 * game.config.height, 'btnao');
+        this.btnao.setScale(0.35);
+        this.btnao.visible = false;
+        this.btnao.name = 'btnao';
+        
+        this.input.on('gameobjectdown', function(pointer, gameObject) {
+            switch (gameObject.name) {
+
+                case 'btHome':
+                    this.btHome.disableInteractive();
+                    this.infoexit.visible = true;
+                    this.btnao.visible = true;
+                    this.btnao.setInteractive({ useHandCursor: true });
+                    this.btsim.visible = true;
+                    this.btsim.setInteractive({ useHandCursor: true });
+
+                    // Falta esconder os pontos e desativar a linha
+                    break;
+                
+                case 'btsim':
+                    this.scene.transition({ target: 'Menu', duration: 100 });
+                    break;
+                
+                case 'btnao':
+                    this.btHome.setInteractive({ useHandCursor: true });
+                    this.infoexit.visible = false;
+                    this.btnao.visible = false;
+                    this.btsim.visible = false;
+                    this.btnao.disableInteractive();
+                    this.btsim.disableInteractive();
+            }
         }, this);
 
         timer = this.add.text(0.065 * game.config.width, 55, segundos + ' s',{
