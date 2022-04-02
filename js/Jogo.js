@@ -74,6 +74,7 @@ class Jogo extends Phaser.Scene {
         });
 
         this.btHome.once('pointerdown', function (event) {
+            score = 0;
         this.scene.transition({ target: 'Menu', duration: 100 });
         }, this);
 
