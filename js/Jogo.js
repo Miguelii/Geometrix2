@@ -271,6 +271,7 @@ class Jogo extends Phaser.Scene {
                     ponto3.y=1000;  
                     ponto4.x = 1000;
                     ponto4.y = 1000;
+                    graphics.clear();
                     // Falta esconder os pontos e desativar a linha
                     break;
                 
@@ -302,6 +303,10 @@ class Jogo extends Phaser.Scene {
                         letrac.y = point.y+5;
                         ponto3.x=point.x;
                         ponto3.y=point.y;  
+                        for(var i= 0;i<lines.length;i++){
+                            graphics.lineStyle(4, color);
+                            graphics.strokeLineShape(lines[i]);
+                        }
                     }
                     if(level==7){
                         letrad.x = point4.x+5; 
@@ -312,6 +317,20 @@ class Jogo extends Phaser.Scene {
                         ponto4.y = point4.y;    
                         ponto3.x=point.x;
                         ponto3.y=point.y;  
+                    }
+                    if(level==8){
+                        letrac.x = point.x+5;
+                        letrac.y = point.y+5;
+                        ponto3.x=point.x;
+                        ponto3.y=point.y;
+                        letrad.x = point4.x+5;
+                        letrad.y = point4.y+5;
+                        ponto4.x=point4.x;
+                        ponto4.y=point4.y;
+                        for(var i= 0;i<lines.length;i++){
+                            graphics.lineStyle(4, color);
+                            graphics.strokeLineShape(lines[i]);
+                        }
                     }
             }
         }, this);
