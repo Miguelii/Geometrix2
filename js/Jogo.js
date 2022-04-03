@@ -246,9 +246,12 @@ class Jogo extends Phaser.Scene {
         }
 
         this.input.on('gameobjectdown', function(pointer, gameObject) {
+            graphics.clear();
+
             switch (gameObject.name) {
 
                 case 'btHome':
+                    graphics.clear();
                     this.btHome.disableInteractive();
                     this.infoexit.visible = true;
                     this.btnao.visible = true;
@@ -271,7 +274,6 @@ class Jogo extends Phaser.Scene {
                     ponto3.y=1000;  
                     ponto4.x = 1000;
                     ponto4.y = 1000;
-                    graphics.clear();
                     score += 5;
                     // Falta esconder os pontos e desativar a linha
                     break;
