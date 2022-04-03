@@ -28,7 +28,6 @@ class Jogo extends Phaser.Scene {
         this.load.image('titulo1', 'assets/titulo1.png');        
         this.load.image('ponto', 'assets/ponto.png');
         this.load.image('info', 'assets/quadroinfo.png');
-
         this.load.image('btsim', 'assets/btsim.png');
         this.load.image('btnao', 'assets/btnao.png');
     }
@@ -46,7 +45,7 @@ class Jogo extends Phaser.Scene {
         var color =  0xffffff;
         var contador = 0;
         var certas = 0; 
-        var level = 6; 
+        var level = 1; 
 
         var texto = this.add.text(850, 150, '', { fontFamily: 'font1',align: 'right'});
         
@@ -93,34 +92,6 @@ class Jogo extends Phaser.Scene {
         this.btnao.setScale(0.35);
         this.btnao.visible = false;
         this.btnao.name = 'btnao';
-        
-        this.input.on('gameobjectdown', function(pointer, gameObject) {
-            switch (gameObject.name) {
-
-                case 'btHome':
-                    this.btHome.disableInteractive();
-                    this.infoexit.visible = true;
-                    this.btnao.visible = true;
-                    this.btnao.setInteractive({ useHandCursor: true });
-                    this.btsim.visible = true;
-                    this.btsim.setInteractive({ useHandCursor: true });
-
-                    // Falta esconder os pontos e desativar a linha
-                    break;
-                
-                case 'btsim':
-                    this.scene.transition({ target: 'Menu', duration: 100 });
-                    break;
-                
-                case 'btnao':
-                    this.btHome.setInteractive({ useHandCursor: true });
-                    this.infoexit.visible = false;
-                    this.btnao.visible = false;
-                    this.btsim.visible = false;
-                    this.btnao.disableInteractive();
-                    this.btsim.disableInteractive();
-            }
-        }, this);
 
         timer = this.add.text(0.065 * game.config.width, 55, segundos + ' s',{
             fontFamily: 'font1',
@@ -273,9 +244,77 @@ class Jogo extends Phaser.Scene {
             letrad.y = point4.y+5;
         }
 
+        this.input.on('gameobjectdown', function(pointer, gameObject) {
+            switch (gameObject.name) {
+
+                case 'btHome':
+                    this.btHome.disableInteractive();
+                    this.infoexit.visible = true;
+                    this.btnao.visible = true;
+                    this.btnao.setInteractive({ useHandCursor: true });
+                    this.btsim.visible = true;
+                    this.btsim.setInteractive({ useHandCursor: true });
+                    letraa.x = 1000;
+                    letraa.y = 1000;
+                    letrab.x = 1000;
+                    letrab.y = 1000;
+                    letrac.x = 1000;
+                    letrac.y = 1000;
+                    letrad.x = 1000; 
+                    letrad.y = 1000;
+                    ponto1.x=1000;
+                    ponto1.y=1000;
+                    ponto2.x=1000;
+                    ponto2.y=1000;
+                    ponto3.x=1000;
+                    ponto3.y=1000;  
+                    ponto4.x = 1000;
+                    ponto4.y = 1000;
+                    // Falta esconder os pontos e desativar a linha
+                    break;
+                
+                case 'btsim':
+                    this.scene.transition({ target: 'Menu', duration: 100 });
+                    break;
+                
+                case 'btnao':
+                    this.btHome.setInteractive({ useHandCursor: true });
+                    this.infoexit.visible = false;
+                    this.btnao.visible = false;
+                    this.btsim.visible = false;
+                    this.btnao.disableInteractive();
+                    this.btsim.disableInteractive();
+                    letraa.x = x+5;
+                    letraa.y = y+5;
+                    letrab.x = x1+5;
+                    letrab.y = y1+5;
+                    ponto1.x=x;
+                    ponto1.y=y;
+                    ponto2.x=x1;
+                    ponto2.y=y1;
+                    if (level==6){
+                        letrac.x = point.x+5;
+                        letrac.y = point.y+5;
+                        ponto3.x=point.x;
+                        ponto3.y=point.y;  
+                    }
+                    if(level==7){
+                        letrad.x = point4.x+5; 
+                        letrad.y = point4.y+5;
+                        letrac.x = point.x+5;
+                        letrac.y = point.y+5;
+                        ponto4.x = point4.x;
+                        ponto4.y = point4.y;    
+                        ponto3.x=point.x;
+                        ponto3.y=point.y;  
+                    }
+            }
+        }, this);
+
         var aceitaMidle = false;
         segundos = 0;
         var sgm = false;
+
 
         this.input.on('pointerdown', function (pointer) {
             
