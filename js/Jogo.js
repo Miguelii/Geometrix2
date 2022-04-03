@@ -272,6 +272,7 @@ class Jogo extends Phaser.Scene {
                     ponto4.x = 1000;
                     ponto4.y = 1000;
                     graphics.clear();
+                    score += 5;
                     // Falta esconder os pontos e desativar a linha
                     break;
                 
@@ -280,6 +281,7 @@ class Jogo extends Phaser.Scene {
                     pointsLine = [];
                     pointsLine2 = [];
                     clearInterval(contaTempo);
+                    score = 0;
                     this.scene.transition({ target: 'Menu', duration: 100 });
                     break;
                 
@@ -290,6 +292,7 @@ class Jogo extends Phaser.Scene {
                     this.btsim.visible = false;
                     this.btnao.disableInteractive();
                     this.btsim.disableInteractive();
+                    score += 5;
                     letraa.x = x+5;
                     letraa.y = y+5;
                     letrab.x = x1+5;
@@ -625,7 +628,6 @@ class Jogo extends Phaser.Scene {
             if (aceita){
                 clearInterval(contaTempo);
                 setTimeout(() =>{
-                    segundos = 0;
                     contador = 0;
                     sgm = false;
                     aceitaMidle = false;
