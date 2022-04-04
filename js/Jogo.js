@@ -10,6 +10,7 @@ var dois = false;
 var timer;
 var score = 0; 
 var textScore;
+var pause = false; 
 
 class Jogo extends Phaser.Scene {
 
@@ -216,10 +217,7 @@ class Jogo extends Phaser.Scene {
                 'Level: ' + level,
                 'Segmento de reta: [AB]'
             ]);
-            ponto3.x = 10000;
-            ponto3.y = 10000;
-            letrac.x = -100000;
-            letrac.y = -100000;
+            escondePontos([ponto3,letrac]);
         }
 
         if(level==8){
@@ -258,24 +256,9 @@ class Jogo extends Phaser.Scene {
                     this.btnao.setInteractive({ useHandCursor: true });
                     this.btsim.visible = true;
                     this.btsim.setInteractive({ useHandCursor: true });
-                    letraa.x = 1000;
-                    letraa.y = 1000;
-                    letrab.x = 1000;
-                    letrab.y = 1000;
-                    letrac.x = 1000;
-                    letrac.y = 1000;
-                    letrad.x = 1000; 
-                    letrad.y = 1000;
-                    ponto1.x=1000;
-                    ponto1.y=1000;
-                    ponto2.x=1000;
-                    ponto2.y=1000;
-                    ponto3.x=1000;
-                    ponto3.y=1000;  
-                    ponto4.x = 1000;
-                    ponto4.y = 1000;
+                    escondePontos([letraa,letrab,letrac,letrad,ponto1,ponto2,ponto3,ponto4]);
                     score += 5;
-                    // Falta esconder os pontos e desativar a linha
+                    pause = true;
                     break;
                 
                 case 'btsim':
@@ -285,9 +268,11 @@ class Jogo extends Phaser.Scene {
                     clearInterval(contaTempo);
                     score = 0;
                     this.scene.transition({ target: 'Menu', duration: 100 });
+                    pause = false; 
                     break;
                 
                 case 'btnao':
+                    pause = false; 
                     this.btHome.setInteractive({ useHandCursor: true });
                     this.infoexit.visible = false;
                     this.btnao.visible = false;
@@ -603,7 +588,7 @@ class Jogo extends Phaser.Scene {
                     if(sgm){
                         texto.setText([
                             'Level: ' + level,
-                            'Ponto Medio do segmento de reta'
+                            'Ponto Medio'
                         ]);
                         if(aceitaMidle){
                             aceita = true;
@@ -686,27 +671,11 @@ class Jogo extends Phaser.Scene {
                             clearInterval(contaTempo);
                             info.x = 0.5 * game.config.width;
                             info.y = 0.5 *game.config.height;
-                            letraa.x = 1000;
-                            letraa.y = 1000;
-                            letrab.x = 1000;
-                            letrab.y = 1000;
-                            letrac.x = 1000;
-                            letrac.y = 1000;
-                            letrad.x = 1000; 
-                            letrad.y = 1000;
-                            ponto1.x=1000;
-                            ponto1.y=1000;
-                            ponto2.x=1000;
-                            ponto2.y=1000;
-                            ponto3.x=1000;
-                            ponto3.y=1000;  
-                            ponto4.x = 1000;
-                            ponto4.y = 1000;
+                            escondePontos([letraa,letrab,ponto1,ponto2]);
                             p = true;
 
                             setTimeout(() =>{
-                                info.x = -1000;
-                                info.y = -1000;
+                                escondePontos([info])
                                 ponto1.x=x;
                                 ponto1.y=y;
                                 ponto2.x=x1;
@@ -732,23 +701,11 @@ class Jogo extends Phaser.Scene {
 
                             info.x = 0.5 * game.config.width;
                             info.y = 0.5 *game.config.height;
-                            letraa.x = 1000;
-                            letraa.y = 1000;
-                            letrab.x = 1000;
-                            letrab.y = 1000;
-                            letrac.x = 1000;
-                            letrac.y = 1000;
-                            ponto1.x=1000;
-                            ponto1.y=1000;
-                            ponto2.x=1000;
-                            ponto2.y=1000;
-                            ponto3.x=1000;
-                            ponto3.y=1000;  
+                            escondePontos([letraa,letrab,ponto1,ponto2]);
                             p = true;
 
                             setTimeout(() =>{
-                                info.x = -1000;
-                                info.y = -1000;
+                                escondePontos([info]);
                                 ponto1.x=x;
                                 ponto1.y=y;
                                 ponto2.x=x1;
@@ -773,23 +730,11 @@ class Jogo extends Phaser.Scene {
 
                             info.x = 0.5 * game.config.width;
                             info.y = 0.5 *game.config.height;
-                            letraa.x = 1000;
-                            letraa.y = 1000;
-                            letrab.x = 1000;
-                            letrab.y = 1000;
-                            letrac.x = 1000;
-                            letrac.y = 1000;
-                            ponto1.x=1000;
-                            ponto1.y=1000;
-                            ponto2.x=1000;
-                            ponto2.y=1000;
-                            ponto3.x=1000;
-                            ponto3.y=1000;  
+                            escondePontos([letraa,letrab,ponto1,ponto2]);
                             p = true;
 
                             setTimeout(() =>{
-                                info.x = -1000;
-                                info.y = -1000;
+                                escondePontos([info]);
                                 ponto1.x=x;
                                 ponto1.y=y;
                                 ponto2.x=x1;
@@ -814,23 +759,11 @@ class Jogo extends Phaser.Scene {
 
                             info.x = 0.5 * game.config.width;
                             info.y = 0.5 *game.config.height;
-                            letraa.x = 1000;
-                            letraa.y = 1000;
-                            letrab.x = 1000;
-                            letrab.y = 1000;
-                            letrac.x = 1000;
-                            letrac.y = 1000;
-                            ponto1.x=1000;
-                            ponto1.y=1000;
-                            ponto2.x=1000;
-                            ponto2.y=1000;
-                            ponto3.x=1000;
-                            ponto3.y=1000;  
+                            escondePontos([letraa,letrab,ponto1,ponto2]);
                             p = true;
 
                             setTimeout(() =>{
-                                info.x = -1000;
-                                info.y = -1000;
+                                escondePontos([info]);
                                 ponto1.x=x;
                                 ponto1.y=y;
                                 ponto2.x=x1;
@@ -877,23 +810,12 @@ class Jogo extends Phaser.Scene {
                             clearInterval(contaTempo);
                             info.x = 0.5 * game.config.width;
                             info.y = 0.5 *game.config.height;
-                            letraa.x = 1000;
-                            letraa.y = 1000;
-                            letrab.x = 1000;
-                            letrab.y = 1000;
-                            letrac.x = 1000;
-                            letrac.y = 1000;
-                            ponto1.x=1000;
-                            ponto1.y=1000;
-                            ponto2.x=1000;
-                            ponto2.y=1000;
-                            ponto3.x=1000;
-                            ponto3.y=1000;  
+                            escondePontos([letraa,letrab,letrac,ponto1,ponto2,ponto3]);
+
                             p = true;
 
                             setTimeout(() =>{
-                                info.x = -1000;
-                                info.y = -1000;
+                                escondePontos([info]);
                                 ponto1.x=x;
                                 ponto1.y=y;
                                 ponto2.x=x1;
@@ -925,30 +847,12 @@ class Jogo extends Phaser.Scene {
                         ]);
                         if(flag){
                             clearInterval(contaTempo);
-
-                            letrac.x = -100000;
-                            letrac.y = -100000;
-                            ponto3.x = 10000;
-                            ponto3.y = 10000;
                             info.x = 0.5 * game.config.width;
                             info.y = 0.5 *game.config.height;
-                            letraa.x = 1000;
-                            letraa.y = 1000;
-                            letrab.x = 1000;
-                            letrab.y = 1000;
-                            letrac.x = 1000;
-                            letrac.y = 1000;
-                            ponto1.x=1000;
-                            ponto1.y=1000;
-                            ponto2.x=1000;
-                            ponto2.y=1000;
-                            ponto3.x=1000;
-                            ponto3.y=1000;  
+                            escondePontos([letraa,letrab,ponto1,ponto2]);
                             p = true;
-
                             setTimeout(() =>{
-                                info.x = -1000;
-                                info.y = -1000;
+                                escondePontos([info]);
                                 ponto1.x=x;
                                 ponto1.y=y;
                                 ponto2.x=x1;
@@ -980,27 +884,11 @@ class Jogo extends Phaser.Scene {
                             clearInterval(contaTempo);
                             info.x = 0.5 * game.config.width;
                             info.y = 0.5 *game.config.height;
-                            letraa.x = 1000;
-                            letraa.y = 1000;
-                            letrab.x = 1000;
-                            letrab.y = 1000;
-                            letrac.x = 1000;
-                            letrac.y = 1000;
-                            letrad.x = 1000;
-                            letrad.y = 1000;
-                            ponto1.x=1000;
-                            ponto1.y=1000;
-                            ponto2.x=1000;
-                            ponto2.y=1000;
-                            ponto3.x=1000;
-                            ponto3.y=1000;  
-                            ponto4.x=1000;
-                            ponto4.y=1000;  
+                            escondePontos([letraa,letrab,letrac,letrad,ponto1,ponto2,ponto3,pont4]);
                             p = true;
 
                             setTimeout(() =>{
-                                info.x = -1000;
-                                info.y = -1000;
+                                escondePontos([info]);
                                 ponto1.x=x;
                                 ponto1.y=y;
                                 ponto2.x=x1;
@@ -1333,4 +1221,11 @@ function pontosParalelo(x,y,x1,y1){
     var paralela = new Phaser.Geom.Line();
     Phaser.Geom.Line.SetToAngle(paralela,x,y -200,angle,dist(x,y,x1,y1));
     return [paralela.getPointA(),paralela.getPointB()];
+}
+
+function escondePontos(pontos){
+    for (var i=0; i<pontos.length;i++){
+        pontos[i].x = 10000; 
+        pontos[i].y = 10000;
+    }
 }
