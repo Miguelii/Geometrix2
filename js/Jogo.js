@@ -649,6 +649,7 @@ class Jogo extends Phaser.Scene {
                         score += (100-segundos) * level;
                     }
                     segundos = 0; 
+
                     if (certas == 3){
                         level += 1; 
                         certas = 0;
@@ -934,7 +935,6 @@ class Jogo extends Phaser.Scene {
                 },1000);  
                 contaTempo = setInterval(function(){ segundo() },1000);
             }
-            
             else{
                 graphics.clear();
                 if(level!=6 && level!=8){
@@ -1220,7 +1220,26 @@ function pontosParalelo(x,y,x1,y1){
     var angle = Phaser.Geom.Line.Angle(linha);
     var paralela = new Phaser.Geom.Line();
     Phaser.Geom.Line.SetToAngle(paralela,x,y -200,angle,dist(x,y,x1,y1));
-    return [paralela.getPointA(),paralela.getPointB()];
+    var points = paralela.getPoints(); 
+    var pontoA = paralela.getPointA();
+    var pontoB = paralela.getPointB(); 
+
+    while(pontoA> 450){
+        for(var i=0; i<points.length;i++){
+            if(points[i].x<450 && dist(points[i].x,points[i].y,pontoB.x,pontoB.y)>50){
+                pontoA = points[i];
+            }
+        }
+    }
+    while(pontoB> 450){
+        for(var i=0; i<points.length;i++){
+            if(points[i].x<450 && dist(points[i].x,points[i].y,pontoA.x,pontoA.y)>50){
+                pontoB = points[i];
+            }
+        }
+    }
+
+    return [pontoA,pontoB];
 }
 
 function escondePontos(pontos){
@@ -1228,4 +1247,14 @@ function escondePontos(pontos){
         pontos[i].x = 10000; 
         pontos[i].y = 10000;
     }
+}
+
+function perpendicular(linha){
+    var normalAngle = Phaser.Geom.Line.NormalAngle(line);
+    var ponto = line.getRandomPoint(); 
+    var perp = new Phaser.Geom.Line();
+    Phaser.Geom.Line.SetToAngle(perp,ponto.x,pont.y -200,normalAngle,dist(linha.getPointA().x,linha.getPointA().y,
+    linha.getPointB().x,linha.getPointB().y));
+
+    return [perp.getPointA(),perp.getPointB()];
 }
