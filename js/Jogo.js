@@ -46,7 +46,7 @@ class Jogo extends Phaser.Scene {
         var color =  0xffffff;
         var contador = 0;
         var certas = 0; 
-        var level = 1; 
+        var level = 9; 
 
         var texto = this.add.text(850, 150, '', { fontFamily: 'font1',align: 'right'});
         
@@ -235,6 +235,31 @@ class Jogo extends Phaser.Scene {
                 letrad.x = point4.x+5;
                 letrad.y = point4.y+5;
                 break; 
+
+            case 9: 
+                texto.setText([
+                'Level: ' + level,
+                'Reta: AB'
+                ]);
+
+                lines[j] = new Phaser.Geom.Line();
+                line = lines[j];
+                [point,point4] = perpendicular(point2,point3);
+                var pointsLine2 = getPointsOnLine(point,point4);
+                console.log(point,point4);
+                for(var i=0;i<pointsLine2.length;i++){
+                    pointsLine.push(pointsLine2[i]);
+                }
+
+                ponto3.x = point.x;
+                ponto3.y = point.y;
+                ponto4.x = point4.x;
+                ponto4.y = point4.y; 
+                letrac.x = point.x+5;
+                letrac.y = point.y+5;
+                letrad.x = point4.x+5;
+                letrad.y = point4.y+5;
+                break;
         }
 
         this.input.on('gameobjectdown', function(pointer, gameObject) {
@@ -1113,7 +1138,7 @@ function reta(a,b,line){ //Verifica se é uma reta que passa em a e em b
             continua3 = true; 
         }
     }
-    if(continua1&&continua2&&continua3 && 100 + dist(a.x,a.y,b.x,b.y) <= dist(line.getPointA().x,
+    if(continua1&&continua2&&continua3 &&  dist(a.x,a.y,b.x,b.y) < dist(line.getPointA().x,
     line.getPointA().y,line.getPointB().x,line.getPointB().y)){
         continua=true;
         
@@ -1216,14 +1241,14 @@ function pontosParalelo(x,y,x1,y1){
     var pontoA = paralela.getPointA();
     var pontoB = paralela.getPointB(); 
 
-    while(pontoA> 450){
+    while(pontoA.x> 450){
         for(var i=0; i<points.length;i++){
             if(points[i].x<450 && dist(points[i].x,points[i].y,pontoB.x,pontoB.y)>50){
                 pontoA = points[i];
             }
         }
     }
-    while(pontoB> 450){
+    while(pontoB.x> 450){
         for(var i=0; i<points.length;i++){
             if(points[i].x<450 && dist(points[i].x,points[i].y,pontoA.x,pontoA.y)>50){
                 pontoB = points[i];
@@ -1241,12 +1266,27 @@ function escondePontos(pontos){
     }
 }
 
-function perpendicular(linha){
-    var normalAngle = Phaser.Geom.Line.NormalAngle(line);
-    var ponto = line.getRandomPoint(); 
+function perpendicular(ponto1,ponto2){
+    var pointerLine = new Phaser.Geom.Line();
+    var declive = (ponto1.y-ponto2.y)/(ponto1.x-ponto2.x);
+    console.log(declive);
+    if(declive<0){
+        pointerLine.setTo(ponto1.x,ponto1.y,ponto2.x,ponto2.y);
+    }
+    else{
+        pointerLine.setTo(ponto2.x,ponto2.y,ponto1.x,ponto1.y);
+    }
+    var normalAngle = Phaser.Geom.Line.NormalAngle(pointerLine);
+    var ponto = pointerLine.getRandomPoint(); 
+    while(dist(ponto.x,ponto.y,ponto1.x,ponto1.y)<50 && dist(ponto.x,ponto.y,ponto2.x,ponto2.y)<50){
+        ponto = pointerLine.getRandomPoint(); 
+    }
     var perp = new Phaser.Geom.Line();
-    Phaser.Geom.Line.SetToAngle(perp,ponto.x,pont.y -200,normalAngle,dist(linha.getPointA().x,linha.getPointA().y,
-    linha.getPointB().x,linha.getPointB().y));
+    
+    Phaser.Geom.Line.SetToAngle(perp,ponto.x,ponto.y,normalAngle,200);
+    
+    var pontoA = perp.getPointA();
+    var pontoB = perp.getPointB(); 
 
-    return [perp.getPointA(),perp.getPointB()];
+    return [pontoA,pontoB];
 }
