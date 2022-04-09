@@ -570,7 +570,6 @@ class Jogo extends Phaser.Scene {
                 
             }
             
-    
             if ((level==1 && segmentoReta(point2,point3,line)) || (level==2 && segmentoReta(point3,point2,line)) 
             || (level==3 && semiReta(point2,point3,line)) || (level==4 && comecaAntesAcabaNoPonto(point3,point2,line))
             ||(level==5 && reta(point2,point3,line)) ){
@@ -840,6 +839,7 @@ class Jogo extends Phaser.Scene {
                             'Level: ' + level,
                             'Segmento de reta: [AB]'
                         ]);
+                        escondePontos([ponto3,letrac]);
                         if(flag){
                             clearInterval(contaTempo);
                             info.x = 0.5 * game.config.width;
@@ -875,13 +875,12 @@ class Jogo extends Phaser.Scene {
                         for(var i=0;i<pointsLine2.length;i++){
                             pointsLine.push(pointsLine2[i]);
                         }
-                        if(flag){
+                        if(flag){   
                             clearInterval(contaTempo);
                             info.x = 0.5 * game.config.width;
                             info.y = 0.5 *game.config.height;
-                            escondePontos([letraa,letrab,letrac,letrad,ponto1,ponto2,ponto3,pont4]);
+                            escondePontos([letraa,letrab,letrac,letrad,ponto1,ponto2,ponto3,ponto4]);
                             p = true;
-
                             setTimeout(() =>{
                                 escondePontos([info]);
                                 ponto1.x=x;
@@ -914,8 +913,8 @@ class Jogo extends Phaser.Scene {
                             letrac.x = point.x+5; 
                             letrac.y = point.y+5;
                         }
-                        
                     }
+
                     if (p==false){  
                         ponto1.x=x;
                         ponto1.y=y;
