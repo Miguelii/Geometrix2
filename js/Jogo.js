@@ -46,7 +46,7 @@ class Jogo extends Phaser.Scene {
         var color =  0xffffff;
         var contador = 0;
         var certas = 0; 
-        var level = 1; 
+        var level = 7; 
         var armazenado = 0;
         var texto = this.add.text(850, 150, '', { fontFamily: 'font1',align: 'right'});
         
@@ -546,7 +546,6 @@ class Jogo extends Phaser.Scene {
                     case 7: 
                         if (segmentoReta(point2,point3,line)){
                             sgm = true;
-                            aux = true;
                             lines.push(line);
                             graphics.strokeLineShape(lines[0]);
                         }
@@ -643,7 +642,6 @@ class Jogo extends Phaser.Scene {
                     }
                     if(sgm){
                         graphics.strokeLineShape(lines[0]);
-                        wait = true;
                         texto.setText([
                             'Level: ' + level,
                             'Ponto Medio'
@@ -1358,21 +1356,6 @@ function pontosParalelo(x,y,x1,y1){
     var points = paralela.getPoints(); 
     var pontoA = paralela.getPointA();
     var pontoB = paralela.getPointB(); 
-
-    while(pontoA.x> 450){
-        for(var i=0; i<points.length;i++){
-            if(points[i].x<450 && dist(points[i].x,points[i].y,pontoB.x,pontoB.y)>50){
-                pontoA = points[i];
-            }
-        }
-    }
-    while(pontoB.x> 450){
-        for(var i=0; i<points.length;i++){
-            if(points[i].x<450 && dist(points[i].x,points[i].y,pontoA.x,pontoA.y)>50){
-                pontoB = points[i];
-            }
-        }
-    }
 
     return [pontoA,pontoB];
 }
