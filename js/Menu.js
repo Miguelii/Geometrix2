@@ -101,7 +101,6 @@ class Menu extends Phaser.Scene {
 
         this.input.on('gameobjectdown', function(pointer, gameObject) {
             switch (gameObject.name) {
-
                 case 'btplay':
                     this.scene.transition({ target: 'Jogo', duration: 100 });
                     this.btcreditos.disableInteractive();
