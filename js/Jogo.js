@@ -11,6 +11,14 @@ var timer;
 var score = 0; 
 var textScore;
 var pause = false; 
+var level = 1; 
+var sim;
+var nao;
+var info;
+var f1 = false; 
+var f2 = false; 
+var muda = false; 
+var armazenado = 0;
 
 class Jogo extends Phaser.Scene {
 
@@ -41,13 +49,11 @@ class Jogo extends Phaser.Scene {
         this.background.setScale(0.79);
         this.titulo1 = this.add.sprite(0.5 * game.config.width, 0.15 *game.config.height, 'titulo1');
         this.titulo1.setScale(0.6);
-        var info = this.add.sprite(-10000,-100000, 'info');
+        info = this.add.sprite(-10000,-100000, 'info');
 
         var color =  0xffffff;
         var contador = 0;
         var certas = 0; 
-        var level = 9; 
-        var armazenado = 0;
         var texto = this.add.text(850, 150, '', { fontFamily: 'font1',align: 'right'});
         
         texto.setFontSize(15);
@@ -102,15 +108,25 @@ class Jogo extends Phaser.Scene {
             fontFamily: 'font1',
         });
 
-        var sim = this.add.sprite(-10000,-100000, 'btsim');
-        var nao = this.add.sprite(-10000,-100000, 'btnao');
+        sim = this.add.sprite(-10000,-100000, 'btsim');
+        nao = this.add.sprite(-10000,-100000, 'btnao');
         sim.name = 'sim';
         nao.name = 'nao';
         nao.setScale(0.35);
         sim.setScale(0.35);
-
-
-
+        sim.setInteractive({ useHandCursor: true});
+        nao.setInteractive({ useHandCursor: true });
+        sim.on('pointerdown', () => {
+            level += 1;
+            armazenado = 0;
+        });
+        nao.on('pointerdown', () => {
+            score -= armazenado;
+        });
+        nao.on('pointerup', () => {
+            armazenado = 0;
+        });
+        
         let x = Math.random()*(800 - 300) + 300;
         let y = Math.random()*(600 - 300) + 300;
         let x1 =Math.random()*(800 - 300) + 300;
@@ -758,7 +774,11 @@ class Jogo extends Phaser.Scene {
                     dois = false; 
                     lines = [];
                     j = 0;
+                    console.log(certas);
+
                     certas += 1;
+                    console.log(certas);
+
                     midlePoint = null; 
                     x = Math.random()*(800 - 300) + 300;
                     y = Math.random()*(600 - 300) + 300;
@@ -770,25 +790,25 @@ class Jogo extends Phaser.Scene {
                         x1 = Math.random()*(800 - 300) + 300;
                         y1 = Math.random()*(600 - 300) + 300;
                     }
-
+                    f1 = false; 
+                    f2 = false; 
                     letraa.x = x+5; 
                     letraa.y = y+5;
                     letrab.x = x1+5;
                     letrab.y = y1+5;
-                    
-                    if (segundos >= 100){
-                        score += 5;
-                        armazenado += 5;
+                    if(!muda){
+                        if (segundos >= 100){
+                            score += 5;
+                            armazenado += 5;
 
-                    }
-                    else{
-                        score += (100-segundos) * level;
-                        armazenado += (100-segundos) * level;
+                        }
+                        else{
+                            score += (100-segundos) * level;
+                            armazenado += (100-segundos) * level;
 
+                        }
                     }
                     segundos = 0; 
-                    var f1 = false; 
-                    var f2 = false; 
 
                     if (certas == 3){
                         graphics.clear();
@@ -801,41 +821,18 @@ class Jogo extends Phaser.Scene {
                         if(level==8){
                             escondePontos([ponto3,ponto4,letrac,letrad]);
                         }
-                        certas = 0;
-                        /*info.x = 0.5 * game.config.width;
-                        info.y = 0.5 *game.config.height;
-                        sim.x = 0.6 * game.config.width;
-                        sim.y = 0.7 * game.config.height;
-                        nao.x = 0.4 * game.config.width;
-                        nao.y = 0.7 * game.config.height;
-                        sim.setInteractive({ useHandCursor: true });
-                        nao.setInteractive({ useHandCursor: true });
-                        console.log(inp);
+                        certas = -1;
+                        muda = true; 
+                        
 
-                        inp.on('gameobjectdown', function(pointer, gameObject) {
-                            graphics.clear();
-                            switch (gameObject.name) {
-                                case 'sim':
-                                    escondePontos([info,sim,nao]);
-                                    armazenado = 0;
-                                    level += 1;
-                                    f2 = true; 
-                                    break;
-                                case 'nao':
-                                    escondePontos([info,sim,nao]);
-                                    score -= armazenado;
-                                    break;
-                            }
-                        }, this);
-                        console.log(inp);*/
-                        level += 1;
-                        f2 = true;
                     }
                     else{
                         f1 = true;
                     }
 
                     if(f1 || f2){  
+                        escondePontos([info,sim,nao]);
+
                         if (level==1){
                             texto.setText([
                                 'Level: ' + level,
@@ -1025,47 +1022,48 @@ class Jogo extends Phaser.Scene {
                                 segundos = 0;
                             }
 
-                            if(level==9){
-                                texto.setText([
-                                    'Level: ' + level,
-                                    'Reta: AB'
-                                ]);
-                                graphics.clear();
-                                lines[j] = new Phaser.Geom.Line();
-                                line = lines[j];
-                                [point,point4] = perpendicular(point2,point3);                    
-                                var pointsLine2 = getPointsOnLine(point,point4);
-                                for(var i=0;i<pointsLine2.length;i++){
-                                    pointsLine.push(pointsLine2[i]);
-                                }
-                                    clearInterval(contaTempo);
-                                    p = true;
-                                    ponto1.x=x;
-                                    ponto1.y=y;
-                                    ponto2.x=x1;
-                                    ponto2.y=y1;
-                                    ponto4.x = point4.x;
-                                    ponto4.y = point4.y;
-                                    letraa.x = x+5;
-                                    letraa.y = y+5;
-                                    letrad.x = point4.x+5;
-                                    letrad.y = point4.y+5;
-                                    letrab.x = x1+5;
-                                    letrab.y = y1+5;
-                                    letrac.x = point.x+5; 
-                                    letrac.y = point.y+5;
-                                    ponto3.x = point.x;
-                                    ponto3.y = point.y;
-                                    contaTempo = setInterval(function(){ segundo() },1000);
-                                    segundos = 0;
-                                }
-
+                        if(level==9){
+                            texto.setText([
+                                'Level: ' + level,
+                                'Reta: AB'
+                            ]);
+                            graphics.clear();
+                            lines[j] = new Phaser.Geom.Line();
+                            line = lines[j];
+                            [point,point4] = perpendicular(point2,point3);                    
+                            var pointsLine2 = getPointsOnLine(point,point4);
+                            for(var i=0;i<pointsLine2.length;i++){
+                                pointsLine.push(pointsLine2[i]);
+                            }
+                                clearInterval(contaTempo);
+                                p = true;
+                                ponto1.x=x;
+                                ponto1.y=y;
+                                ponto2.x=x1;
+                                ponto2.y=y1;
+                                ponto4.x = point4.x;
+                                ponto4.y = point4.y;
+                                letraa.x = x+5;
+                                letraa.y = y+5;
+                                letrad.x = point4.x+5;
+                                letrad.y = point4.y+5;
+                                letrab.x = x1+5;
+                                letrab.y = y1+5;
+                                letrac.x = point.x+5; 
+                                letrac.y = point.y+5;
+                                ponto3.x = point.x;
+                                ponto3.y = point.y;
+                                contaTempo = setInterval(function(){ segundo() },1000);
+                                segundos = 0;
+                            }
+                        
                         if (p==false){  
                             ponto1.x=x;
                             ponto1.y=y;
                             ponto2.x=x1;
                             ponto2.y=y1;
                         }
+                        muda = false;
 
                         aceita = false;
                     }
@@ -1207,6 +1205,17 @@ class Jogo extends Phaser.Scene {
     update(){
         timer.setText([segundos + ' s' ]);
         textScore.setText(['Score: ' + score ]);
+        if(level>9){
+            this.scene.transition({ target: 'Menu', duration: 100 });
+        }
+        if (muda){
+            info.x = 0.5 * game.config.width;
+            info.y = 0.5 *game.config.height;
+            sim.x = 0.6 * game.config.width;
+            sim.y = 0.7 * game.config.height;
+            nao.x = 0.4 * game.config.width;
+            nao.y = 0.7 * game.config.height;
+        }
     }
 }
 
