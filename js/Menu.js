@@ -97,8 +97,6 @@ class Menu extends Phaser.Scene {
         this.nave = this.add.sprite(0.5 * game.config.width + 390, 480, "nave");
         this.nave.setScale(0.5);
 
-        
-
         this.input.on('gameobjectdown', function(pointer, gameObject) {
             switch (gameObject.name) {
                 case 'btplay':
@@ -143,8 +141,6 @@ class Menu extends Phaser.Scene {
                     break;
             }
         }, this);
-
-
     }
         
 
