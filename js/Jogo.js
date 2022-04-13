@@ -524,10 +524,20 @@ class Jogo extends Phaser.Scene {
                         if (level == 6 && pointer.x <= point.x+50 && pointer.x >= point.x-50 && pointer.y <= point.y+50 && pointer.y >= point.y-50){
                             line.setTo(point.x, point.y, point.x, point.y);
                         }
-                        else{   
-                            if(pointer.x<=pointsLine[i].x+50 &&pointer.x >= pointsLine[i].x-50 && pointer.y <= pointsLine[i].y+50 && pointer.y >= pointsLine[i].y-50 ){
-                                line.setTo(pointsLine[i].x, pointsLine[i].y, pointsLine[i].x, pointsLine[i].y);
-                                ultimo = true;
+                        else{ 
+                            if(level>= 8 && pointer.x <= point.x+50 && pointer.x >= point.x-50 && pointer.y <= point.y+50 && pointer.y >= point.y-50){
+                                line.setTo(point.x, point.y, point.x, point.y);
+                            }
+                            else{
+                                if(level>= 8 && pointer.x <= point4.x+50 && pointer.x >= point4.x-50 && pointer.y <= point4.y+50 && pointer.y >= point4.y-50){
+                                    line.setTo(point4.x, point4.y, point4.x, point4.y);
+                                }
+                                else{
+                                    if(pointer.x<=pointsLine[i].x+50 &&pointer.x >= pointsLine[i].x-50 && pointer.y <= pointsLine[i].y+50 && pointer.y >= pointsLine[i].y-50 ){
+                                        line.setTo(pointsLine[i].x, pointsLine[i].y, pointsLine[i].x, pointsLine[i].y);
+                                        ultimo = true;
+                                    }
+                                }
                             }
                         }
                     }
@@ -673,10 +683,22 @@ class Jogo extends Phaser.Scene {
                                 line.y2 = point.y; 
                             }
                             else{
-                                if(pointer.x<=pointsLine[i].x+50 &&pointer.x >= pointsLine[i].x-50 && pointer.y <= pointsLine[i].y+50 && pointer.y >= pointsLine[i].y-50){
-                                    line.x2 = pointsLine[i].x;
-                                    line.y2 = pointsLine[i].y;
-                                    p = true;
+                                if(level >= 8 && pointer.x <= point.x+50 && pointer.x >= point.x-50 && pointer.y <= point.y+50 && pointer.y >= point.y-50){
+                                    line.x2 = point.x; 
+                                    line.y2 = point.y; 
+                                }
+                                else{
+                                    if(level >= 8 && pointer.x <= point4.x+50 && pointer.x >= point4.x-50 && pointer.y <= point4.y+50 && pointer.y >= point4.y-50){
+                                        line.x2 = point4.x; 
+                                        line.y2 = point4.y; 
+                                    }
+                                    else{
+                                        if(pointer.x<=pointsLine[i].x+50 &&pointer.x >= pointsLine[i].x-50 && pointer.y <= pointsLine[i].y+50 && pointer.y >= pointsLine[i].y-50){
+                                            line.x2 = pointsLine[i].x;
+                                            line.y2 = pointsLine[i].y;
+                                            p = true;
+                                        }
+                                    }
                                 }
                             }   
                         }
@@ -2093,7 +2115,7 @@ function pontosAleatorios(){
 
     for(i=9,alphabet="";++i<36;)
         alphabet += i.toString(36).toUpperCase();
-    
+    console.log(alphabet);
     var rand = Math.random()* 31; 
     while(alphabet[Math.floor(rand)]=='z'||alphabet[Math.floor(rand)]=='x'|| alphabet[Math.floor(rand)]=='y'
     || alphabet[Math.floor(rand)]=='w'){
