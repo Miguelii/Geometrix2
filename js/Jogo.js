@@ -7,6 +7,7 @@ var lines = [];
 var j = 0; 
 var um = false;
 var dois = false; 
+var tres = false; 
 var timer;
 var score = 0; 
 var textScore;
@@ -283,11 +284,37 @@ class Jogo extends Phaser.Scene {
                 letrad.x = point4.x+5;
                 letrad.y = point4.y+5;
                 break;
+            case 10: 
+                texto.setText([
+                'Level: ' + level,
+                'Segmento de Reta: [AB['
+                ]);
+
+                lines[j] = new Phaser.Geom.Line();
+                line = lines[j];
+                [point,point4] = pontosParalelo(point2.x,point2.y,point3.x,point3.y);
+                var pointsLine2 = getPointsOnLine(point,point4);
+                var pointsLine3 = getPointsOnLine(point2,point); //perpendicular a,c
+            
+                for(var i=0;i<pointsLine2.length;i++){
+                    pointsLine.push(pointsLine2[i]);
+                }
+                for(var i=0;i<pointsLine3.length;i++){
+                    pointsLine.push(pointsLine3[i]);
+                }
+
+                ponto3.x = point.x;
+                ponto3.y = point.y;
+                ponto4.x = point4.x;
+                ponto4.y = point4.y; 
+                letrac.x = point.x+5;
+                letrac.y = point.y+5;
+                letrad.x = point4.x+5;
+                letrad.y = point4.y+5;
+                break;
         }
-        //var inp = this.input;
         
         this.input.on('gameobjectdown', function(pointer, gameObject) {
-            graphics.clear();
 
             switch (gameObject.name) {
 
@@ -300,8 +327,8 @@ class Jogo extends Phaser.Scene {
                     this.btsim.visible = true;
                     this.btsim.setInteractive({ useHandCursor: true });
                     escondePontos([letraa,letrab,letrac,letrad,ponto1,ponto2,ponto3,ponto4]);
+                    clearInterval(contaTempo);
                     break;
-                
                 case 'btsim':
                     lines = [];
                     pointsLine = [];
@@ -311,8 +338,8 @@ class Jogo extends Phaser.Scene {
                     this.scene.transition({ target: 'Menu', duration: 100 });
                     pause = false; 
                     break;
-                
                 case 'btnao':
+                    contaTempo = setInterval(function(){ segundo() },1000);
                     pause = false; 
                     this.btHome.setInteractive({ useHandCursor: true });
                     this.infoexit.visible = false;
@@ -349,7 +376,7 @@ class Jogo extends Phaser.Scene {
                         ponto3.x=point.x;
                         ponto3.y=point.y;  
                     }
-                    if(level==8){
+                    if(level==8 || level==9 || level==10){
                         letrac.x = point.x+5;
                         letrac.y = point.y+5;
                         ponto3.x=point.x;
@@ -363,6 +390,7 @@ class Jogo extends Phaser.Scene {
                             graphics.strokeLineShape(lines[i]);
                         }
                     }
+                    break;
             }
         }, this);
 
@@ -488,7 +516,14 @@ class Jogo extends Phaser.Scene {
                     }             
                     graphics.strokeLineShape(line);
                     break; 
-
+                case 10: 
+                    graphics.clear();
+                    for(var i= 0;i<lines.length;i++){
+                        graphics.lineStyle(4, color);
+                        graphics.strokeLineShape(lines[i]);
+                    }             
+                    graphics.strokeLineShape(line);
+                    break; 
             }
         });
 
@@ -608,6 +643,16 @@ class Jogo extends Phaser.Scene {
                         graphics.lineStyle(4, color);
                         graphics.strokeLineShape(line);
                         break;  
+                    case 10: 
+                        graphics.clear();
+                        for(var i= 0;i<lines.length;i++){
+                            graphics.lineStyle(4, color);
+                            graphics.strokeLineShape(lines[i]);
+                        }
+                        graphics.lineStyle(4, color);
+                        graphics.strokeLineShape(line);
+                        break; 
+
                 }
             }
         });
@@ -759,6 +804,47 @@ class Jogo extends Phaser.Scene {
                         aceita=true;
                     }
                     break; 
+                case 10: 
+                    console.log(semiReta(point2,point,line));
+                    if (contador==1){
+                        lines.push(line);
+                    }
+                    contador = 1;
+                    if(semiReta(point2,point3,line)){
+                        um = true; 
+                        texto.setText([
+                            'Level: ' + level,
+                            'Reta paralela'
+                        ]);
+                    }
+                    else{
+                        if(reta(point,point4,line) && um == true){
+                            dois = true; 
+                            texto.setText([
+                                'Level: ' + level,
+                                'Segmento de reta [AC['
+                            ]);
+                        }
+                        else{
+                            if(semiReta(point2,point,line) && dois == true){
+                                tres = true;
+                            }
+                            else{
+                                score-=5;
+                                lines.pop();
+                                graphics.clear();
+                            }
+                        }
+                    }                
+                    for(var i= 0;i<lines.length;i++){
+                        graphics.strokeLineShape(lines[i]);
+                    }
+                    line = new Phaser.Geom.Line(); 
+
+                    if(um && dois && tres){
+                        aceita=true;
+                    }
+                    break; 
             }
 
             line = new Phaser.Geom.Line(); 
@@ -772,6 +858,7 @@ class Jogo extends Phaser.Scene {
                     posto = false;
                     um = false;
                     dois = false; 
+                    tres = false;
                     lines = [];
                     j = 0;
                     console.log(certas);
@@ -1035,6 +1122,44 @@ class Jogo extends Phaser.Scene {
                             for(var i=0;i<pointsLine2.length;i++){
                                 pointsLine.push(pointsLine2[i]);
                             }
+                            clearInterval(contaTempo);
+                            p = true;
+                            ponto1.x=x;
+                            ponto1.y=y;
+                            ponto2.x=x1;
+                            ponto2.y=y1;
+                            ponto4.x = point4.x;
+                            ponto4.y = point4.y;
+                            letraa.x = x+5;
+                            letraa.y = y+5;
+                            letrad.x = point4.x+5;
+                            letrad.y = point4.y+5;
+                            letrab.x = x1+5;
+                            letrab.y = y1+5;
+                            letrac.x = point.x+5; 
+                            letrac.y = point.y+5;
+                            ponto3.x = point.x;
+                            ponto3.y = point.y;
+                            contaTempo = setInterval(function(){ segundo() },1000);
+                            segundos = 0;
+                            }
+                            if(level==10){
+                                texto.setText([
+                                    'Level: ' + level,
+                                    'Segmento de Reta: [AB['
+                                ]);
+                                graphics.clear();
+                                lines[j] = new Phaser.Geom.Line();
+                                line = lines[j];
+                                [point,point4] = pontosParalelo(point2.x,point2.y,point3.x,point3.y);                    
+                                var pointsLine2 = getPointsOnLine(point,point4);
+                                var pointsLine3 = getPointsOnLine(point2,point);
+                                for(var i=0;i<pointsLine2.length;i++){
+                                    pointsLine.push(pointsLine2[i]);
+                                }
+                                for(var i=0;i<pointsLine3.length;i++){
+                                    pointsLine.push(pointsLine3[i]);
+                                }
                                 clearInterval(contaTempo);
                                 p = true;
                                 ponto1.x=x;
@@ -1056,7 +1181,7 @@ class Jogo extends Phaser.Scene {
                                 contaTempo = setInterval(function(){ segundo() },1000);
                                 segundos = 0;
                             }
-                        
+
                         if (p==false){  
                             ponto1.x=x;
                             ponto1.y=y;
@@ -1073,7 +1198,7 @@ class Jogo extends Phaser.Scene {
             else{
                 graphics.clear();
                 switch (level){
-                    case 1||2||3||4||5:  
+                    case 1:  
                         graphics.clear();
                         graphics.lineStyle(4, color);
                         graphics.strokeLineShape(line);
@@ -1195,6 +1320,20 @@ class Jogo extends Phaser.Scene {
                             }
                         }
                         break;
+                    case 10: 
+                        for(var i= 0;i<lines.length;i++){
+                            graphics.lineStyle(4, color);
+                            graphics.strokeLineShape(lines[i]);
+                        }
+                        if(!um){
+                            if(score>=5){
+                                score -= 5;
+                            }
+                            else{
+                                score = 0;
+                            }
+                        }
+                        break;
                 }
                  
                 line = new Phaser.Geom.Line(); 
@@ -1205,7 +1344,7 @@ class Jogo extends Phaser.Scene {
     update(){
         timer.setText([segundos + ' s' ]);
         textScore.setText(['Score: ' + score ]);
-        if(level>9){
+        if(level>10){
             this.scene.transition({ target: 'Menu', duration: 100 });
         }
         if (muda){
