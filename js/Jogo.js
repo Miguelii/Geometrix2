@@ -148,7 +148,7 @@ class Jogo extends Phaser.Scene {
         
         var point2 = new Phaser.Geom.Point(x, y);
         var point3 = new Phaser.Geom.Point(x1, y1);// point at 400/300
-        console.log(pontosAleatorios());
+        console.log(letras);
 
         var letraa = this.add.text(x+5,y+5,letra1,{
             fontFamily: 'font1',
@@ -2117,8 +2117,8 @@ function pontosAleatorios(){
         alphabet += i.toString(36).toUpperCase();
     console.log(alphabet);
     var rand = Math.random()* 31; 
-    while(alphabet[Math.floor(rand)]=='z'||alphabet[Math.floor(rand)]=='x'|| alphabet[Math.floor(rand)]=='y'
-    || alphabet[Math.floor(rand)]=='w'){
+    while(alphabet[Math.floor(rand)]=='Z'||alphabet[Math.floor(rand)]=='X'|| alphabet[Math.floor(rand)]=='Y'
+    || alphabet[Math.floor(rand)]=='W'){
         rand = Math.random()* 31; 
 
     }
