@@ -2115,13 +2115,13 @@ function pontosAleatorios(){
 
     for(i=9,alphabet="";++i<36;)
         alphabet += i.toString(36).toUpperCase();
-    console.log(alphabet);
-    var rand = Math.random()* 31; 
+    var rand = Math.random()* 23; 
+
     while(alphabet[Math.floor(rand)]=='Z'||alphabet[Math.floor(rand)]=='X'|| alphabet[Math.floor(rand)]=='Y'
     || alphabet[Math.floor(rand)]=='W'){
-        rand = Math.random()* 31; 
-
+        rand = 0; 
     }
+    console.log(alphabet[Math.floor(rand)],Math.floor(rand));
     return [alphabet[Math.floor(rand)],alphabet[Math.floor(rand)+1],
     alphabet[Math.floor(rand)+2]
     ,alphabet[Math.floor(rand)+3]];
