@@ -38,7 +38,8 @@ class Jogo extends Phaser.Scene {
         this.load.image('ponto', 'assets/ponto.png');
         this.load.image('titulo1', 'assets/titulo1.png');        
         this.load.image('ponto', 'assets/ponto.png');
-        this.load.image('info', 'assets/quadroinfo.png');
+        this.load.image('info', 'assets/quadropassar.png');
+        this.load.image('infoexit', 'assets/quadroinfo.png');
         this.load.image('btsim', 'assets/btsim.png');
         this.load.image('btnao', 'assets/btnao.png');
     }
@@ -52,6 +53,7 @@ class Jogo extends Phaser.Scene {
         this.titulo1 = this.add.sprite(0.5 * game.config.width, 0.15 *game.config.height, 'titulo1');
         this.titulo1.setScale(0.6);
         info = this.add.sprite(-10000,-100000, 'info');
+        info.setScale(0.75);
 
         var color =  0xffffff;
         var contador = 0;
@@ -87,7 +89,7 @@ class Jogo extends Phaser.Scene {
         });
 
         //Exit
-        this.infoexit = this.add.sprite(0.5 * game.config.width, 0.55 *game.config.height, "info");
+        this.infoexit = this.add.sprite(0.5 * game.config.width, 0.55 *game.config.height, "infoexit");
         this.infoexit.setScale(0.75);
         this.infoexit.visible = false;
         this.infoexit.name = 'infoexit';
