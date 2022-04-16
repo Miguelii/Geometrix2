@@ -2131,6 +2131,11 @@ class Jogo extends Phaser.Scene {
         if(level>15){
             this.scene.transition({ target: 'Menu', duration: 100 });
         }
+        if(aceita){
+            this.btHome.disableInteractive();
+            aux = true; 
+        }
+
         if(muda){
             this.btHome.disableInteractive();
             aux = true; 
@@ -2146,12 +2151,12 @@ class Jogo extends Phaser.Scene {
                 nao.y = 0.7 * game.config.height;
             }
         }
-        else{
-            if(aux){
-                this.btHome.setInteractive({ useHandCursor: true });
-                aux = false; 
-            }
+
+        if(aux){
+            this.btHome.setInteractive({ useHandCursor: true });
+            aux = false; 
         }
+        
         if(score<=5){
             score = 0;
         }
