@@ -132,6 +132,8 @@ class Jogo extends Phaser.Scene {
         nao.on('pointerdown', () => {
             score -= armazenado;
             aceita = true; 
+            segundos = 100;
+            certas = 0;
         });
         nao.on('pointerup', () => {
             armazenado = 0;
