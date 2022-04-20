@@ -139,25 +139,20 @@ class Jogo extends Phaser.Scene {
             armazenado = 0;
         });
         
-        let x = Math.random()*(800 - 300) + 300;
-        let y = Math.random()*(600 - 300) + 300;
-        let x1 =Math.random()*(800 - 300) + 300;
-        let y1 = Math.random()*(600 - 300) + 300;
-
-        while (y > 450 || y1>450 || x==x1 || x==y || x==y1 || x1==y1 || y==x1 || y==y1 || dist(x,y,x1,y1)<=150){
-            x = Math.random()*(800 - 300) + 300;
-            y = Math.random()*(600 - 300) + 300;
-            x1 = Math.random()*(800 - 300) + 300;
-            y1 = Math.random()*(600 - 300) + 300;
-        }
         var letras = pontosAleatorios(); 
         var letra1 = letras[0];
         var letra2 = letras[1];
         var letra3 = letras[2];
         var letra4 = letras[3];
         
-        var point2 = new Phaser.Geom.Point(x, y);
-        var point3 = new Phaser.Geom.Point(x1, y1);// point at 400/300
+        var pon = generate2points(); 
+        var point2 = pon[0];
+        var point3 = pon[1];
+
+        var x = point2.x;
+        var y = point2.y; 
+        var x1 = point3.x; 
+        var y1 = point3.y; 
 
         var letraa = this.add.text(x+5,y+5,letra1,{
             fontFamily: 'font1',
@@ -203,23 +198,10 @@ class Jogo extends Phaser.Scene {
                 graphics.clear();
                 lines[j] = new Phaser.Geom.Line();
                 line = lines[j];
-                var a = Math.random()*(800 - 300) + 300;
-                var b = Math.random()*(600 - 300) + 300;
-
-                for(var i =0;i<pointsLine.length;i++){
-                    while((a<=pointsLine[i].x+50 && a>=pointsLine[i].x-50 && b<=pointsLine[i].y+50 && b>=pointsLine[i].y-50)||(b>450 ||a==x || a==x1 || b==y || b==y1 || dist(a,b,x,y)<=150 || dist(x,y,x1,y1)<=150) ){
-                        a = Math.random()*(800 - 300) + 300;
-                        b = Math.random()*(600 - 300) + 300;
-                    }
-                }
+                point = generateExtraPoint([point2,point3],1);                    
+                var a = point.x;
+                var b = point.y
                 
-                point = new Phaser.Geom.Point(a,b);                    
-                var pointsLine2 = getPointsOnLine(point3,point);
-                var pointsLine3 = getPointsOnLine(point2,point);
-
-                for(var i=0;i<pointsLine2.length;i++){
-                    pointsLine.push(pointsLine2[i]);
-                }
                 ponto1.x=x;
                 ponto1.y=y;
                 ponto2.x=x1;
@@ -1078,6 +1060,11 @@ class Jogo extends Phaser.Scene {
                                 'Level: ' + level,
                                 'Segmento de Reta: [' + letra1 + letra3 + ']'
                             ]);
+                            pointsLine = [];
+                            var pointsLine2 = getPointsOnLine(point2,point);
+                            for(var i=0;i<pointsLine2.length;i++){
+                                pointsLine.push(pointsLine2[i]);
+                            }
                         }
                         else{
                             if(segmentoReta(point2,point,line) && um == true){
@@ -1086,6 +1073,12 @@ class Jogo extends Phaser.Scene {
                                     'Level: ' + level,
                                     'Segmento de Reta: [' + letra2 + letra3 + ']'
                                 ]);
+                                pointsLine = [];
+                                var pointsLine3 = getPointsOnLine(point3,point);
+
+                                for(var i=0;i<pointsLine3.length;i++){
+                                    pointsLine.push(pointsLine3[i]);
+                                }
                             }
                             else{
                                 if(segmentoReta(point3,point,line) && dois==true){
@@ -1598,17 +1591,7 @@ class Jogo extends Phaser.Scene {
                     lines = [];
                     j = 0;
                     certas += 1;
-                    midlePoint = null; 
-                    x = Math.random()*(800 - 300) + 300;
-                    y = Math.random()*(600 - 300) + 300;
-                    x1 = Math.random()*(800 - 300) + 300;
-                    y1 = Math.random()*(600 - 300) + 300;
-                    while (y > 450 || y1>450 || x==x1 || x==y || x==y1 || x1==y1 || y==x1 || y==y1 || dist(x,y,x1,y1)<=150 ){
-                        x = Math.random()*(800 - 300) + 300;
-                        y = Math.random()*(600 - 300) + 300;
-                        x1 = Math.random()*(800 - 300) + 300;
-                        y1 = Math.random()*(600 - 300) + 300;
-                    }
+                    midlePoint = null;
                     f1 = false; 
                     f2 = false; 
                     letraa.x = x+5; 
@@ -1650,8 +1633,13 @@ class Jogo extends Phaser.Scene {
                         console.log(level);
                         escondePontos([info,sim,nao]);
                         graphics.clear();
-                        point2 = new Phaser.Geom.Point(x, y);
-                        point3 = new Phaser.Geom.Point(x1, y1);
+                        pon = generate2points(); 
+                        point2 = pon[0];
+                        point3 = pon[1];
+                        x = point2.x; 
+                        y = point2.y; 
+                        x1 = point3.x; 
+                        y1 = point3.y;
                         pointsLine = getPointsOnLine(point2,point3);
                         var p = false;  
                         switch (level){
@@ -1688,27 +1676,11 @@ class Jogo extends Phaser.Scene {
                                 graphics.clear();
                                 lines[j] = new Phaser.Geom.Line();
                                 line = lines[j];
-                                var a = Math.random()*(800 - 300) + 300;
-                                var b = Math.random()*(600 - 300) + 300;
-                
-                                for(var i =0;i<pointsLine.length;i++){
-                                    while((a<=pointsLine[i].x+50 && a>=pointsLine[i].x-50 && b<=pointsLine[i].y+50 && b>=pointsLine[i].y-50)||(b>450 ||a==x || a==x1 || b==y || b==y1 || dist(a,b,x,y)<=150 || dist(x,y,x1,y1)<=150) ){
-                                        a = Math.random()*(800 - 300) + 300;
-                                        b = Math.random()*(600 - 300) + 300;
-                                    }
-                                }
-                                
-                                point = new Phaser.Geom.Point(a,b);                    
-                                var pointsLine2 = getPointsOnLine(point3,point);
-                                var pointsLine3 = getPointsOnLine(point2,point);
-
-                                for(var i=0;i<pointsLine2.length;i++){
-                                    pointsLine.push(pointsLine2[i]);
-                                }
+                                point = generateExtraPoint([point2,point3],1);                    
+                                var a = point.x;
+                                var b = point.y;
                                 clearInterval(contaTempo);
-                                
                                 p = true;
-
                                 ponto1.x=x;
                                 ponto1.y=y;
                                 ponto2.x=x1;
@@ -2662,4 +2634,69 @@ function pontosAleatorios(){
     return [alphabet[Math.floor(rand)],alphabet[Math.floor(rand)+1],
     alphabet[Math.floor(rand)+2]
     ,alphabet[Math.floor(rand)+3]];
+}
+
+function generate2points(){
+    let x = Math.random()*(800 - 300) + 300;
+    let y = Math.random()*(600 - 300) + 300;
+    let x1 =Math.random()*(800 - 300) + 300;
+    let y1 = Math.random()*(600 - 300) + 300;
+
+    while (y > 450 || y1>450 || x==x1 || x==y || x==y1 || x1==y1 || y==x1 || y==y1 || dist(x,y,x1,y1)<=150){
+        x = Math.random()*(800 - 300) + 300;
+        y = Math.random()*(600 - 300) + 300;
+        x1 = Math.random()*(800 - 300) + 300;
+        y1 = Math.random()*(600 - 300) + 300;
+    }
+    var point2 = new Phaser.Geom.Point(x, y);
+    var point3 = new Phaser.Geom.Point(x1, y1);
+    return [point2,point3];
+}
+
+function generateExtraPoint(pontos,quantos){
+    var point2; var point3; 
+    point2 = pontos[0]; 
+    point3 = pontos[1];
+    
+    var pointsLine = getPointsOnLine(point2,point3);
+
+    var a = Math.random()*(800 - 300) + 300;
+    var b = Math.random()*(600 - 300) + 300;
+
+    for(var i =0;i<pointsLine.length;i++){
+        while((a<=pointsLine[i].x+10 && a>=pointsLine[i].x-10 && b<=pointsLine[i].y+10 && b>=pointsLine[i].y-10)||
+        (b>450 ||a==x || a==x1 || b==y || b==y1 || dist(a,b,x,y)<=150 || dist(x,y,x1,y1)<=150) ){
+            a = Math.random()*(800 - 300) + 300;
+            b = Math.random()*(600 - 300) + 300;
+        }
+    }
+    var ponto = new Phaser.Geom.Point(a, b);
+
+    if(quantos == 1){
+        return ponto; 
+    }
+    else{
+        var pointsLine2 = getPointsOnLine(point,point3);
+        var pointsLine3 = getPointsOnLine(point2,point);
+        for(var i =0;i<pointsLine2.length;i++){
+            pointsLine.append(pointsLine2[i]);
+        }
+        for(var i =0;i<pointsLine3.length;i++){
+            pointsLine.append(pointsLine3[i]);
+        }
+        var a1 = Math.random()*(800 - 300) + 300;
+        var b1 = Math.random()*(600 - 300) + 300;
+
+        for(var i =0;i<pointsLine.length;i++){
+            while((a<=pointsLine[i].x+10 && a>=pointsLine[i].x-10 && b<=pointsLine[i].y+10 && b>=pointsLine[i].y-10)||
+            (b1>450 ||a1==x || a1==x1 || b1==y || b1==y1 ||a1==a || a1==b
+                || dist(a1,b1,x,y)<=150 || dist(a1,b1,a,b)<=150)
+            || dist(a1,b1,x1,y1)<=150  ){
+                a1 = Math.random()*(800 - 300) + 300;
+                b1 = Math.random()*(600 - 300) + 300;
+            }
+        }
+        var pontodois = new Phaser.Geom.Point(a1, b1);
+        return [ponto,pontodois];
+    }
 }
