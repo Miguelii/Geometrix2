@@ -224,7 +224,7 @@ class Jogo extends Phaser.Scene {
                 graphics.clear(); 
                 lines[j] = new Phaser.Geom.Line();
                 line = lines[j];
-                var aux = generateExtraPoint([point2,point3],3); 
+                var aux = generateExtraPoint([point2,point3],2); 
                 point = aux[0]; 
                 point4 = aux[1];
                 var a = point.x;
@@ -253,9 +253,37 @@ class Jogo extends Phaser.Scene {
             case 4: 
                 texto.setText([
                 'Level: ' + level,
-                'Semi-reta: ]' + letra2 + letra1 + ']'
+                'Segmento de reta: ]' + letra1 + letra2 + '['
                 ]);
-                break;
+                graphics.clear(); 
+                lines[j] = new Phaser.Geom.Line();
+                line = lines[j];
+                var aux = generateExtraPoint([point2,point3],2); 
+                point = aux[0]; 
+                point4 = aux[1];
+                var a = point.x;
+                var b = point.y; 
+                var px = point4.x; 
+                var py = point4.y;
+
+                ponto1.x=x;
+                ponto1.y=y;
+                ponto2.x=x1;
+                ponto2.y=y1;
+                ponto3.x = a;
+                ponto3.y = b;
+                ponto4.x = px; 
+                ponto4.y = py; 
+                letraa.x = x+5;
+                letraa.y = y+5;
+                letrab.x = x1+5;
+                letrab.y = y1+5;
+                letrac.x = a+5; 
+                letrac.y = b+5;
+                letrad.x = px+5; 
+                letrad.y = py+5; 
+                segundos = 0;
+                break; 
             case 5: 
                 texto.setText([
                 'Level: ' + level,
@@ -634,11 +662,11 @@ class Jogo extends Phaser.Scene {
                         line.setTo(x1, y1, x1, y1);
                         }
                         else{
-                            if ((level == 2||level==3) && pointer.x <= point.x+50 && pointer.x >= point.x-50 && pointer.y <= point.y+50 && pointer.y >= point.y-50){
+                            if ((level == 2||level==3||level==4) && pointer.x <= point.x+50 && pointer.x >= point.x-50 && pointer.y <= point.y+50 && pointer.y >= point.y-50){
                                 line.setTo(point.x, point.y, point.x, point.y);
                             }
                             else{ 
-                                if((level==3 )&& pointer.x <= point4.x+50 && pointer.x >= point4.x-50 && pointer.y <= point4.y+50 && pointer.y >= point4.y-50){
+                                if((level==3 ||level==4)&& pointer.x <= point4.x+50 && pointer.x >= point4.x-50 && pointer.y <= point4.y+50 && pointer.y >= point4.y-50){
                                     line.setTo(point4.x, point4.y, point4.x, point4.y);
                                 }
                                 else{
@@ -691,7 +719,10 @@ class Jogo extends Phaser.Scene {
                         break;
                     case 4: 
                         graphics.clear();
-                        graphics.lineStyle(4, color);
+                        for(var i= 0;i<lines.length;i++){
+                            graphics.lineStyle(4, color);
+                            graphics.strokeLineShape(lines[i]);
+                        }             
                         graphics.strokeLineShape(line);
                         break;
                     case 5: 
@@ -831,12 +862,12 @@ class Jogo extends Phaser.Scene {
                                 line.y2 = y1; 
                             }
                             else{
-                                if((level == 2||level==15) && pointer.x <= point.x+50 && pointer.x >= point.x-50 && pointer.y <= point.y+50 && pointer.y >= point.y-50){
+                                if((level == 2|| level==3 || level==4) && pointer.x <= point.x+50 && pointer.x >= point.x-50 && pointer.y <= point.y+50 && pointer.y >= point.y-50){
                                     line.x2 = point.x; 
                                     line.y2 = point.y; 
                                 }
                                 else{
-                                        if((level==3) && pointer.x <= point4.x+50 && pointer.x >= point4.x-50 && pointer.y <= point4.y+50 && pointer.y >= point4.y-50){
+                                        if((level==3||level==4) && pointer.x <= point4.x+50 && pointer.x >= point4.x-50 && pointer.y <= point4.y+50 && pointer.y >= point4.y-50){
                                             line.x2 = point4.x; 
                                             line.y2 = point4.y; 
                                         }
@@ -901,9 +932,13 @@ class Jogo extends Phaser.Scene {
                             break;
                         case 4: 
                             graphics.clear();
-                            graphics.lineStyle(4, color);
+                            for(var i= 0;i<lines.length;i++){
+                                graphics.lineStyle(4, color);
+                                graphics.strokeLineShape(lines[i]);
+                            }  
+                            graphics.lineStyle(4, color);           
                             graphics.strokeLineShape(line);
-                            break; 
+                            break;
                         case 5: 
                             graphics.clear();
                             graphics.lineStyle(4, color);
@@ -1179,7 +1214,56 @@ class Jogo extends Phaser.Scene {
                         }
                         break;
                     case 4: 
-                        if(comecaAntesAcabaNoPonto(point3,point2,line)) aceita = true; 
+                        if (contador==1){
+                            lines.push(line);
+                        }
+                        contador = 1;
+                        if(reta(point2,point3,line)){
+                            pointsLine = [];
+                            var pointsLine2 = getPointsOnLine(point3,point4);
+                            for(var i=0;i<pointsLine2.length;i++){
+                                pointsLine.push(pointsLine2[i]);
+                            }
+                            um = true; 
+                            texto.setText([
+                                'Level: ' + level,
+                                'Segmento de Reta: [' + letra2 + letra3 + ']'
+                            ]);
+                        }
+                        else{
+                            if(segmentoReta(point3,point,line) && um == true){
+                                dois = true; 
+                                texto.setText([
+                                    'Level: ' + level,
+                                    'Segmento de Reta: [' + letra1 + letra4 + ']'
+                                ]);
+                                pointsLine = [];
+                                var pointsLine3 = getPointsOnLine(point2,point4);
+
+                                for(var i=0;i<pointsLine3.length;i++){
+                                    pointsLine.push(pointsLine3[i]);
+                                }
+                            }
+                            else{
+                                if(segmentoReta(point2,point4,line) && dois==true){
+                                    tres = true; 
+                                    certas = 2;
+                                }
+                                else{
+                                    score-=5;
+                                    lines.pop();
+                                    graphics.clear();
+                                }
+                            }
+                        }                
+                        for(var i= 0;i<lines.length;i++){
+                            graphics.strokeLineShape(lines[i]);
+                        }
+                        line = new Phaser.Geom.Line(); 
+
+                        if(um && dois && tres){
+                            aceita=true;
+                        }
                         break;
                     case 5: 
                         if (reta(point2,point3,line)) aceita = true; 
@@ -1692,7 +1776,7 @@ class Jogo extends Phaser.Scene {
                         if(level==2){
                             escondePontos([ponto3,letrac]);
                         }
-                        if(level==3){
+                        if(level==3 || level == 4){
                             escondePontos([ponto3,ponto4,letrac,letrad]);
                         }
                         certas = -1;
@@ -1812,23 +1896,46 @@ class Jogo extends Phaser.Scene {
                                 segundos = 0;
                                 break; 
                             case 4: 
+                                clearInterval(contaTempo);
+                                escondePontos([info]);
+
                                 texto.setText([
-                                    'Level: ' + level,
-                                    'Semi-reta: ]' + letra2 + letra1 + ']'
+                                'Level: ' + level,
+                                'Segmento de reta: ]' + letra1 + letra2 + '['
                                 ]);
-                                clearInterval(contaTempo);                                
-                                p = true;
+                                graphics.clear(); 
+                                lines[j] = new Phaser.Geom.Line();
+                                line = lines[j];
+                                var aux = generateExtraPoint([point2,point3],3); 
+                                point = aux[0]; 
+                                point4 = aux[1];
+                                var a = point.x;
+                                var b = point.y; 
+                                var px = point4.x; 
+                                var py = point4.y;
+                
                                 ponto1.x=x;
                                 ponto1.y=y;
                                 ponto2.x=x1;
                                 ponto2.y=y1;
+                                ponto3.x = a;
+                                ponto3.y = b;
+                                ponto4.x = px; 
+                                ponto4.y = py; 
                                 letraa.x = x+5;
                                 letraa.y = y+5;
                                 letrab.x = x1+5;
                                 letrab.y = y1+5;
+                                letrac.x = a+5; 
+                                letrac.y = b+5;
+                                letrad.x = px+5; 
+                                letrad.y = py+5; 
+                                segundos = 0;
+                                
+                                p = true;
                                 contaTempo = setInterval(function(){ segundo() },1000);
                                 segundos = 0;
-                                break;
+                                break; 
                             case 5: 
                                 texto.setText([
                                     'Level: ' + level,
@@ -2221,16 +2328,19 @@ class Jogo extends Phaser.Scene {
                         }
                         break;
                     case 4: 
-                        graphics.clear();
-                        graphics.lineStyle(4, color);
-                        graphics.strokeLineShape(line);
-                        if(score>=5){
-                            score -= 5;
+                        for(var i= 0;i<lines.length;i++){
+                            graphics.lineStyle(4, color);
+                            graphics.strokeLineShape(lines[i]);
                         }
-                        else{
-                            score = 0;
-                        } 
-                        break; 
+                        if(!um){
+                            if(score>=5){
+                                score -= 5;
+                            }
+                            else{
+                                score = 0;
+                            }
+                        }
+                    break;
                     case 5: 
                         graphics.clear();
                         graphics.lineStyle(4, color);
