@@ -1246,14 +1246,31 @@ class Jogo extends Phaser.Scene {
                             }
                             else{
                                 if(segmentoReta(point2,point4,line) && dois==true){
+                                    texto.setText([
+                                        'Level: ' + level,
+                                        'Segmento de Reta: [' + letra3 + letra4 + ']'
+                                    ]);
                                     tres = true; 
-                                    certas = 2;
+                                    pointsLine = [];
+                                    var pointsLine4 = getPointsOnLine(point,point4);
+
+                                    for(var i=0;i<pointsLine4.length;i++){
+                                        pointsLine.push(pointsLine4[i]);
+                                    }
                                 }
                                 else{
-                                    score-=5;
-                                    lines.pop();
-                                    graphics.clear();
+                                    if(segmentoReta(point,point4,line) && tres==true){
+                                        quatro = true; 
+                                        certas = 2; 
+                                        pointsLine = [];
+                                    }
+                                    else{
+                                        score-=5;
+                                        lines.pop();
+                                        graphics.clear();
+                                    }
                                 }
+                                
                             }
                         }                
                         for(var i= 0;i<lines.length;i++){
@@ -1261,7 +1278,7 @@ class Jogo extends Phaser.Scene {
                         }
                         line = new Phaser.Geom.Line(); 
 
-                        if(um && dois && tres){
+                        if(um && dois && tres && quatro){
                             aceita=true;
                         }
                         break;
