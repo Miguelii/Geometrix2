@@ -31,6 +31,7 @@ var sgm = false;
 var posto = false;
 var midlePoint = null;
 var contaTempo;
+var disable = false; 
 
 class Jogo extends Phaser.Scene {
 
@@ -137,7 +138,7 @@ class Jogo extends Phaser.Scene {
         nao.on('pointerdown', () => {
             score -= armazenado;
             aceita = true; 
-            segundos = 100;
+            segundos = 0;
             certas = -1;
         });
         nao.on('pointerup', () => {
@@ -552,6 +553,7 @@ class Jogo extends Phaser.Scene {
                     escondePontos([letraa,letrab,letrac,letrad,ponto1,ponto2,ponto3,ponto4]);
                     clearInterval(contaTempo);
                     vidas += 1; 
+                    score += 5;
                     break;
                 case 'btsim':
                     lines = [];
@@ -1888,6 +1890,7 @@ class Jogo extends Phaser.Scene {
                 line = new Phaser.Geom.Line(); 
             }
             if (aceita){
+                disable = true; 
                 letras = pontosAleatorios(); 
                 letra1 = letras[0];
                 letra2 = letras[1];
@@ -2428,6 +2431,7 @@ class Jogo extends Phaser.Scene {
                 f2 = false;
                 muda = false;
                 aceita = false;
+                disable = false; 
                  
             }
             else{
@@ -2626,7 +2630,6 @@ class Jogo extends Phaser.Scene {
     }
 
     update(){
-        console.log(vidas);
         timer.setText([segundos + ' s' ]);
         textScore.setText(['Score: ' + score ]);
         if(level>15){
@@ -2637,13 +2640,14 @@ class Jogo extends Phaser.Scene {
             this.btHome.disableInteractive();
             aux = true; 
         }
+
         if(vidas == 0){
             this.scene.transition({ target: 'Menu', duration: 100 });  
             clearInterval(contaTempo);
             vidas = 3;
             level = 1;
         }
-
+        
         if(muda){
             this.btHome.disableInteractive();
             aux = true; 
@@ -2660,7 +2664,7 @@ class Jogo extends Phaser.Scene {
             }
         }
 
-        if((aux&&!muda) || (aux&&!aceita)){
+        if((aux&&!muda)){
             this.btHome.setInteractive({ useHandCursor: true });
             aux = false; 
         }
