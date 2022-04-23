@@ -1375,56 +1375,58 @@ class Jogo extends Phaser.Scene {
                         break;
                     case 5: 
                         if (reta(point2,point3,line)&&certas == 0) aceita = true; 
-                        if (reta(point2,point3,line)&&certas == 1); 
-                        if (sgm){
-                            if(midlePoint!=null && sgm==true){
-                                graphics.fillPointShape(midlePoint, 10);
-                                posto = true;
-                                graphics.lineStyle(4, color);
-                                graphics.strokeLineShape(line);
-                            }
-                            else{
-                                graphics.clear();
-                                posto = false;
-                                graphics.lineStyle(4, color);
-                                graphics.strokeLineShape(line);
-                            }
-                            texto.setText([
-                                'Level: ' + level,
-                                'Marca Ponto no segmento de reta'
-                            ]);
-                            if(sgm){
-                                graphics.lineStyle(4, color);
-                                graphics.strokeLineShape(lines[0]);
-                                if(aceitaMidle){
-                                    certas+=1;
-                                    aceita = true;
-                                    if (segundos >= 100){
-                                        score += 5;
-                                        armazenado += 5;
-                                    }
-                                    else{
-                                        score += (100-segundos) * level;
-                                        armazenado += (100-segundos) * level;
-                                    }
-                                    clearInterval(contaTempo);
-                                    contaTempo = setInterval(function(){ segundo() },1000);
-                                    segundos = 0;
+                        else{
+                            if (reta(point2,point3,line)&&certas == 1); 
+                            if (sgm){
+                                if(midlePoint!=null && sgm==true){
+                                    graphics.fillPointShape(midlePoint, 10);
+                                    posto = true;
+                                    graphics.lineStyle(4, color);
+                                    graphics.strokeLineShape(line);
                                 }
                                 else{
-                                    midlePoint = null; 
-                                    score-=5; 
-                                    vidas -=1; 
-                                }
-                            }
-                            else{
-                                if(!aceitaMidle){
-                                    midlePoint = null;
+                                    graphics.clear();
                                     posto = false;
-                                    
+                                    graphics.lineStyle(4, color);
+                                    graphics.strokeLineShape(line);
                                 }
-                                if(!sgm){
-                                    line = new Phaser.Geom.Line();
+                                texto.setText([
+                                    'Level: ' + level,
+                                    'Marca Ponto no segmento de reta'
+                                ]);
+                                if(sgm){
+                                    graphics.lineStyle(4, color);
+                                    graphics.strokeLineShape(lines[0]);
+                                    if(aceitaMidle){
+                                        certas+=1;
+                                        aceita = true;
+                                        if (segundos >= 100){
+                                            score += 5;
+                                            armazenado += 5;
+                                        }
+                                        else{
+                                            score += (100-segundos) * level;
+                                            armazenado += (100-segundos) * level;
+                                        }
+                                        clearInterval(contaTempo);
+                                        contaTempo = setInterval(function(){ segundo() },1000);
+                                        segundos = 0;
+                                    }
+                                    else{
+                                        midlePoint = null; 
+                                        score-=5; 
+                                        vidas -=1; 
+                                    }
+                                }
+                                else{
+                                    if(!aceitaMidle){
+                                        midlePoint = null;
+                                        posto = false;
+                                        
+                                    }
+                                    if(!sgm){
+                                        line = new Phaser.Geom.Line();
+                                    }
                                 }
                             }
                         } 
@@ -3030,8 +3032,8 @@ function generateExtraPoint(pontos,quantos){
         var a1 = Math.random()*(800 - 300) + 300;
         var b1 = Math.random()*(600 - 300) + 300;
 
-        while((b1>450 ||a1==x || a1==x1 || b1==y || b1==y1 ||a1==a || a1==b
-            || dist(a1,b1,x,y)<=200 || dist(a1,b1,a,b)<=200)
+        while(b1>450 ||a1==x || a1==x1 || b1==y || b1==y1 ||a1==a || a1==b
+            || dist(a1,b1,x,y)<=200 || dist(a1,b1,a,b)<=200
         || dist(a1,b1,x1,y1)<=200){
             a1 = Math.random()*(800 - 300) + 300;
             b1 = Math.random()*(600 - 300) + 300;
