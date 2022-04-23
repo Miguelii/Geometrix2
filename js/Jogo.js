@@ -1279,6 +1279,10 @@ class Jogo extends Phaser.Scene {
                                     }
                                     else{
                                         midlePoint = null;
+                                        if(signal){
+                                            score -= 5;
+                                            vidas -= 1;
+                                        }
                                     }
                                 }
                                 else{
@@ -1292,10 +1296,8 @@ class Jogo extends Phaser.Scene {
                                 }
                             }
                             else{
-                                if(signal){
-                                    score -= 5;
-                                    vidas -= 1;
-                                }
+                                score -= 5;
+                                vidas -= 1;
                             }
                         }
                         break; 
@@ -1566,6 +1568,10 @@ class Jogo extends Phaser.Scene {
                                     }
                                 }
                             }
+                            else{
+                                vidas -= 1;
+                                score -= 5;
+                            }
                         } 
                         break;
                     case 6: 
@@ -1661,7 +1667,6 @@ class Jogo extends Phaser.Scene {
                             }
                             else{
                                 lines.pop();
-
                                 if (sgm){
                                     if(midlePoint!=null && sgm==true){
                                         graphics.fillPointShape(midlePoint, 10);
@@ -1695,8 +1700,11 @@ class Jogo extends Phaser.Scene {
                                             segundos = 0;
                                         }
                                     else{
-                                        
                                         midlePoint = null;
+                                        if(signal){
+                                            score -= 5; 
+                                            vidas -= 1;
+                                        }
                                     }
                                 }
                                 else{
@@ -1710,10 +1718,8 @@ class Jogo extends Phaser.Scene {
                                 }
                             }
                             else{
-                                if(signal){
-                                    score -= 5; 
-                                    vidas -= 1;
-                                }
+                                score -= 5; 
+                                vidas -= 1;
                             } 
                         }
                     }                
@@ -1816,8 +1822,11 @@ class Jogo extends Phaser.Scene {
                                             segundos = 0;
                                         }
                                     else{
-                                        
                                         midlePoint = null;
+                                        if(signal){
+                                            score -= 5; 
+                                            vidas -= 1;
+                                        }
                                     }
                                 }
                                 else{
@@ -1831,10 +1840,8 @@ class Jogo extends Phaser.Scene {
                                 }
                             }
                             else{
-                                if(signal){
-                                    score -= 5; 
-                                    vidas -= 1;
-                                }
+                                score -= 5; 
+                                vidas -= 1;
                             } 
                         }
                     }                
@@ -1903,6 +1910,10 @@ class Jogo extends Phaser.Scene {
                                     }
                                     else{
                                         midlePoint = null;
+                                        if(signal){
+                                            score -= 5; 
+                                            vidas -= 1;
+                                        }
                                     }
                                 }
                                 else{
@@ -1916,10 +1927,8 @@ class Jogo extends Phaser.Scene {
                                 }
                             }
                             else{
-                                if(signal){
-                                    score -= 5;
-                                    vidas -= 1;
-                                }
+                                score -= 5;
+                                vidas -= 1;
                             }
                         }
                         break;
