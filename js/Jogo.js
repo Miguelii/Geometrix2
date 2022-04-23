@@ -1596,6 +1596,7 @@ class Jogo extends Phaser.Scene {
                                     graphics.lineStyle(4, color);
                                     graphics.strokeLineShape(lines[0]);
                                     if(aceitaMidle){
+                                        tres = true;
                                         certas+=1;
                                         aceita = true;
                                         if (segundos >= 100){
@@ -1633,6 +1634,7 @@ class Jogo extends Phaser.Scene {
 
                         if(um && dois && tres){
                             aceita=true;
+                            certas = 2; 
                             if (segundos >= 100){
                                 score += 5;
                                 armazenado += 5;
