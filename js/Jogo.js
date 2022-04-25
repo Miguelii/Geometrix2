@@ -122,7 +122,8 @@ class Jogo extends Phaser.Scene {
         this.clock = this.add.sprite(0.12 * game.config.width, 60, 'clock');
         this.clock.setScale(0.4);
 
-        //vidas
+        // --- vidas ---
+        //Coracao cheio
         this.coracaocheio1 = this.add.sprite(0.18 * game.config.width, 0.17 * game.config.height, 'coracao1');
         this.coracaocheio1.setScale(0.3);
 
@@ -132,7 +133,18 @@ class Jogo extends Phaser.Scene {
         this.coracaocheio3 = this.add.sprite(0.26 * game.config.width, 0.17 * game.config.height, 'coracao1');
         this.coracaocheio3.setScale(0.3);
 
-        //this.coracaovazio1 = this.add.sprite(0.26 * game.config.width, 0.17 * game.config.height, 'coracao2');
+        //Coracao vazio
+        this.coracaovazio1 = this.add.sprite(0.18 * game.config.width, 0.17 * game.config.height, 'coracao2');
+        this.coracaovazio1.setScale(0.3);
+        this.coracaovazio1.visible = false;
+
+        this.coracaovazio2 = this.add.sprite(0.22 * game.config.width, 0.17 * game.config.height, 'coracao2');
+        this.coracaovazio2.setScale(0.3);
+        this.coracaovazio2.visible = false;
+
+        this.coracaovazio3 = this.add.sprite(0.26 * game.config.width, 0.17 * game.config.height, 'coracao2');
+        this.coracaovazio3.setScale(0.3);
+        this.coracaovazio3.visible = false;
 
 
         textScore = this.add.text(0.88 * game.config.width, 55, score + " pts",{
