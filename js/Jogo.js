@@ -13,7 +13,7 @@ var timer;
 var score = 0; 
 var textScore;
 var pause = false; 
-var level = 10; 
+var level = 1; 
 var sim;
 var nao;
 var info;
@@ -54,6 +54,9 @@ class Jogo extends Phaser.Scene {
         this.load.image('infoexit', 'assets/quadroinfo.png');
         this.load.image('btsim', 'assets/btsim.png');
         this.load.image('btnao', 'assets/btnao.png');
+        this.load.image('clock', 'assets/clock.png');
+        this.load.image('coracao1', 'assets/coracao1.png');
+        this.load.image('coracao2', 'assets/coracao2.png');
     }
         
     create (){
@@ -65,7 +68,7 @@ class Jogo extends Phaser.Scene {
         this.titulo1 = this.add.sprite(0.5 * game.config.width, 0.15 *game.config.height, 'titulo1');
         this.titulo1.setScale(0.6);
         info = this.add.sprite(-10000,-100000, 'info');
-        info.setScale(0.75);
+        info.setScale(0.7);
 
         var color =  0xffffff;
         var texto = this.add.text(850, 150, '', { fontFamily: 'font1',align: 'right'});
@@ -81,12 +84,10 @@ class Jogo extends Phaser.Scene {
         this.base4=this.add.sprite(0.09 * game.config.width, 100, "base4");
         this.base4.setScale(0.5);
 
-
         this.btHome = this.add.sprite(0.05 * game.config.width, 535, "btHome");
         this.btHome.setScale(0.5);
         this.btHome.setInteractive({ useHandCursor: true });
         this.btHome.name = 'btHome';
-
 
         this.btHome.on('pointerover', () => {
         this.btHome.displayHeight += 5;
@@ -100,25 +101,41 @@ class Jogo extends Phaser.Scene {
 
         //Exit
         this.infoexit = this.add.sprite(0.5 * game.config.width, 0.55 *game.config.height, "infoexit");
-        this.infoexit.setScale(0.75);
+        this.infoexit.setScale(0.7);
         this.infoexit.visible = false;
         this.infoexit.name = 'infoexit';
 
-        this.btsim = this.add.sprite(0.6 * game.config.width, 0.7 * game.config.height, 'btsim');
-        this.btsim.setScale(0.35);
+        this.btsim = this.add.sprite(0.56 * game.config.width, 0.68 * game.config.height, 'btsim');
+        this.btsim.setScale(0.45);
         this.btsim.visible = false;
         this.btsim.name = 'btsim';
 
-        this.btnao = this.add.sprite(0.4 * game.config.width, 0.7 * game.config.height, 'btnao');
-        this.btnao.setScale(0.35);
+        this.btnao = this.add.sprite(0.44 * game.config.width, 0.68 * game.config.height, 'btnao');
+        this.btnao.setScale(0.45);
         this.btnao.visible = false;
         this.btnao.name = 'btnao';
 
-        timer = this.add.text(0.065 * game.config.width, 55, segundos + ' s',{
+        timer = this.add.text(0.065 * game.config.width, 55, segundos,{
             fontFamily: 'font1',
         });
+        
+        this.clock = this.add.sprite(0.12 * game.config.width, 60, 'clock');
+        this.clock.setScale(0.4);
 
-        textScore = this.add.text(0.88 * game.config.width, 55, 'Score: ' + score,{
+        //vidas
+        this.coracaocheio1 = this.add.sprite(0.18 * game.config.width, 0.17 * game.config.height, 'coracao1');
+        this.coracaocheio1.setScale(0.3);
+
+        this.coracaocheio2 = this.add.sprite(0.22 * game.config.width, 0.17 * game.config.height, 'coracao1');
+        this.coracaocheio2.setScale(0.3);
+
+        this.coracaocheio3 = this.add.sprite(0.26 * game.config.width, 0.17 * game.config.height, 'coracao1');
+        this.coracaocheio3.setScale(0.3);
+
+        //this.coracaovazio1 = this.add.sprite(0.26 * game.config.width, 0.17 * game.config.height, 'coracao2');
+
+
+        textScore = this.add.text(0.88 * game.config.width, 55, score + " pts",{
             fontFamily: 'font1',
         });
 
@@ -126,8 +143,8 @@ class Jogo extends Phaser.Scene {
         nao = this.add.sprite(-10000,-100000, 'btnao');
         sim.name = 'sim';
         nao.name = 'nao';
-        nao.setScale(0.35);
-        sim.setScale(0.35);
+        nao.setScale(0.45);
+        sim.setScale(0.45);
         sim.setInteractive({ useHandCursor: true});
         nao.setInteractive({ useHandCursor: true });
         sim.on('pointerdown', () => {
@@ -2893,8 +2910,8 @@ class Jogo extends Phaser.Scene {
     }
 
     update(){
-        timer.setText([segundos + ' s' ]);
-        textScore.setText(['Score: ' + score ]);
+        timer.setText([segundos]);
+        textScore.setText([score + " pts" ]);
         if(level>15){
             this.scene.transition({ target: 'Menu', duration: 100 });
             reset();
