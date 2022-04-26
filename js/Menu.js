@@ -18,6 +18,7 @@ class Menu extends Phaser.Scene {
         this.load.image('btlogin', 'assets/login.png');
         this.load.image('quadrologin', 'assets/quadrologin.png');
 
+        this.load.image('logButton', 'assets/greenButton.png');
     }
 
 
@@ -115,20 +116,31 @@ class Menu extends Phaser.Scene {
         this.loginErrorMsg = this.add.text(0.40 * game.config.width, 0.51 * game.config.height,"Utilizador ou Password Errados",{ fontFamily: 'font1',fontSize: 15,color: '#ff0000',align: 'center'});
         this.loginErrorMsg.visible = false;
 
-        /*
         this.utilizador = this.add.text(0.44 * game.config.width, 0.2 * game.config.height, "Utilizador:", { fontFamily: 'font1', fontSize: 25, color: '#403217' })
         this.utilizador.visible = false;
 
         this.password = this.add.text(0.44 * game.config.width, 0.35 * game.config.height, "Password:", { fontFamily: 'font1', fontSize: 25, color: '#403217' })
-        this.password.visible = false;    
-
-        */
-       
+        this.password.visible = false;
+           
+        let user = `
+        <input type="text" name="username" style="font-size: 15px;font-family:'font1';text-align:center;">
+        `;
+        
+        let pass = `
+        <input type="password" name="password" style="font-size: 15px;font-family:'font1';text-align:center;">
+        `;      
+                
+        var x = this.add.dom(0.5 * game.config.width, 0.3 * game.config.height).createFromHTML(user);
+        x.setScale(1);
+        x.visible = false;
+        
+        var y = this.add.dom(0.5 * game.config.width, 0.45 * game.config.height).createFromHTML(pass);
+        y.setScale(1);
+        y.visible = false;
         ////
 
 
-
-        //Tem que ficar em ultimo para ficar em cima de qualquer imagem
+        
         this.btclose = this.add.sprite(0.69 * game.config.width, 0.18 * game.config.height, 'btclose');
         this.btclose.setScale(0.35);
         this.btclose.visible = false;
@@ -175,6 +187,12 @@ class Menu extends Phaser.Scene {
                     this.btinfo.visible = true;
                     this.bttop.visible = true;
                     this.btplay.visible = true;
+
+                    //Login hide
+                    this.password.visible = false;
+                    this.utilizador.visible = false;
+                    x.visible = false;
+                    y.visible = false;
                     break;
 
                 case 'btlogin':
@@ -187,6 +205,33 @@ class Menu extends Phaser.Scene {
                     this.bttop.visible = false;
                     this.btplay.visible = false;
                     this.btclose.setInteractive({ useHandCursor: true });
+
+                    this.password.visible = true;
+                    this.utilizador.visible = true;
+                    x.visible = true;
+                    y.visible = true;
+                    
+                    this.loginfinal.on('pointerup', function () {
+                        let user = x.getChildByName("username").value
+                        let password = y.getChildByName("passwor").value
+                        if (user != '' && password != '') {
+            
+                            let r = login(user, password,this);
+                            x.getChildByName("username").value = '';
+                            y.getChildByName("passwor").value = '';
+                        }
+                    }, this);
+
+                    this.loginfinal.on('pointerover', () => {
+                        this.loginfinal.displayHeight += 5;
+                        this.loginfinal.displayWidth += 5;
+            
+                    });
+                    this.loginfinal.on('pointerout', () => {
+                        this.loginfinal.displayHeight -= 5;
+                        this.loginfinal.displayWidth -= 5;
+            
+                    });
 
                     break;
         
