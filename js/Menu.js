@@ -17,8 +17,6 @@ class Menu extends Phaser.Scene {
 
         this.load.image('btlogin', 'assets/login.png');
         this.load.image('quadrologin', 'assets/quadrologin.png');
-
-        this.load.image('logButton', 'assets/greenButton.png');
     }
 
 
