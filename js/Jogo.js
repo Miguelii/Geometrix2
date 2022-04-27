@@ -13,7 +13,7 @@ var timer;
 var score = 0; 
 var textScore;
 var pause = false; 
-var level = 1; 
+var level = 2; 
 var sim;
 var nao;
 var info;
@@ -3431,7 +3431,6 @@ class Jogo extends Phaser.Scene {
                                 var a = point.x;
                                 var b = point.y;
                                 clearInterval(contaTempo);
-                                p = true;
                                 ponto1.x=x;
                                 ponto1.y=y;
                                 ponto2.x=x1;
