@@ -3246,7 +3246,7 @@ class Jogo extends Phaser.Scene {
                                                         pointsLine.push(pointsLine2[i]);
                                                     }
                                                     texto.setText([
-                                                        'Traça a reta SUPORTE da semirreta |' + letra1 + letra4 
+                                                        'Traça a reta SUPORTE da semirreta |' + letra1 + letra5
                                                     ]); 
 
                                                     if(reta(point2,point5,line)){
