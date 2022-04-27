@@ -13,7 +13,7 @@ var timer;
 var score = 0; 
 var textScore;
 var pause = false; 
-var level = 14; 
+var level = 19; 
 var sim;
 var nao;
 var info;
@@ -215,6 +215,7 @@ class Jogo extends Phaser.Scene {
         var line = new Phaser.Geom.Line(); 
         var point; 
         var point4;
+        var point5; 
         var pointsLine = getPointsOnLine(point2,point3);
 
         switch(level){
@@ -535,6 +536,66 @@ class Jogo extends Phaser.Scene {
                 letrad.y = point4.y+5;
                 segundos = 0;
                 break;
+            case 16: 
+                texto.setText([
+                    textoLevel(level) + letra1 + ' e ' + letra2
+                ]);
+                graphics.clear();
+                lines[j] = new Phaser.Geom.Line();
+                line = lines[j];
+                [point,point4] = pontosParalelo(point2.x,point2.y,point3.x,point3.y);
+                ponto3.x = point.x;
+                ponto3.y = point.y; 
+                letrac.x = point.x+5;
+                letrac.y = point.y+5;
+                segundos = 0;
+                break;
+            case 17: 
+                texto.setText([
+                    textoLevel(level) + letra1 + ' e ' + letra2
+                ]);
+                graphics.clear();
+                lines[j] = new Phaser.Geom.Line();
+                line = lines[j];
+                [point,point4] = pontosParalelo(point2.x,point2.y,point3.x,point3.y);
+                ponto3.x = point.x;
+                ponto3.y = point.y; 
+                letrac.x = point.x+5;
+                letrac.y = point.y+5;
+                segundos = 0;
+            case 18: 
+                texto.setText([
+                    textoLevel(level) + letra1 + ' e ' + letra2
+                ]);
+                graphics.clear();
+                lines[j] = new Phaser.Geom.Line();
+                line = lines[j];
+                [point,point4] = perpendicular(point2,point3);
+                point5 = pontosParaleloF(point2.x,point2.y,point3.x,point3.y,point4);
+                ponto3.x = point4.x;
+                ponto3.y = point4.y; 
+                letrac.x = point4.x+5;
+                letrac.y = point4.y+5;
+                segundos = 0;
+                break;
+            case 19: 
+                texto.setText([
+                    textoLevel(level) + letra1 + ' e ' + letra2
+                ]);
+                lines[j] = new Phaser.Geom.Line();
+                line = lines[j];
+                [point,point4] = pontosParalelo(point2.x,point2.y,point3.x,point3.y);
+                ponto3.x = point.x;
+                ponto3.y = point.y;
+                ponto4.x = point4.x;
+                ponto4.y = point4.y; 
+                letrac.x = point.x+5;
+                letrac.y = point.y+5;
+                letrad.x = point4.x+5;
+                letrad.y = point4.y+5;
+                break; 
+            case 20: 
+
         }
         
         this.input.on('gameobjectdown', function(pointer, gameObject) {
@@ -556,7 +617,6 @@ class Jogo extends Phaser.Scene {
                 case 'btsim':
                     lines = [];
                     pointsLine = [];
-                    pointsLine2 = [];
                     clearInterval(contaTempo);
                     segundos = 0;
                     score = 0;
@@ -627,13 +687,13 @@ class Jogo extends Phaser.Scene {
                     line.setTo(pointer.x, pointer.y, pointer.x, pointer.y);
                 }
 
-                if (((level == 1||level==5||level==7||level==8||level==9||level==13||level==15) && certas ==1)){
+                if (((level == 1||level==5||level==7||level==8||level==9||level==13||level==15||level==17||level==19) && certas ==1)){
                     if(posto==false){
                         signal = true; 
                         var pontosLine = getPointsOnLine(point2,point3);
                         for(var i=0;i<pontosLine.length;i++){
                             var mid = pontosLine[i];
-                            if(level==7||level==8||level==13){     
+                            if(level==7||level==8){     
                                 var paux1 = point2; 
                                 var paux2 = point3; 
                                 if(level == 8){
@@ -666,8 +726,8 @@ class Jogo extends Phaser.Scene {
                                     var paux1 = point2; 
                                     var paux2 = point3; 
                                     if ((pontoEsquerda(paux1,paux2) == paux1 && (
-                                    pointer.x>paux2.x)) || (pontoEsquerda(paux1,paux2) == paux2 && (
-                                    pointer.x>paux1.x)) && 
+                                    pointer.x<paux2.x)) || (pontoEsquerda(paux1,paux2) == paux2 && (
+                                    pointer.x<paux1.x)) && 
                                     (pointer.x<=mid.x+5 && pointer.x>=mid.x-5 && pointer.y<=mid.y+5 && pointer.y>=mid.y-5)
                                     ){
                                         midlePoint = new Phaser.Geom.Point(mid.x,mid.y);
@@ -687,20 +747,49 @@ class Jogo extends Phaser.Scene {
     
                                 }
                                 else{
-                                    if(pointer.x<=mid.x+5 && pointer.x>=mid.x-5 && pointer.y<=mid.y+5 && pointer.y>=mid.y-5){
-                                        midlePoint = new Phaser.Geom.Point(mid.x,mid.y);
-                                        if(sgm){
-                                            aceitaMidle = true;
-                                            posto=true;
-                                            if(!posto){
-                                                graphics.fillPointShape(midlePoint, 10);
-                                                graphics.strokeLineShape(lines[0]);
+                                    if(level==19){
+                                        var paux1 = point2; 
+                                        var paux2 = point3; 
+                                        if ((pontoEsquerda(paux1,paux2) == paux1 && (
+                                        pointer.x>paux2.x)) || (pontoEsquerda(paux1,paux2) == paux2 && (
+                                        pointer.x>paux1.x)) && 
+                                        (pointer.x<=mid.x+5 && pointer.x>=mid.x-5 && pointer.y<=mid.y+5 && pointer.y>=mid.y-5)
+                                        ){
+                                            midlePoint = new Phaser.Geom.Point(mid.x,mid.y);
+                                            if(sgm){
+                                                aceitaMidle = true;
+                                                posto=true;
+                                                if(!posto){
+                                                    graphics.fillPointShape(midlePoint, 10);
+                                                    graphics.strokeLineShape(lines[0]);
+                                                }
                                             }
                                         }
+                                        else{
+                                            midlePoint = new Phaser.Geom.Point(pointer.x,pointer.y);
+                                            graphics.fillPointShape(midlePoint, 10);
+                                        }
+        
                                     }
                                     else{
-                                        midlePoint = new Phaser.Geom.Point(pointer.x,pointer.y);
-                                        graphics.fillPointShape(midlePoint, 10);
+                                        if(level == 15|| level==17){
+                                            pontosLine = getPointsOnLine(point,point4);
+                                        } 
+                                        if(pointer.x<=mid.x+5 && pointer.x>=mid.x-5 && pointer.y<=mid.y+5 && pointer.y>=mid.y-5){
+                                            midlePoint = new Phaser.Geom.Point(mid.x,mid.y);
+                                            if(sgm){
+                                                aceitaMidle = true;
+                                                posto=true;
+                                                if(!posto){
+                                                    graphics.fillPointShape(midlePoint, 10);
+                                                    graphics.strokeLineShape(lines[0]);
+                                                }
+                                            }
+                                        }
+                                        else{
+                                            midlePoint = new Phaser.Geom.Point(pointer.x,pointer.y);
+                                            graphics.fillPointShape(midlePoint, 10);
+                                        }
                                     }
                                 }
                             }
@@ -718,13 +807,13 @@ class Jogo extends Phaser.Scene {
                         }
                         else{
                             if ((level == 2||level==3||level==4||level==6||level==7||level==8||
-                                level == 10 || level==11 || level==12||level==13
+                                level == 10 || level==11 || level==12||level==13||level==16||level==17||level==19
                                 ) && pointer.x <= point.x+50 && pointer.x >= point.x-50 && pointer.y <= point.y+50 && pointer.y >= point.y-50){
                                 line.setTo(point.x, point.y, point.x, point.y);
                             }
                             else{ 
                                 if((level==3 ||level==4||level==8||level==12||level==13
-                                    ||level==14||level==15)&& pointer.x <= point4.x+50 && pointer.x >= point4.x-50 && pointer.y <= point4.y+50 && pointer.y >= point4.y-50){
+                                    ||level==14||level==15||level==18||level==19)&& pointer.x <= point4.x+50 && pointer.x >= point4.x-50 && pointer.y <= point4.y+50 && pointer.y >= point4.y-50){
                                     line.setTo(point4.x, point4.y, point4.x, point4.y);
                                 }
                                 else{
@@ -958,6 +1047,72 @@ class Jogo extends Phaser.Scene {
                             }
                         }
                         break; 
+                    case 16: 
+                        graphics.clear();
+                        for(var i= 0;i<lines.length;i++){
+                            graphics.lineStyle(4, color);
+                            graphics.strokeLineShape(lines[i]);
+                        }   
+                        graphics.lineStyle(4, color);          
+                        graphics.strokeLineShape(line);
+                        break;
+                    case 17: 
+                        graphics.clear();
+                        graphics.lineStyle(4, color);
+                        graphics.strokeLineShape(line);
+                        for(var i= 0;i<lines.length;i++){
+                            graphics.lineStyle(4, color);
+                            graphics.strokeLineShape(lines[i]);
+                        }
+                        if(certas==1){
+                            graphics.strokeLineShape(lines[0]); 
+                            if(midlePoint!=null){
+                                graphics.clear();
+                                graphics.fillPointShape(midlePoint, 10);
+                                graphics.lineStyle(4, color);
+                                graphics.strokeLineShape(line);
+                            }
+                            else{
+                                graphics.clear();
+                                graphics.lineStyle(4, color);
+                                graphics.strokeLineShape(line);
+                            }
+                        }
+                        break; 
+                    case 18: 
+                        graphics.clear();
+                        for(var i= 0;i<lines.length;i++){
+                            graphics.lineStyle(4, color);
+                            graphics.strokeLineShape(lines[i]);
+                        }   
+                        graphics.lineStyle(4, color);          
+                        graphics.strokeLineShape(line);
+                        break;
+                    case 19: 
+                        graphics.clear();
+                        graphics.lineStyle(4, color);
+                        graphics.strokeLineShape(line);
+                        for(var i= 0;i<lines.length;i++){
+                            graphics.lineStyle(4, color);
+                            graphics.strokeLineShape(lines[i]);
+                        }
+                        if(certas==1){
+                            graphics.strokeLineShape(lines[0]); 
+                            if(midlePoint!=null){
+                                graphics.clear();
+                                graphics.fillPointShape(midlePoint, 10);
+                                graphics.lineStyle(4, color);
+                                graphics.strokeLineShape(line);
+                            }
+                            else{
+                                graphics.clear();
+                                graphics.lineStyle(4, color);
+                                graphics.strokeLineShape(line);
+                            }
+                        }
+                        break;
+                    case 20: 
+
                 }
             }
         });
@@ -988,13 +1143,13 @@ class Jogo extends Phaser.Scene {
                             }
                             else{
                                 if((level == 2|| level==3 || level==4||level==6||level==7||level==8
-                                    ||level==10||level==11||level == 12||level==13) && 
+                                    ||level==10||level==11||level == 12||level==13||level==16||level==17||level==19) && 
                                     pointer.x <= point.x+50 && pointer.x >= point.x-50 && pointer.y <= point.y+50 && pointer.y >= point.y-50){
                                     line.x2 = point.x; 
                                     line.y2 = point.y; 
                                 }
                                 else{
-                                    if((level==3||level==4||level==8||level==12||level==13||level==14||level==15
+                                    if((level==3||level==4||level==8||level==12||level==13||level==14||level==15||level==18||level==19
                                         ) && pointer.x <= point4.x+50 && pointer.x >= point4.x-50 && pointer.y <= point4.y+50 && pointer.y >= point4.y-50){
                                         line.x2 = point4.x; 
                                         line.y2 = point4.y; 
@@ -1273,7 +1428,7 @@ class Jogo extends Phaser.Scene {
                                 graphics.strokeLineShape(lines[i]);
                             }
                             if(certas==1){
-                                if (reta(point3,point4,line)){
+                                if (reta(point,point4,line)){
                                     sgm = true;
                                     lines.push(line);
                                     graphics.strokeLineShape(lines[0]);
@@ -1296,6 +1451,88 @@ class Jogo extends Phaser.Scene {
                                 }
                             }
                             break;
+                        case 16: 
+                            graphics.clear();
+                            for(var i= 0;i<lines.length;i++){
+                                graphics.lineStyle(4, color);
+                                graphics.strokeLineShape(lines[i]);
+                            }  
+                            graphics.lineStyle(4, color);           
+                            graphics.strokeLineShape(line);
+                            break;
+                        case 17: 
+                            graphics.clear();
+                            graphics.lineStyle(4, color);
+                            graphics.strokeLineShape(line);
+                            for(var i= 0;i<lines.length;i++){
+                                graphics.lineStyle(4, color);
+                                graphics.strokeLineShape(lines[i]);
+                            }
+                            if(certas==1){
+                                if (reta(point,point4,line)){
+                                    sgm = true;
+                                    lines.push(line);
+                                    graphics.strokeLineShape(lines[0]);
+                                }
+
+                                if(midlePoint!=null){
+                                graphics.clear();
+                                graphics.fillPointShape(midlePoint, 10);
+                                graphics.lineStyle(4, color);
+                                graphics.strokeLineShape(line);
+                                
+                                }
+                                else{
+                                    graphics.clear();
+                                    graphics.lineStyle(4, color);
+                                    graphics.strokeLineShape(line);
+                                }
+                                if(sgm){
+                                    graphics.strokeLineShape(lines[0]);
+                                }
+                            }
+                            break;
+                        case 18: 
+                            graphics.clear();
+                            for(var i= 0;i<lines.length;i++){
+                                graphics.lineStyle(4, color);
+                                graphics.strokeLineShape(lines[i]);
+                            }  
+                            graphics.lineStyle(4, color);           
+                            graphics.strokeLineShape(line);
+                            break;
+                        case 19: 
+                            graphics.clear();
+                            graphics.lineStyle(4, color);
+                            graphics.strokeLineShape(line);
+                            for(var i= 0;i<lines.length;i++){
+                                graphics.lineStyle(4, color);
+                                graphics.strokeLineShape(lines[i]);
+                            }
+                            if(certas==1){
+                                if (segmentoReta(point3,point4,line)){
+                                    sgm = true;
+                                    lines.push(line);
+                                    graphics.strokeLineShape(lines[0]);
+                                }
+
+                                if(midlePoint!=null){
+                                graphics.clear();
+                                graphics.fillPointShape(midlePoint, 10);
+                                graphics.lineStyle(4, color);
+                                graphics.strokeLineShape(line);
+                                }
+                                else{
+                                    graphics.clear();
+                                    graphics.lineStyle(4, color);
+                                    graphics.strokeLineShape(line);
+                                }
+                                if(sgm){
+                                    graphics.strokeLineShape(lines[0]);
+                                }
+                            }
+                            break;
+                        case 20: 
                     }
                 }
             }
@@ -2459,6 +2696,386 @@ class Jogo extends Phaser.Scene {
                         }
                         
                         break;
+                    case 16: 
+                        if (contador==1){
+                            lines.push(line);
+                        }
+                        contador = 1;
+                        if(reta(point2,point3,line)){
+                            pointsLine = [];
+                            var pointsLine2 = getPointsOnLine(point,point4);
+                            for(var i=0;i<pointsLine2.length;i++){
+                                pointsLine.push(pointsLine2[i]);
+                            }
+                            um = true; 
+                            texto.setText([
+                                'Traça a reta paralela a ' + letra1 + letra2 +'\nque passa por ' + letra3
+                            ]);
+                        }
+                        else{
+                            if(reta(point,point4,line) && um == true){
+                                dois = true; 
+                                texto.setText([
+                                    'Traça o segmento de reta [' + letra2 + letra3 + ']'
+                                ]);
+                                pointsLine = [];
+                                var pointsLine3 = getPointsOnLine(point3,point);
+
+                                for(var i=0;i<pointsLine3.length;i++){
+                                    pointsLine.push(pointsLine3[i]);
+                                }
+                            }
+                            else{
+                                if(segmentoReta(point3,point,line) && dois==true){
+                                    tres = true; 
+                                }
+                                else{
+                                    score-=5;
+                                    vidas -=1;
+                                    lines.pop();
+                                    graphics.clear();
+                                }
+                                
+                            }
+                        }                
+                        for(var i= 0;i<lines.length;i++){
+                            graphics.strokeLineShape(lines[i]);
+                        }
+                        line = new Phaser.Geom.Line(); 
+
+                        if(um && dois && tres){
+                            aceita=true;
+                            certas = 2;
+                            if (segundos >= 100){
+                                score += 5;
+                                armazenado += 5;
+                            }
+                            else{
+                                score += (100-segundos) * level;
+                                armazenado += (100-segundos) * level;
+                            }
+                            clearInterval(contaTempo);
+                            contaTempo = setInterval(function(){ segundo() },1000);
+                            segundos = 0;
+                        }
+                        break;
+                    case 17: 
+                        if (contador==1){
+                            lines.push(line);
+                        }
+                        contador = 1;
+                        if(reta(point2,point3,line)){
+                            um = true; 
+                            texto.setText([
+                                'Traça a reta paralela a ' + letra1 + letra2 + '\nque passa por ' + letra3
+                            ]);
+                            pointsLine = [];
+                            var pointsLine2 = getPointsOnLine(point4,point);
+                            for(var i=0;i<pointsLine2.length;i++){
+                                pointsLine.push(pointsLine2[i]);
+                            }
+                        }
+                        else{
+                            if(reta(point4,point,line) && um == true){
+                                dois = true;
+                                texto.setText([
+                                    'Marca um ponto da reta paralela a ' + letra1 + letra2 +'\nque passa por '+ letra3
+                                ]); 
+                                sgm = true; 
+                                certas = 1; 
+                            }
+                            else{
+                                lines.pop();
+                            }
+                                if (sgm){
+                                    if(midlePoint!=null && sgm==true){
+                                        graphics.fillPointShape(midlePoint, 10);
+                                        posto = true;
+                                        graphics.lineStyle(4, color);
+                                        graphics.strokeLineShape(line);
+                                    }
+                                    else{
+                                        graphics.clear();
+                                        posto = false;
+                                        graphics.lineStyle(4, color);
+                                        graphics.strokeLineShape(line);
+                                    }
+                                    if(sgm){
+                                        graphics.lineStyle(4, color);
+                                        graphics.strokeLineShape(lines[0]);
+                                        if(aceitaMidle){
+                                            quatro = true;
+                                            certas+=1;
+                                            aceita = true;
+                                            if (segundos >= 100){
+                                                score += 5;
+                                                armazenado += 5;
+                                            }
+                                            else{
+                                                score += (100-segundos) * level;
+                                                armazenado += (100-segundos) * level;
+                                            }
+                                            clearInterval(contaTempo);
+                                            contaTempo = setInterval(function(){ segundo() },1000);
+                                            segundos = 0;
+                                        }
+                                    else{
+                                        midlePoint = null;
+                                        if(signal){
+                                            score -= 5; 
+                                            vidas -= 1;
+                                        }
+                                    }
+                                }
+                                else{
+                                    if(!aceitaMidle){
+                                        midlePoint = null;
+                                        posto = false;
+                                    }
+                                    if(!sgm){
+                                        line = new Phaser.Geom.Line();
+                                    }
+                                }
+                            }
+                            else{
+                                score -= 5; 
+                                vidas -= 1;
+                            }  
+                        }                
+                        for(var i= 0;i<lines.length;i++){
+                            graphics.strokeLineShape(lines[i]);
+                        }
+                        line = new Phaser.Geom.Line(); 
+
+                        if(um && dois && tres && quatro){
+                            aceita=true;
+                            certas = 2; 
+                            if (segundos >= 100){
+                                score += 5;
+                                armazenado += 5;
+                            }
+                            else{
+                                score += (100-segundos) * level;
+                                armazenado += (100-segundos) * level;
+                            }
+                            clearInterval(contaTempo);
+                            contaTempo = setInterval(function(){ segundo() },1000);
+                            segundos = 0;
+                        }
+                        
+                        break;
+                    case 18: 
+                        if (contador==1){
+                            lines.push(line);
+                        }
+                        contador = 1;
+                        if(reta(point2,point3,line)){
+                            pointsLine = [];
+                            var pointsLine2 = getPointsOnLine(point,point4);
+                            for(var i=0;i<pointsLine2.length;i++){
+                                pointsLine.push(pointsLine2[i]);
+                            }
+                            um = true; 
+                            texto.setText([
+                                'Traça a reta perpendicular a ' + letra1 + letra2 +'\nque passa por ' + letra3
+                            ]);
+                        }
+                        else{
+                            if(reta(point,point4,line) && um == true){
+                                dois = true; 
+                                texto.setText([
+                                    'Traça a reta paralela a ' + letra1 + letra2 +'\nque passa por ' + letra3
+                                ]);
+                                pointsLine = [];
+                                var pointsLine3 = getPointsOnLine(point4,point5);
+
+                                for(var i=0;i<pointsLine3.length;i++){
+                                    pointsLine.push(pointsLine3[i]);
+                                }
+                            }
+                            else{
+                                if(reta(point4,point5,line) && dois==true){
+                                    tres = true; 
+                                    texto.setText([
+                                        'Traça o segmento de reta [' + letra2 + letra3 + ']'
+                                    ]);
+                                    var pointsLine3 = getPointsOnLine(point3,point4);
+
+                                    for(var i=0;i<pointsLine3.length;i++){
+                                        pointsLine.push(pointsLine3[i]);
+                                    }
+                                }
+                                else{
+                                    if(segmentoReta(point3,point4,line)&&tres){
+                                        quatro = true;    
+                                    }
+                                    else{
+                                        score-=5;
+                                        vidas -=1;
+                                        lines.pop();
+                                        graphics.clear();
+                                    }
+                                }
+                            }
+                        }                
+                        for(var i= 0;i<lines.length;i++){
+                            graphics.strokeLineShape(lines[i]);
+                        }
+                        line = new Phaser.Geom.Line(); 
+
+                        if(um && dois && tres &&quatro){
+                            aceita=true;
+                            certas = 2;
+                            if (segundos >= 100){
+                                score += 5;
+                                armazenado += 5;
+                            }
+                            else{
+                                score += (100-segundos) * level;
+                                armazenado += (100-segundos) * level;
+                            }
+                            clearInterval(contaTempo);
+                            contaTempo = setInterval(function(){ segundo() },1000);
+                            segundos = 0;
+                        }
+                        break;
+                    case 19: 
+                        if (contador==1){
+                            lines.push(line);
+                        }
+                        contador = 1;
+                        if(reta(point2,point3,line)){
+                            um = true; 
+                            texto.setText([
+                                'Traça a semirreta |' + letra1 + letra3 
+                            ]);
+                            pointsLine = [];
+                            var pointsLine2 = getPointsOnLine(point2,point);
+                            for(var i=0;i<pointsLine2.length;i++){
+                                pointsLine.push(pointsLine2[i]);
+                            }
+                        }
+                        else{
+                            if(comecaAntesAcabaNoPonto(point2,point,line) && um == true){
+                                dois = true;
+                                texto.setText([
+                                    'Traça o segmento de reta [' + letra2 + letra4 +']'
+                                ]); 
+                                pointsLine = [];
+                                var pointsLine2 = getPointsOnLine(point3,point4);
+                                for(var i=0;i<pointsLine2.length;i++){
+                                    pointsLine.push(pointsLine2[i]);
+                                }
+                            }
+                            else{
+                                if(segmentoReta(point3,point4,line)&&dois){
+                                    tres = true; 
+                                    sgm = true; 
+                                    certas = 1; 
+                                    texto.setText([
+                                        'Marca um ponto alinhado com ' + letra1 + letra2 +' \ne que não pertence a '
+                                        + '|' + letra1 + letra2 
+                                    ]); 
+                                }
+                                else{
+                                    if (sgm){
+                                        if(midlePoint!=null && sgm==true){
+                                            graphics.fillPointShape(midlePoint, 10);
+                                            posto = true;
+                                            graphics.lineStyle(4, color);
+                                            graphics.strokeLineShape(line);
+                                        }
+                                        else{
+                                            graphics.clear();
+                                            posto = false;
+                                            graphics.lineStyle(4, color);
+                                            graphics.strokeLineShape(line);
+                                        }
+                                        if(sgm){
+                                            graphics.lineStyle(4, color);
+                                            graphics.strokeLineShape(lines[0]);
+                                            if(aceitaMidle){
+                                                graphics.fillPointShape(midlePoint, 10);
+                                                var pointsLine2 = getPointsOnLine(point,point4);
+                                                for(var i=0;i<pointsLine2.length;i++){
+                                                    pointsLine.push(pointsLine2[i]);
+                                                }
+                                                texto.setText([
+                                                    'Traça a reta paralela a ' + letra1 + letra2 +' \nque passa por '
+                                                    + letra3
+                                                ]); 
+                                                if(reta(point,point4,line)){
+                                                    lines.push(line);
+                                                    quatro = true; 
+                                                    aceita = true; 
+                                                    certas += 1; 
+                                                    if (segundos >= 100){
+                                                        score += 5;
+                                                        armazenado += 5;
+                                                    }
+                                                    else{
+                                                        score += (100-segundos) * level;
+                                                        armazenado += (100-segundos) * level;
+                                                    }
+                                                    clearInterval(contaTempo);
+                                                    contaTempo = setInterval(function(){ segundo() },1000);
+                                                    segundos = 0;
+                                                }
+                                                else{
+                                                    lines.pop();
+                                                }
+                                            }
+                                        else{
+                                            midlePoint = null;
+                                            if(signal){
+                                                score -= 5; 
+                                                vidas -= 1;
+                                            }
+                                        }
+                                    }
+                                    else{
+                                        if(!aceitaMidle){
+                                            midlePoint = null;
+                                            posto = false;
+                                        }
+                                        if(!sgm){
+                                            line = new Phaser.Geom.Line();
+                                        }
+                                    }
+                                    
+                                }
+                                else{
+                                    lines.pop();
+                                    score -= 5; 
+                                    vidas -= 1;
+                                } 
+                            }
+                        }
+                    }                
+                        for(var i= 0;i<lines.length;i++){
+                            graphics.strokeLineShape(lines[i]);
+                        }
+                        line = new Phaser.Geom.Line(); 
+
+                        if(um && dois && tres && quatro){
+                            aceita=true;
+                            certas = 2; 
+                            if (segundos >= 100){
+                                score += 5;
+                                armazenado += 5;
+                            }
+                            else{
+                                score += (100-segundos) * level;
+                                armazenado += (100-segundos) * level;
+                            }
+                            clearInterval(contaTempo);
+                            contaTempo = setInterval(function(){ segundo() },1000);
+                            segundos = 0;
+                        }
+                        
+                        break;
+                    case 20: 
+
                 }
 
                 line = new Phaser.Geom.Line(); 
@@ -2526,7 +3143,6 @@ class Jogo extends Phaser.Scene {
                         x1 = point3.x; 
                         y1 = point3.y;
                         pointsLine = getPointsOnLine(point2,point3);
-                        var p = false;  
                         switch (level){
                             case 1: 
                                 if(certas == 0){
@@ -2906,7 +3522,7 @@ class Jogo extends Phaser.Scene {
                                 segundos = 0;
                                 break; 
                             case 14: 
-                                escondePontos([letrac,point]);
+                                escondePontos([letrac,ponto3]);
                                 clearInterval(contaTempo);
                                 texto.setText([
                                     textoLevel(level) + letra1 + ' e ' + letra2
@@ -2919,6 +3535,10 @@ class Jogo extends Phaser.Scene {
                                 ponto4.y = point4.y; 
                                 letrad.x = point4.x+5;
                                 letrad.y = point4.y+5;
+                                letraa.x = x+5;
+                                letraa.y = y+5;
+                                letrab.x = x1+5;
+                                letrab.y = y1+5;
                                 contaTempo = setInterval(function(){ segundo() },1000); 
                                 segundos = 0;
                                 break; 
@@ -2930,21 +3550,99 @@ class Jogo extends Phaser.Scene {
                                 graphics.clear();
                                 lines[j] = new Phaser.Geom.Line();
                                 line = lines[j];
-                                [point,point4] = perpendicular(point2,point3);    
+                                [point,point4] = perpendicular(point2,point3);  
+                                 
                                 ponto4.x = point4.x;
                                 ponto4.y = point4.y; 
                                 letrad.x = point4.x+5;
                                 letrad.y = point4.y+5;
+                                letraa.x = x+5;
+                                letraa.y = y+5;
+                                letrab.x = x1+5;
+                                letrab.y = y1+5;
                                 contaTempo = setInterval(function(){ segundo() },1000); 
                                 segundos = 0;
                                 break;
+                            case 16:
+                                escondePontos([letrad,ponto4]);
+                                clearInterval(contaTempo); 
+                                texto.setText([
+                                    textoLevel(level) + letra1 + ' e ' + letra2
+                                ]);
+                                graphics.clear();
+                                lines[j] = new Phaser.Geom.Line();
+                                line = lines[j];
+                                [point,point4] = pontosParalelo(point2.x,point2.y,point3.x,point3.y);
+                                ponto3.x = point.x;
+                                ponto3.y = point.y; 
+                                letrac.x = point.x+5;
+                                letrac.y = point.y+5;
+                                contaTempo = setInterval(function(){ segundo() },1000); 
+                                segundos = 0;
+                                break;
+                            case 17: 
+                                clearInterval(contaTempo); 
+                                texto.setText([
+                                    textoLevel(level) + letra1 + ' e ' + letra2
+                                ]);
+                                graphics.clear();
+                                lines[j] = new Phaser.Geom.Line();
+                                line = lines[j];
+                                [point,point4] = pontosParalelo(point2.x,point2.y,point3.x,point3.y);
+                                ponto3.x = point.x;
+                                ponto3.y = point.y; 
+                                letrac.x = point.x+5;
+                                letrac.y = point.y+5;
+                                contaTempo = setInterval(function(){ segundo() },1000); 
+                                segundos = 0;
+                                break; 
+                            case 18: 
+                                clearInterval(contaTempo); 
+                                texto.setText([
+                                    textoLevel(level) + letra1 + ' e ' + letra2
+                                ]);
+                                graphics.clear();
+                                lines[j] = new Phaser.Geom.Line();
+                                line = lines[j];
+                                [point,point4] = perpendicular(point2,point3);
+                                point5 = pontosParaleloF(point2.x,point2.y,point3.x,point3.y,point4);
+                                ponto3.x = point4.x;
+                                ponto3.y = point4.y; 
+                                letrac.x = point4.x+5;
+                                letrac.y = point4.y+5;
+                                contaTempo = setInterval(function(){ segundo() },1000); 
+                                segundos = 0;
+                            case 19: 
+                                clearInterval(contaTempo); 
+                                texto.setText([
+                                    textoLevel(level) + letra1 + ' e ' + letra2
+                                ]);
+                                lines[j] = new Phaser.Geom.Line();
+                                line = lines[j];
+                                [point,point4] = pontosParalelo(point2.x,point2.y,point3.x,point3.y);
+                                ponto3.x = point.x;
+                                ponto3.y = point.y;
+                                ponto4.x = point4.x;
+                                ponto4.y = point4.y; 
+                                letrac.x = point.x+5;
+                                letrac.y = point.y+5;
+                                letrad.x = point4.x+5;
+                                letrad.y = point4.y+5;
+                                contaTempo = setInterval(function(){ segundo() },1000); 
+                                segundos = 0; 
+                                break; 
+                            case 20: 
                         }
-                        if (p==false){  
-                            ponto1.x=x;
-                            ponto1.y=y;
-                            ponto2.x=x1;
-                            ponto2.y=y1;
-                        }
+                    
+                        ponto1.x=x;
+                        ponto1.y=y;
+                        ponto2.x=x1;
+                        ponto2.y=y1;
+                        letraa.x = x+5;
+                        letraa.y = y+5;
+                        letrab.x = x1+5;
+                        letrab.y = y1+5;
+            
                       
                     }
                 },1000); 
@@ -3067,6 +3765,38 @@ class Jogo extends Phaser.Scene {
                             graphics.strokeLineShape(lines[i]);
                         }
                         break;
+                    case 16: 
+                        for(var i= 0;i<lines.length;i++){
+                            graphics.lineStyle(4, color);
+                            graphics.strokeLineShape(lines[i]);
+                        }
+                        break;
+                    case 17: 
+                        for(var i= 0;i<lines.length;i++){
+                            graphics.lineStyle(4, color);
+                            graphics.strokeLineShape(lines[i]);
+                        }
+                        break;
+                    case 18: 
+                        for(var i= 0;i<lines.length;i++){
+                            graphics.lineStyle(4, color);
+                            graphics.strokeLineShape(lines[i]);
+                        }
+                    break;
+                    case 19: 
+                        for(var i= 0;i<lines.length;i++){
+                            graphics.lineStyle(4, color);
+                            graphics.strokeLineShape(lines[i]);
+                        }
+                        graphics.fillPointShape(midlePoint, 10);
+
+                        break;
+                    case 20: 
+                        for(var i= 0;i<lines.length;i++){
+                            graphics.lineStyle(4, color);
+                            graphics.strokeLineShape(lines[i]);
+                        }
+                        break;
                 } 
                 line = new Phaser.Geom.Line(); 
             }
@@ -3078,7 +3808,7 @@ class Jogo extends Phaser.Scene {
         textScore.setText([score + " pts" ]);
         levelText.setText(['Level: ' + level ]);
 
-        if(level>15){
+        if(level>20){
             this.scene.transition({ target: 'Menu', duration: 100 });
             reset();
         }
@@ -3095,8 +3825,9 @@ class Jogo extends Phaser.Scene {
         if(muda){
             this.btHome.disableInteractive();
             aux = true; 
-            if(level>15){
+            if(level>20){
                 this.scene.transition({ target: 'Menu', duration: 100 });  
+                reset();
             }
             else{
                 info.x = 0.5 * game.config.width;
@@ -3367,6 +4098,18 @@ function pontosParalelo(x,y,x1,y1){
     var pontoB = paralela.getPointB(); 
 
     return [pontoA,pontoB];
+}
+
+function pontosParaleloF(x,y,x1,y1,pF){
+    
+    var linha = new Phaser.Geom.Line(x, y, x1, y1);
+    var angle = Phaser.Geom.Line.Angle(linha);
+    var paralela = new Phaser.Geom.Line();
+    Phaser.Geom.Line.SetToAngle(paralela,pF.x,pF.y,angle,50);
+    var points = paralela.getPoints(); 
+    var pontoA = paralela.getPointA();
+    var pontoB = paralela.getPointB(); 
+    return pontoB;
 }
 
 function escondePontos(pontos){
