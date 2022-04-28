@@ -13,7 +13,7 @@ var timer;
 var score = 0; 
 var textScore;
 var pause = false; 
-var level = 2; 
+var level = 14; 
 var sim;
 var nao;
 var info;
