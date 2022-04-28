@@ -641,6 +641,7 @@ class Jogo extends Phaser.Scene {
             if(!aceita){
                 switch (gameObject.name) {
                     case 'btHome':
+                        changeLives = false; 
                         graphics.clear();
                         this.btHome.disableInteractive();
                         this.infoexit.visible = true;
@@ -663,9 +664,11 @@ class Jogo extends Phaser.Scene {
                         pause = false; 
                         level = 1; 
                         vidas = 3; 
+                        changeLives = true;
                         reset();
                         break;
                     case 'btnao':
+                        changeLives = true; 
                         clearInterval(contaTempo);
                         contaTempo = setInterval(function(){ segundo() },1000);
                         pause = false; 
