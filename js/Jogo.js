@@ -116,9 +116,11 @@ class Jogo extends Phaser.Scene {
         this.btnao.visible = false;
         this.btnao.name = 'btnao';
 
-        timer = this.add.text(0.065 * game.config.width, 55, segundos,{
+        timer = this.add.text(0.065 * game.config.width, 43, segundos,{
             fontFamily: 'font1',
         });
+
+        timer.setFontSize(25);
         
         this.clock = this.add.sprite(0.12 * game.config.width, 60, 'clock');
         this.clock.setScale(0.4);

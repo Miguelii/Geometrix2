@@ -30,7 +30,7 @@
     <meta name="HandheldFriendly" content="true" />
     <title>Geometrix</title>
 
-    <script src="//cdn.jsdelivr.net/npm/phaser@3.54.0/dist/phaser.js"></script>
+    
     <link rel="shortcut icon" type="image/x-icon" href="https://www.hypatiamat.com/images/favicon.ico">
 
     
@@ -48,6 +48,7 @@
                     allowClickBypass: true
                 }
                 </script> 
+                <script src="/phaser.min.js"></script>
                 <script src="js/pleaserotate.js"></script> 
                 <script src="js/Menu.js"></script>
                 <script src="js/Jogo.js"></script>
@@ -74,8 +75,7 @@ var config={
     },
     backgroundColor: "#ffffff",
 
-    // Verificar o parent
-    //parent: 'game',
+    parent: 'div',
     dom: {
         createContainer: true
     },

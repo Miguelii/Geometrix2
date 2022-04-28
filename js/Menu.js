@@ -140,7 +140,7 @@ class Menu extends Phaser.Scene {
 
         
         this.btclose = this.add.sprite(0.69 * game.config.width, 0.18 * game.config.height, 'btclose');
-        this.btclose.setScale(0.35);
+        this.btclose.setScale(0.4);
         this.btclose.visible = false;
         this.btclose.name = 'btclose';
 
