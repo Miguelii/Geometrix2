@@ -34,6 +34,8 @@ var contaTempo;
 var disable = false; 
 var signal = false; 
 var levelText; 
+var changeLevel = false; 
+var changeLives = true; 
 
 class Jogo extends Phaser.Scene {
 
@@ -129,12 +131,15 @@ class Jogo extends Phaser.Scene {
         //Coracao cheio
         this.coracaocheio1 = this.add.sprite(0.18 * game.config.width, 0.17 * game.config.height, 'coracao1');
         this.coracaocheio1.setScale(0.3);
+        this.coracaocheio1.visible = true;
 
         this.coracaocheio2 = this.add.sprite(0.22 * game.config.width, 0.17 * game.config.height, 'coracao1');
         this.coracaocheio2.setScale(0.3);
+        this.coracaocheio2.visible = true;
 
         this.coracaocheio3 = this.add.sprite(0.26 * game.config.width, 0.17 * game.config.height, 'coracao1');
         this.coracaocheio3.setScale(0.3);
+        this.coracaocheio3.visible = true;
 
         //Coracao vazio
         this.coracaovazio1 = this.add.sprite(0.18 * game.config.width, 0.17 * game.config.height, 'coracao2');
@@ -160,8 +165,13 @@ class Jogo extends Phaser.Scene {
         sim.setScale(0.45);
         sim.setInteractive({ useHandCursor: true});
         nao.setInteractive({ useHandCursor: true });
+
         sim.on('pointerdown', () => {
-            level += 1;
+            if(!changeLevel){
+                level += 1;
+                changeLevel = true;
+            }
+            changeLives = false; 
             armazenado = 0;
             f2 = true;
             aceita = true;
@@ -675,7 +685,7 @@ class Jogo extends Phaser.Scene {
                         ponto1.y=y;
                         ponto2.x=x1;
                         ponto2.y=y1;
-                        if (level==2 || level==1 || level==6){
+                        if (level==2 || level==1 || level==6|| level==7|| level==10|| level==11|| level==16){
                             letrac.x = point.x+5;
                             letrac.y = point.y+5;
                             ponto3.x=point.x;
@@ -685,8 +695,17 @@ class Jogo extends Phaser.Scene {
                                 graphics.strokeLineShape(lines[i]);
                             }
                         }
-                        
-                        if(level==3 || level==4 || level==5){
+                        if(level==14||level==15|| level==18){
+                            letrad.x = point4.x+5;
+                            letrad.y = point4.y+5;
+                            ponto4.x=point4.x;
+                            ponto4.y=point4.y;
+                            for(var i= 0;i<lines.length;i++){
+                                graphics.lineStyle(4, color);
+                                graphics.strokeLineShape(lines[i]);
+                            }
+                        }
+                        if(level==3 || level==4 || level==5||level==8|| level==12|| level==13|| level==19){
                             letrac.x = point.x+5;
                             letrac.y = point.y+5;
                             ponto3.x=point.x;
@@ -695,6 +714,24 @@ class Jogo extends Phaser.Scene {
                             letrad.y = point4.y+5;
                             ponto4.x=point4.x;
                             ponto4.y=point4.y;
+                            for(var i= 0;i<lines.length;i++){
+                                graphics.lineStyle(4, color);
+                                graphics.strokeLineShape(lines[i]);
+                            }
+                        }
+                        if(level==20){
+                            letrac.x = point.x+5;
+                            letrac.y = point.y+5;
+                            ponto3.x=point.x;
+                            ponto3.y=point.y;
+                            letrad.x = point4.x+5;
+                            letrad.y = point4.y+5;
+                            letrae.x = point5.x+5;
+                            letrae.y = point5.y+5;
+                            ponto4.x=point4.x;
+                            ponto4.y=point4.y;
+                            ponto5.x=point5.x;
+                            ponto5.y=point5.y;
                             for(var i= 0;i<lines.length;i++){
                                 graphics.lineStyle(4, color);
                                 graphics.strokeLineShape(lines[i]);
@@ -1640,7 +1677,7 @@ class Jogo extends Phaser.Scene {
             if(!muda){
                 switch (level){
                     case 1: 
-                        if (reta(point2,point3,line) && certas == 0) aceita = true; 
+                        if (segmentoReta(point2,point3,line) && certas == 0) aceita = true; 
                         else{
                             if (sgm){
                                 if(midlePoint!=null && sgm==true){
@@ -1679,7 +1716,7 @@ class Jogo extends Phaser.Scene {
                                     }
                                     else{
                                         midlePoint = null;
-                                        if(signal){
+                                        if(signal && changeLives){
                                             score -= 5;
                                             vidas -= 1;
                                         }
@@ -1696,8 +1733,10 @@ class Jogo extends Phaser.Scene {
                                 }
                             }
                             else{
-                                score -= 5;
-                                vidas -= 1;
+                                if(changeLives){
+                                    score -= 5;
+                                    vidas -= 1;
+                                }
                             }
                         }
                         break; 
@@ -1706,7 +1745,7 @@ class Jogo extends Phaser.Scene {
                             lines.push(line);
                         }
                         contador = 1;
-                        if(reta(point2,point3,line)){
+                        if(segmentoReta(point2,point3,line)){
                             um = true; 
                             texto.setText([
                                 'Traça o segmento de reta [' + letra1 + letra3 + ']'
@@ -1736,8 +1775,10 @@ class Jogo extends Phaser.Scene {
                                     certas = 2;
                                 }
                                 else{
-                                    score-=5;
-                                    vidas -= 1; 
+                                    if(changeLives){
+                                        score -= 5;
+                                        vidas -= 1;
+                                    }
                                     lines.pop();
                                     graphics.clear();
                                 }
@@ -1769,7 +1810,7 @@ class Jogo extends Phaser.Scene {
                             lines.push(line);
                         }
                         contador = 1;
-                        if(reta(point2,point3,line)){
+                        if(segmentoReta(point2,point3,line)){
                             pointsLine = [];
                             var pointsLine2 = getPointsOnLine(point3,point4);
                             for(var i=0;i<pointsLine2.length;i++){
@@ -1799,8 +1840,10 @@ class Jogo extends Phaser.Scene {
                                     certas = 2;
                                 }
                                 else{
-                                    score-=5;
-                                    vidas -=1; 
+                                    if(changeLives){
+                                        score -= 5;
+                                        vidas -= 1;
+                                    }
                                     lines.pop();
                                     graphics.clear();
                                 }
@@ -1831,7 +1874,7 @@ class Jogo extends Phaser.Scene {
                             lines.push(line);
                         }
                         contador = 1;
-                        if(reta(point2,point3,line)){
+                        if(segmentoReta(point2,point3,line)){
                             pointsLine = [];
                             var pointsLine2 = getPointsOnLine(point3,point4);
                             for(var i=0;i<pointsLine2.length;i++){
@@ -1875,8 +1918,10 @@ class Jogo extends Phaser.Scene {
                                         pointsLine = [];
                                     }
                                     else{
-                                        score-=5;
-                                        vidas -=1;
+                                        if(changeLives){
+                                            score -= 5;
+                                            vidas -= 1;
+                                        }
                                         lines.pop();
                                         graphics.clear();
                                     }
@@ -1945,7 +1990,7 @@ class Jogo extends Phaser.Scene {
                                     }
                                     else{
                                         midlePoint = null; 
-                                        if(signal){
+                                        if(signal&&changeLives){
                                             score-=5; 
                                             vidas -=1; 
                                         }
@@ -1962,8 +2007,10 @@ class Jogo extends Phaser.Scene {
                                 }
                             }
                             else{
-                                vidas -= 1;
-                                score -= 5;
+                                if(changeLives){
+                                    score -= 5;
+                                    vidas -= 1;
+                                }
                             }
                         } 
                         break;
@@ -2000,11 +2047,12 @@ class Jogo extends Phaser.Scene {
                                     tres = true;
                                 }
                                 else{
-                                    score-=5;
                                     lines.pop();
                                     graphics.clear();  
-                                    score -= 5; 
-                                    vidas -= 1;
+                                    if(changeLives){
+                                        score -= 5;
+                                        vidas -= 1;
+                                    }
                                 }
                             }
                         }                
@@ -2090,7 +2138,7 @@ class Jogo extends Phaser.Scene {
                                         }
                                     else{
                                         midlePoint = null;
-                                        if(signal){
+                                        if(signal&&changeLives){
                                             score -= 5; 
                                             vidas -= 1;
                                         }
@@ -2107,8 +2155,10 @@ class Jogo extends Phaser.Scene {
                                 }
                             }
                             else{
-                                score -= 5; 
-                                vidas -= 1;
+                                if(changeLives){
+                                    score -= 5;
+                                    vidas -= 1;
+                                }
                             } 
                         }
                     }                
@@ -2210,7 +2260,7 @@ class Jogo extends Phaser.Scene {
                                         }
                                     else{
                                         midlePoint = null;
-                                        if(signal){
+                                        if(signal&&changeLives){
                                             score -= 5; 
                                             vidas -= 1;
                                         }
@@ -2227,8 +2277,10 @@ class Jogo extends Phaser.Scene {
                                 }
                             }
                             else{
-                                score -= 5; 
-                                vidas -= 1;
+                                if(changeLives){
+                                    score -= 5;
+                                    vidas -= 1;
+                                }
                             } 
                         }
                     }                
@@ -2296,7 +2348,7 @@ class Jogo extends Phaser.Scene {
                                     }
                                     else{
                                         midlePoint = null;
-                                        if(signal){
+                                        if(signal&&changeLives){
                                             score -= 5; 
                                             vidas -= 1;
                                         }
@@ -2313,8 +2365,10 @@ class Jogo extends Phaser.Scene {
                                 }
                             }
                             else{
-                                score -= 5;
-                                vidas -= 1;
+                                if(changeLives){
+                                    score -= 5;
+                                    vidas -= 1;
+                                }
                             }
                         }
                         break;
@@ -2352,8 +2406,10 @@ class Jogo extends Phaser.Scene {
                                     tres = true; 
                                 }
                                 else{
-                                    score-=5;
-                                    vidas -=1;
+                                    if(changeLives){
+                                        score -= 5;
+                                        vidas -= 1;
+                                    }
                                     lines.pop();
                                     graphics.clear();
                                 }
@@ -2415,8 +2471,10 @@ class Jogo extends Phaser.Scene {
                                     tres = true; 
                                 }
                                 else{
-                                    score-=5;
-                                    vidas -=1;
+                                    if(changeLives){
+                                        score -= 5;
+                                        vidas -= 1;
+                                    }
                                     lines.pop();
                                     graphics.clear();
                                 }
@@ -2478,8 +2536,10 @@ class Jogo extends Phaser.Scene {
                                     tres = true; 
                                 }
                                 else{
-                                    score-=5;
-                                    vidas -=1;
+                                    if(changeLives){
+                                        score -= 5;
+                                        vidas -= 1;
+                                    }
                                     lines.pop();
                                     graphics.clear();
                                 }
@@ -2583,7 +2643,7 @@ class Jogo extends Phaser.Scene {
                                         }
                                     else{
                                         midlePoint = null;
-                                        if(signal){
+                                        if(signal&&changeLives){
                                             score -= 5; 
                                             vidas -= 1;
                                         }
@@ -2600,8 +2660,10 @@ class Jogo extends Phaser.Scene {
                                 }
                             }
                             else{
-                                score -= 5; 
-                                vidas -= 1;
+                                if(changeLives){
+                                    score -= 5;
+                                    vidas -= 1;
+                                }
                             } 
                         }
                     }                
@@ -2661,8 +2723,10 @@ class Jogo extends Phaser.Scene {
                                     tres = true; 
                                 }
                                 else{
-                                    score-=5;
-                                    vidas -=1;
+                                    if(changeLives){
+                                        score -= 5;
+                                        vidas -= 1;
+                                    }
                                     lines.pop();
                                     graphics.clear();
                                 }
@@ -2752,7 +2816,7 @@ class Jogo extends Phaser.Scene {
                                         }
                                     else{
                                         midlePoint = null;
-                                        if(signal){
+                                        if(signal&&changeLives){
                                             score -= 5; 
                                             vidas -= 1;
                                         }
@@ -2769,8 +2833,10 @@ class Jogo extends Phaser.Scene {
                                 }
                             }
                             else{
-                                score -= 5; 
-                                vidas -= 1;
+                                if(changeLives){
+                                    score -= 5;
+                                    vidas -= 1;
+                                }
                             }  
                         }                
                         for(var i= 0;i<lines.length;i++){
@@ -2829,8 +2895,10 @@ class Jogo extends Phaser.Scene {
                                     tres = true; 
                                 }
                                 else{
-                                    score-=5;
-                                    vidas -=1;
+                                    if(changeLives){
+                                        score -= 5;
+                                        vidas -= 1;
+                                    }
                                     lines.pop();
                                     graphics.clear();
                                 }
@@ -2937,8 +3005,10 @@ class Jogo extends Phaser.Scene {
                                 }
                             }
                             else{
-                                score -= 5; 
-                                vidas -= 1;
+                                if(changeLives){
+                                    score -= 5;
+                                    vidas -= 1;
+                                }
                             }  
                         }                
                         for(var i= 0;i<lines.length;i++){
@@ -3009,8 +3079,10 @@ class Jogo extends Phaser.Scene {
                                         quatro = true;    
                                     }
                                     else{
-                                        score-=5;
-                                        vidas -=1;
+                                        if(changeLives){
+                                            score -= 5;
+                                            vidas -= 1;
+                                        }
                                         lines.pop();
                                         graphics.clear();
                                     }
@@ -3126,7 +3198,7 @@ class Jogo extends Phaser.Scene {
                                             }
                                         else{
                                             midlePoint = null;
-                                            if(signal){
+                                            if(signal&&changeLives){
                                                 score -= 5; 
                                                 vidas -= 1;
                                             }
@@ -3145,8 +3217,10 @@ class Jogo extends Phaser.Scene {
                                 }
                                 else{
                                     lines.pop();
-                                    score -= 5; 
-                                    vidas -= 1;
+                                    if(changeLives){
+                                        score -= 5;
+                                        vidas -= 1;
+                                    }
                                 } 
                             }
                         }
@@ -3289,7 +3363,7 @@ class Jogo extends Phaser.Scene {
                                                     }
                                             else{
                                                 midlePoint = null;
-                                                if(signal){
+                                                if(signal&&changeLives){
                                                     score -= 5; 
                                                     vidas -= 1;
                                                 }
@@ -3307,8 +3381,10 @@ class Jogo extends Phaser.Scene {
                                     }
                                     else{
                                         lines.pop();
-                                        score -= 5; 
-                                        vidas -= 1;
+                                        if(changeLives){
+                                            score -= 5;
+                                            vidas -= 1;
+                                        }
                                     } 
                                 }
                             }
@@ -3354,6 +3430,8 @@ class Jogo extends Phaser.Scene {
                     letrad.text = letra4;
                     certas += 1;
                     midlePoint = null;
+                    changeLevel = false;
+                    changeLives = true; 
                     f1 = false; 
                     f2 = false; 
                     contador = 0;
@@ -4084,6 +4162,24 @@ class Jogo extends Phaser.Scene {
         timer.setText([segundos]);
         textScore.setText([score + " pts" ]);
         levelText.setText(['Level: ' + level ]);
+
+        switch (vidas){
+            case 0: 
+                this.coracaocheio3.visible = false;
+                this.coracaocheio2.visible = false;
+                this.coracaocheio1.visible = false;
+                this.coracaovazio1.visible = true;
+                this.coracaovazio2.visible = true;
+                this.coracaovazio3.visible = true;
+            case 1: 
+                this.coracaocheio3.visible = false;
+                this.coracaocheio2.visible = false;
+                this.coracaovazio2.visible = true;
+                this.coracaovazio3.visible = true;
+            case 2: 
+                this.coracaocheio3.visible = false;
+                this.coracaovazio3.visible = true;
+        }
 
         if(certas==1 && (level==1||level==9)){
             this.btHome.disableInteractive();
