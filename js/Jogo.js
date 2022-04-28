@@ -3376,12 +3376,7 @@ class Jogo extends Phaser.Scene {
                         graphics.clear();
                         clearInterval(contaTempo);
                         escondePontos([ponto1,ponto2,letraa,letrab]);
-                        if(level==2||level==6 || level==7){
-                            escondePontos([ponto3,letrac]);
-                        }
-                        if(level==3 || level == 4 || level == 8){
-                            escondePontos([ponto3,ponto4,letrac,letrad]);
-                        }
+                        escondePontos([ponto3,ponto4,letrac,letrad]);
                         certas = -1;
                         muda = true; 
                         f1 = false; 
@@ -4089,7 +4084,18 @@ class Jogo extends Phaser.Scene {
         timer.setText([segundos]);
         textScore.setText([score + " pts" ]);
         levelText.setText(['Level: ' + level ]);
-        console.log(disable);
+
+        if(certas==1 && (level==1||level==9)){
+            this.btHome.disableInteractive();
+            setTimeout(() =>{
+            aux = true;},1000);
+        }
+        if(certas==2){
+            this.btHome.disableInteractive();
+            setTimeout(() =>{
+            aux = true;},1000);
+        }
+        
         if(level>20){
             this.scene.transition({ target: 'Menu', duration: 100 });
             reset();
@@ -4127,7 +4133,6 @@ class Jogo extends Phaser.Scene {
         }
     }
 }
-
 
 function segmentoReta(a,b,line){ //Verifica se é um segmento de reta de A para b 
 
@@ -4370,10 +4375,19 @@ function pontosParalelo(x,y,x1,y1){
     var linha = new Phaser.Geom.Line(x, y, x1, y1);
     var angle = Phaser.Geom.Line.Angle(linha);
     var paralela = new Phaser.Geom.Line();
-    Phaser.Geom.Line.SetToAngle(paralela,x,y -200,angle,dist(x,y,x1,y1));
+    var k = 200;
+    Phaser.Geom.Line.SetToAngle(paralela,x,y -k,angle,dist(x,y,x1,y1));
     var points = paralela.getPoints(); 
     var pontoA = paralela.getPointA();
     var pontoB = paralela.getPointB(); 
+    
+    while(pontoB.y<200 || pontoB.y>450 || pontoA.y<200 || pontoA.y>450){
+        k -= 10;
+        Phaser.Geom.Line.SetToAngle(paralela,x,y -k,angle,dist(x,y,x1,y1));
+        pontoA = paralela.getPointA();
+        pontoB = paralela.getPointB();
+    }
+    
 
     return [pontoA,pontoB];
 }
@@ -4402,19 +4416,30 @@ function perpendicular(ponto1,ponto2){
     pointerLine.setTo(ponto1.x,ponto1.y,ponto2.x,ponto2.y);
     var normalAngle = Phaser.Geom.Line.NormalAngle(pointerLine);
     var ponto = pointerLine.getRandomPoint(); 
-    while(dist(ponto.x,ponto.y,ponto1.x,ponto1.y)<50 && dist(ponto.x,ponto.y,ponto2.x,ponto2.y)<50){
+    while((dist(ponto.x,ponto.y,ponto1.x,ponto1.y)<50 && dist(ponto.x,ponto.y,ponto2.x,ponto2.y)<50) || ponto.x == ponto1.x
+    ||ponto.x == ponto2.x || ponto.y == ponto1.y || ponto.y == ponto2.y
+    ){
         ponto = pointerLine.getRandomPoint(); 
     }
     var perp = new Phaser.Geom.Line();
     var perpInverse = new Phaser.Geom.Line();
-    Phaser.Geom.Line.SetToAngle(perp,ponto.x,ponto.y,normalAngle,200);
-    Phaser.Geom.Line.SetToAngle(perpInverse,ponto.x,ponto.y,normalAngle+3.14,200);
+    var distancia = 200; 
+    Phaser.Geom.Line.SetToAngle(perp,ponto.x,ponto.y,normalAngle,distancia);
+    Phaser.Geom.Line.SetToAngle(perpInverse,ponto.x,ponto.y,normalAngle+3.14,distancia);
     var pontoA = perp.getPointA();
     var pontoB = perp.getPointB(); 
-    if (pontoB.y>400){
-        pontoA = perpInverse.getPointA();
-        pontoB = perpInverse.getPointB(); 
+
+    console.log(pontoB.y);
+    while (pontoB.y<200 || pontoB.y>450){
+        distancia -= 50;
+        Phaser.Geom.Line.SetToAngle(perp,ponto.x,ponto.y,normalAngle,distancia);
+        pontoA = perp.getPointA();
+        pontoB = perp.getPointB(); 
     }
+
+    
+    console.log(pontoB.y);
+
     return [pontoA,pontoB];
 }
 
@@ -4440,7 +4465,7 @@ function generate2points(){
     let x1 =Math.random()*(800 - 300) + 300;
     let y1 = Math.random()*(600 - 300) + 300;
 
-    while (y > 450 || y1>450 || x==x1 || x==y || x==y1 || x1==y1 || y==x1 || y==y1 || dist(x,y,x1,y1)<=150){
+    while (y > 450 || y<200 || y1>450 ||y1<200 || x==x1 || x==y || x==y1 || x1==y1 || y==x1 || y==y1 || dist(x,y,x1,y1)<=300){
         x = Math.random()*(800 - 300) + 300;
         y = Math.random()*(600 - 300) + 300;
         x1 = Math.random()*(800 - 300) + 300;
@@ -4472,8 +4497,8 @@ function generateExtraPoint(pontos,quantos){
     var b = Math.random()*(600 - 300) + 300;
 
     for(var i =0;i<pointsLine.length;i++){
-        while((a<=pointsLine[i].x+10 && a>=pointsLine[i].x-10 && b<=pointsLine[i].y+10 && b>=pointsLine[i].y-10)||
-        (b>450 ||a==x || a==x1 || b==y || b==y1 || dist(a,b,x,y)<=150 || dist(x,y,x1,y1)<=150) ){
+        while((a<=pointsLine[i].x+30 && a>=pointsLine[i].x-30 && b<=pointsLine[i].y+30 && b>=pointsLine[i].y-30)||
+        (b>450 || b<200 ||a==x || a==x1 || b==y || b==y1 || dist(a,b,x,y)<=150 || dist(x,y,x1,y1)<=150) ){
             a = Math.random()*(800 - 300) + 300;
             b = Math.random()*(600 - 300) + 300;
         }
@@ -4495,13 +4520,12 @@ function generateExtraPoint(pontos,quantos){
         var a1 = Math.random()*(800 - 300) + 300;
         var b1 = Math.random()*(600 - 300) + 300;
 
-        while(b1>450 ||a1==x || a1==x1 || b1==y || b1==y1 ||a1==a || a1==b
+        while(b1>450 || b1<200 ||a1==x || a1==x1 || b1==y || b1==y1 ||a1==a || a1==b
             || dist(a1,b1,x,y)<=200 || dist(a1,b1,a,b)<=200
         || dist(a1,b1,x1,y1)<=200){
             a1 = Math.random()*(800 - 300) + 300;
             b1 = Math.random()*(600 - 300) + 300;
         }
-        
         
         var pontodois = new Phaser.Geom.Point(a1, b1);
         return [ponto,pontodois];
