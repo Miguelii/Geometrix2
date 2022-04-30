@@ -14,7 +14,7 @@ var timer;
 var score = 0; 
 var textScore;
 var pause = false; 
-var level = 20; 
+var level = 1; 
 var sim;
 var nao;
 var info;
@@ -778,120 +778,39 @@ class Jogo extends Phaser.Scene {
                 if(ultimo==false){
                     line.setTo(pointer.x, pointer.y, pointer.x, pointer.y);
                 }
+                var pontosLine;
+
+                if(level==1||level==5||level==7||level==9||level==13||level==19){
+                    pontosLine= getPretendedLine(level,point2,point3);
+                }
+                if(level==8||level==20){
+                    pontosLine= getPretendedLine(level,point2,point);
+                }
+                if(level==15||level==17){
+                    pontosLine= getPretendedLine(level,point4,point);
+                }
 
                 if (((level == 1||level==5||level==7||level==8||level==9||level==13||level==15||level==17||level==19||level==20) && certas ==1)){
                     if(posto==false){
                         signal = true; 
-                        var pontosLine = getPointsOnLine(point2,point3);
+                       
                         for(var i=0;i<pontosLine.length;i++){
+                            graphics.fillPointShape(pontosLine[i],5);
                             var mid = pontosLine[i];
-                            if(level==7||level==8){     
-                                var paux1 = point2; 
-                                var paux2 = point3; 
-                                if(level == 8){
-                                    paux2 = point; 
-                                    pontosLine = getPointsOnLine(point2,point);
-                                }  
-                                if ((pontoEsquerda(paux1,paux2) == paux1 && (pointer.x<paux1.x ||
-                                pointer.x>paux2.x)) || (pontoEsquerda(paux1,paux2) == paux2 && (pointer.x<paux2.x ||
-                                pointer.x>paux1.x)) && 
-                                (pointer.x<=mid.x+20 && pointer.x>=mid.x-20 && pointer.y<=mid.y+20 && pointer.y>=mid.y-20)
-                                ){
-                                    midlePoint = new Phaser.Geom.Point(mid.x,mid.y);
-                                    if(sgm){
-                                        aceitaMidle = true;
-                                        if(!posto){
-                                            pontoExtra.x = mid.x;
-                                            pontoExtra.y = mid.y; 
-                                            graphics.strokeLineShape(lines[0]);
-                                        }
-                                        posto=true;
+                            if ((pointer.x<=mid.x+20 && pointer.x>=mid.x-20 && pointer.y<=mid.y+20 && pointer.y>=mid.y-20)){
+                                midlePoint = new Phaser.Geom.Point(mid.x,mid.y);
+                                if(sgm){
+                                    aceitaMidle = true;
+                                    if(!posto){
+                                        pontoExtra.x = mid.x;
+                                        pontoExtra.y = mid.y; 
+                                        graphics.strokeLineShape(lines[0]);
                                     }
-                                }
-                                else{
-                                    midlePoint = new Phaser.Geom.Point(pointer.x,pointer.y);
+                                    posto=true;
                                 }
                             }
                             else{
-                                if(level==13){
-                                    var paux1 = point2; 
-                                    var paux2 = point3; 
-                                    if ((pontoEsquerda(paux1,paux2) == paux1 && (
-                                    pointer.x>paux2.x)) || (pontoEsquerda(paux1,paux2) == paux2 && (
-                                    pointer.x<paux1.x)) && 
-                                    (pointer.x<=mid.x+5 && pointer.x>=mid.x-5 && pointer.y<=mid.y+5 && pointer.y>=mid.y-5)
-                                    ){
-                                        midlePoint = new Phaser.Geom.Point(mid.x,mid.y);
-                                        if(sgm){
-                                            aceitaMidle = true;
-                                            console.log(posto);
-                                            if(!posto){
-                                                pontoExtra.x = mid.x;
-                                                pontoExtra.y = mid.y; 
-                                                graphics.strokeLineShape(lines[0]);
-                                            }
-                                            posto=true;
-                                        }
-                                    }
-                                    else{
-                                        midlePoint = new Phaser.Geom.Point(pointer.x,pointer.y);
-                                        
-                                    }
-    
-                                }
-                                else{
-                                    if(level==19||level==20){
-                                        var paux1 = point2; 
-                                        var paux2 = point3; 
-                                        if(level==20){
-                                            paux2 = point; 
-                                            pontosLine = getPointsOnLine(point2,point);
-                                        }
-                                        if ((pontoEsquerda(paux1,paux2) == paux1 && (
-                                        pointer.x>paux2.x)) || (pontoEsquerda(paux1,paux2) == paux2 && (
-                                        pointer.x>paux1.x)) && 
-                                        (pointer.x<=mid.x+20 && pointer.x>=mid.x-20 && pointer.y<=mid.y+5 && pointer.y>=mid.y-20)
-                                        ){
-                                            midlePoint = new Phaser.Geom.Point(mid.x,mid.y);
-                                            if(sgm){
-                                                aceitaMidle = true;
-                                                if(!posto){
-                                                    pontoExtra.x = mid.x;
-                                                    pontoExtra.y = mid.y;   
-                                                    graphics.strokeLineShape(lines[0]);
-                                                }
-                                                posto=true;
-                                            }
-                                        }
-                                        else{
-                                            midlePoint = new Phaser.Geom.Point(pointer.x,pointer.y);
-                                        }
-        
-                                    }
-                                    else{
-                                        if(level == 15|| level==17){
-                                            pontosLine = getPointsOnLine(point,point4);
-                                        } 
-                                        if(pointer.x<=mid.x+20 && pointer.x>=mid.x-20 && pointer.y<=mid.y+20 && pointer.y>=mid.y-20){
-                                            midlePoint = new Phaser.Geom.Point(mid.x,mid.y);
-                                            if(sgm){
-
-                                                aceitaMidle = true;
-                                                if(!posto){
-                                                    pontoExtra.x = mid.x;
-                                                    pontoExtra.y = mid.y; 
-                                                    graphics.strokeLineShape(lines[0]);
-                                                }
-                                                posto=true;
-                                            }
-                                        }
-                                        else{
-                                            if(!posto){
-                                                midlePoint = new Phaser.Geom.Point(pointer.x,pointer.y);
-                                            }
-                                        }
-                                    }
-                                }
+                                midlePoint = new Phaser.Geom.Point(pointer.x,pointer.y);
                             }
                         }
                     }
@@ -4568,6 +4487,88 @@ class Jogo extends Phaser.Scene {
     }
 }
 
+function getPretendedLine (level,ponto1,ponto2){
+    var linha = new Phaser.Geom.Line(); 
+    var x = ponto1.x; 
+    var y = ponto1.y; 
+    var x1 = ponto2.x; 
+    var y1 = ponto2.y; 
+    var lineWanted = new Phaser.Geom.Line(); 
+    var lineWantedInverse = new Phaser.Geom.Line(); 
+
+    lineWanted.setTo(x,y,x1,y1);
+    lineWantedInverse.setTo(x1,y1,x,y);
+
+
+    var angle = Phaser.Geom.Line.Angle(lineWanted);
+    var angleInverse = Phaser.Geom.Line.Angle(lineWantedInverse);
+    var lineAuxInverse = new Phaser.Geom.Line();
+    var lineaux =new Phaser.Geom.Line();   
+    
+    Phaser.Geom.Line.SetToAngle(lineAuxInverse,x1,y1,angleInverse,600);
+    Phaser.Geom.Line.SetToAngle(lineaux,x,y,angle,600);
+
+    var otherLine=new Phaser.Geom.Line(); 
+    Phaser.Geom.Line.SetToAngle(otherLine,x,y,angleInverse,600);
+
+    var otherLine2=new Phaser.Geom.Line(); 
+    Phaser.Geom.Line.SetToAngle(otherLine2,x1,y1,angle,600);
+
+    var end = lineaux.getPointB();
+    var end2 = lineAuxInverse.getPointB(); 
+    var lineTeste = new Phaser.Geom.Line();   
+
+    switch (level){
+        case 1: 
+            linha.setTo(ponto1.x,ponto1.y,ponto2.x,ponto2.y);
+            console.log(linha);
+            return linha.getPoints(200);
+        case 5: 
+            lineTeste.setTo(end.x,end.y,end2.x,end2.y);
+            return lineTeste.getPoints(600);
+        case 7: 
+            var pontos = []; 
+            var pontosAux = otherLine2.getPoints(100);
+            var pontosAuxInv = otherLine.getPoints(100);
+            
+            for(var i=0;i<pontosAux.length;i++){
+                pontos.push(pontosAux[i]);
+            }
+            for(var i=0;i<pontosAuxInv.length;i++){
+                pontos.push(pontosAuxInv[i]);
+            }
+            
+            return pontos; 
+        case 8: 
+            var pontos = []; 
+            var pontosAux = otherLine2.getPoints(100);
+            var pontosAuxInv = otherLine.getPoints(100);
+            
+            for(var i=0;i<pontosAux.length;i++){
+                pontos.push(pontosAux[i]);
+            }
+            for(var i=0;i<pontosAuxInv.length;i++){
+                pontos.push(pontosAuxInv[i]);
+            }
+            
+            return pontos; 
+        case 9: 
+            return lineAuxInverse.getPoints(200);
+        case 13: 
+            Phaser.Geom.Line.SetToAngle(lineaux,x1,y1,angle,300);
+            return lineaux.getPoints(200);
+        case 15: 
+            linhaTeste.setTo(end.x,end.y,end2.x,end2.y);
+            return linhaTeste.getPoints(200);
+        case 19: 
+            Phaser.Geom.Line.SetToAngle(lineaux,x1,y1,angle,300);
+            return lineaux.getPoints(200);
+        case 20: 
+            Phaser.Geom.Line.SetToAngle(lineaux,x1,y1,angle,300);
+            return lineaux.getPoints(200);
+    }
+}
+
 function segmentoReta(a,b,line){ //Verifica se é um segmento de reta de A para b 
 
     if (line.getPointB().x == b.x && line.getPointB().y == b.y && line.getPointA().x==a.x  && line.getPointA().y==a.y){
@@ -4774,11 +4775,6 @@ function getPointsOnLine(a,b){
     lineTeste.setTo(end.x,end.y,end2.x,end2.y);
     return lineTeste.getPoints(1000);
 }
-
-function getPointsOnLine(lineTeste){
-    return lineTeste.getPoints(200);
-}
-
 
 function dist(x,y,x1,y1){
     let ret = ((x1-x)^2 + (y1-y)^2)
