@@ -4675,11 +4675,17 @@ function generateExtraPoint(pontos,quantos){
     if(teste==point2){
         teste2 = point3; 
     }
-
-    while((b>450 || b<200 ||a==x || a==x1 || b==y || b==y1 || dist(a,b,point2.x,point2.y)<=50 || dist(a,b,point3.x,point3.y)<=50 ||(b<=teste.y+50 && b>=teste2.y-50))){
+    var iterations = 0; 
+    var continua = true; 
+    while((b>450 || b<200 ||a==x || a==x1 || b==y || b==y1 || dist(a,b,point2.x,point2.y)<=50 || dist(a,b,point3.x,point3.y)<=50 ||(b<=teste.y+50 && b>=teste2.y-50))&&continua){
         a = Math.random()*(800 - 300) + 300;
         b = Math.random()*(600 - 300) + 300;
-        console.log("while1");
+        iterations += 1; 
+        if(iterations>200){
+            continua = false; 
+            a = 400; 
+            b = 400;
+        }
     }
 
     var ponto = new Phaser.Geom.Point(a, b);
@@ -4689,20 +4695,25 @@ function generateExtraPoint(pontos,quantos){
     }
 
     else{
-        console.log("entrou");
+        iterations = 200; 
+        continua = true;
         var a1 = Math.random()*(800 - 300) + 300;
         var b1 = Math.random()*(600 - 300) + 300;
 
-        while(b1>450 || b1<200 ||a1==x || a1==x1 || b1==y || b1==y1 ||a1==a || a1==b
+        while((b1>450 || b1<200 ||a1==x || a1==x1 || b1==y || b1==y1 ||a1==a || a1==b
             || dist(a1,b1,x,y)<=50 || dist(a1,b1,a,b)<=50
-        || dist(a1,b1,x1,y1)<=50){
+        || dist(a1,b1,x1,y1)<=50 )&&continua){
             a1 = Math.random()*(800 - 300) + 300;
             b1 = Math.random()*(600 - 300) + 300;
-            console.log("while2");
+            iterations += 1; 
+            if(iterations>200){
+                continua = false; 
+                a= 400; 
+                b = 400;
+            }
         }
     
         var pontodois = new Phaser.Geom.Point(a1, b1);
-        console.log("saiu");
         return [ponto,pontodois];
     }
 }
