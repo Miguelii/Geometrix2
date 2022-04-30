@@ -795,7 +795,6 @@ class Jogo extends Phaser.Scene {
                         signal = true; 
                        
                         for(var i=0;i<pontosLine.length;i++){
-                            graphics.fillPointShape(pontosLine[i],5);
                             var mid = pontosLine[i];
                             if ((pointer.x<=mid.x+20 && pointer.x>=mid.x-20 && pointer.y<=mid.y+20 && pointer.y>=mid.y-20)){
                                 midlePoint = new Phaser.Geom.Point(mid.x,mid.y);
