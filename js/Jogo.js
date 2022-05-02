@@ -796,6 +796,7 @@ class Jogo extends Phaser.Scene {
                        
                         for(var i=0;i<pontosLine.length;i++){
                             var mid = pontosLine[i];
+                            graphics.fillPointShape(mid,4);
                             if ((pointer.x<=mid.x+20 && pointer.x>=mid.x-20 && pointer.y<=mid.y+20 && pointer.y>=mid.y-20)){
                                 midlePoint = new Phaser.Geom.Point(mid.x,mid.y);
                                 if(sgm){
@@ -1152,7 +1153,6 @@ class Jogo extends Phaser.Scene {
                                 graphics.lineStyle(4, color);
                                 graphics.strokeLineShape(lines[i]);
                             }
-                            console.log(lines);
                             if(midlePoint!=null){
                                 graphics.clear();
                                 graphics.lineStyle(4, color);
@@ -1222,7 +1222,7 @@ class Jogo extends Phaser.Scene {
                                             if(pointer.x<=pointsLine[i].x+50 &&pointer.x >= pointsLine[i].x-50 && pointer.y <= pointsLine[i].y+50 && pointer.y >= pointsLine[i].y-50){
                                                 line.x2 = pointsLine[i].x;
                                                 line.y2 = pointsLine[i].y;
-                                                p = true;
+                                                
                                                 }
                                             }
                                         }
@@ -1815,7 +1815,6 @@ class Jogo extends Phaser.Scene {
                                 else{
                                     if(!naoMexe && contador==0){
                                         contador += 1;
-                                        console.log("ola");
                                         graphics.clear();
                                         lines.pop();
                                         sgm = false;
@@ -1887,7 +1886,6 @@ class Jogo extends Phaser.Scene {
                                 texto.setText([
                                     'Marca um ponto do segmento \nde reta [' + letra1 + letra2 + '] que não seja\n um extremo'
                                 ]);
-                                console.log(midlePoint);
                                 if(sgm){
                                     graphics.lineStyle(4, color);
                                     graphics.strokeLineShape(lines[0]);
@@ -2537,7 +2535,6 @@ class Jogo extends Phaser.Scene {
                                 texto.setText([
                                     'Marca outro ponto da semirreta |' + letra1 + letra2
                                 ]);
-                                console.log(midlePoint);
                                 if(sgm){
                                     graphics.lineStyle(4, color);
                                     graphics.strokeLineShape(lines[0]);
@@ -3541,7 +3538,7 @@ class Jogo extends Phaser.Scene {
                                         ]); 
                                     }
                                     else{
-                                        if (sgm && !cinco){
+                                        if (sgm && !cinco){ 
                                             if(midlePoint!=null && sgm==true){
                                                 posto = true;
                                                 graphics.lineStyle(4, color);
@@ -3688,7 +3685,6 @@ class Jogo extends Phaser.Scene {
                     letraa.y = y+5;
                     letrab.x = x1+5;
                     letrab.y = y1+5;
-                    //segundos = 0; 
                     if (certas == 3){
                         graphics.clear();
                         clearInterval(contaTempo);
@@ -3703,7 +3699,6 @@ class Jogo extends Phaser.Scene {
                     }
 
                     if(f1 || f2){  
-                        console.log(level);
                         escondePontos([info,sim,nao]);
                         graphics.clear();
                         pon = generate2points(); 
@@ -3774,9 +3769,9 @@ class Jogo extends Phaser.Scene {
                                 graphics.clear(); 
                                 lines[j] = new Phaser.Geom.Line();
                                 line = lines[j];
-                                var aux = generateExtraPoint([point2,point3],3); 
-                                point = aux[0]; 
-                                point4 = aux[1];
+                                var aux 
+                                point = generateExtraPoint([point2,point3],1); 
+                                point4 = generateExtraPoint([point2,point3,point],1);
                                 var a = point.x;
                                 var b = point.y; 
                                 var px = point4.x; 
@@ -3820,7 +3815,6 @@ class Jogo extends Phaser.Scene {
                                 var b = point.y; 
                                 var px = point4.x; 
                                 var py = point4.y;
-                
                                 ponto1.x=x;
                                 ponto1.y=y;
                                 ponto2.x=x1;
@@ -3837,11 +3831,9 @@ class Jogo extends Phaser.Scene {
                                 letrac.y = b+5;
                                 letrad.x = px+5; 
                                 letrad.y = py+5; 
-                                segundos = 0;
-                                
-                                p = true;
                                 contaTempo = setInterval(function(){ segundo() },1000);
                                 segundos = 0;
+
                                 break; 
                             case 5: 
                                 texto.x = 780;
@@ -4430,10 +4422,8 @@ class Jogo extends Phaser.Scene {
                 this.coracaovazio2.visible = true;
                 this.coracaovazio3.visible = true;
                 this.scene.transition({ target: 'Menu', duration: 100 });  
-                console.log(aux,muda);
                 reset();
                 aux = false;
-                console.log(aux,muda);
 
             case 1: 
                 this.coracaocheio3.visible = false;
@@ -4504,14 +4494,14 @@ function getPretendedLine (level,ponto1,ponto2){
     var lineAuxInverse = new Phaser.Geom.Line();
     var lineaux =new Phaser.Geom.Line();   
     
-    Phaser.Geom.Line.SetToAngle(lineAuxInverse,x1,y1,angleInverse,600);
-    Phaser.Geom.Line.SetToAngle(lineaux,x,y,angle,600);
+    Phaser.Geom.Line.SetToAngle(lineAuxInverse,x1,y1,angleInverse,1000);
+    Phaser.Geom.Line.SetToAngle(lineaux,x,y,angle,1000);
 
     var otherLine=new Phaser.Geom.Line(); 
-    Phaser.Geom.Line.SetToAngle(otherLine,x,y,angleInverse,600);
+    Phaser.Geom.Line.SetToAngle(otherLine,x,y,angleInverse,1000);
 
     var otherLine2=new Phaser.Geom.Line(); 
-    Phaser.Geom.Line.SetToAngle(otherLine2,x1,y1,angle,600);
+    Phaser.Geom.Line.SetToAngle(otherLine2,x1,y1,angle,1000);
 
     var end = lineaux.getPointB();
     var end2 = lineAuxInverse.getPointB(); 
@@ -4520,8 +4510,25 @@ function getPretendedLine (level,ponto1,ponto2){
     switch (level){
         case 1: 
             linha.setTo(ponto1.x,ponto1.y,ponto2.x,ponto2.y);
-            console.log(linha);
-            return linha.getPoints(200);
+            var ang = Phaser.Geom.Line.Angle(linha);
+            var nova =new Phaser.Geom.Line(); 
+            Phaser.Geom.Line.SetToAngle(nova,x,y,ang,dist(ponto1.x,ponto1.y,ponto2.x,ponto2.y)-50);
+
+            var inversa = new Phaser.Geom.Line();
+            inversa.setTo(ponto2.x,ponto2.y,ponto1.x,ponto1.y);
+
+            var angInv = Phaser.Geom.Line.Angle(inversa);
+            var novaInv =new Phaser.Geom.Line();
+
+            Phaser.Geom.Line.SetToAngle(novaInv,x1,y1,angInv,dist(ponto1.x,ponto1.y,ponto2.x,ponto2.y)-50);
+            var acaba1 = nova.getPointB(); 
+            var acaba2 = novaInv.getPointB();
+            var pretended = new Phaser.Geom.Line();
+            pretended.setTo(acaba1.x,acaba1.y,acaba2.x,acaba2.y);
+
+            var pontos = pretended.getPoints(50);
+
+            return pontos;
         case 5: 
             lineTeste.setTo(end.x,end.y,end2.x,end2.y);
             return lineTeste.getPoints(600);
@@ -4554,16 +4561,16 @@ function getPretendedLine (level,ponto1,ponto2){
         case 9: 
             return lineAuxInverse.getPoints(200);
         case 13: 
-            Phaser.Geom.Line.SetToAngle(lineaux,x1,y1,angle,300);
+            Phaser.Geom.Line.SetToAngle(lineaux,x1,y1,angle,1000);
             return lineaux.getPoints(200);
         case 15: 
             linhaTeste.setTo(end.x,end.y,end2.x,end2.y);
             return linhaTeste.getPoints(200);
         case 19: 
-            Phaser.Geom.Line.SetToAngle(lineaux,x1,y1,angle,300);
+            Phaser.Geom.Line.SetToAngle(lineaux,x1,y1,angle,1000);
             return lineaux.getPoints(200);
         case 20: 
-            Phaser.Geom.Line.SetToAngle(lineaux,x1,y1,angle,300);
+            Phaser.Geom.Line.SetToAngle(lineaux,x1,y1,angle,1000);
             return lineaux.getPoints(200);
     }
 }
@@ -4812,10 +4819,10 @@ function pontosParalelo(x,y,x1,y1){
     Phaser.Geom.Line.SetToAngle(paralela,x,y -k,angle,dist(x,y,x1,y1));
     var pontoA = paralela.getPointA();
     var pontoB = paralela.getPointB(); 
-    
-    while(pontoB.x>700 ||pontoA.x>700 || pontoB.y<200 || pontoB.y>450 || pontoA.y<200 || pontoA.y>450){
+    var z = dist(x,y,x1,y1)
+    while(pontoB.y<200 || pontoB.y>450 || pontoA.y<200 || pontoA.y>450){
         k -= 10;
-        Phaser.Geom.Line.SetToAngle(paralela,x,y -k,angle,dist(x,y,x1,y1));
+        Phaser.Geom.Line.SetToAngle(paralela,x,y -k,angle,z);
         pontoA = paralela.getPointA();
         pontoB = paralela.getPointB();
     }
@@ -4924,11 +4931,13 @@ function generateExtraPoint(pontos,quantos){
     var point2; var point3; 
     point2 = pontos[0]; 
     point3 = pontos[1];
+    var point = pontos[2];
     var x = point2.x; 
     var y = point2.y; 
     var x1 = point3.x; 
     var y1 = point3.y;
-    var pointsLine = getPointsOnLine(point2,point3);
+    var a1; 
+    var b1;
 
     var a = Math.random()*(800 - 300) + 300;
     var b = Math.random()*(600 - 300) + 300;
@@ -4939,45 +4948,44 @@ function generateExtraPoint(pontos,quantos){
     }
     var iterations = 0; 
     var continua = true; 
-    while((a>700||b>450 || b<200 ||a==x || a==x1 || b==y || b==y1 || dist(a,b,point2.x,point2.y)<=50 || dist(a,b,point3.x,point3.y)<=50 ||(b<=teste.y+50 && b>=teste2.y-50))&&continua){
-        a = Math.random()*(800 - 300) + 300;
-        b = Math.random()*(600 - 300) + 300;
-        iterations += 1; 
-        if(iterations>200){
-            continua = false; 
-            a = x+y/2; 
-            b = pontoDeCima(point2,point3).y
+
+    if(point==null){
+        while((a>700||b>450 || b<200 ||a==x || a==x1 || b==y || b==y1 || dist(a,b,point2.x,point2.y)<=50 || dist(a,b,point3.x,point3.y)<=50 ||(b<=teste.y+50 && b>=teste2.y-50))&&continua){
+            a = Math.random()*(800 - 300) + 300;
+            b = Math.random()*(600 - 300) + 300;
+            iterations += 1; 
+            if(iterations>200){
+                continua = false; 
+                a = x+y/2; 
+                b = pontoDeCima(point2,point3).y;
+            }
+        }
+        var ponto = new Phaser.Geom.Point(a, b);
+        return ponto; 
+    }
+    
+    
+    var iterations = 0; 
+    var continua = true; 
+
+    if(point!=null){
+        a1 = point.x;
+        b1=point.y;        
+        while((a>700||b>450 || b<200 ||a==x || a==x1 || b==y || b==y1 || a==a1 || a==b1 || dist(a,b,point2.x,point2.y)<=50 || dist(a,b,point3.x,point3.y)<=50 || dist(a,b,point.x,point.y)<=50||(b<=teste.y+50 && b>=teste2.y-50))&&continua){
+            a = Math.random()*(800 - 300) + 300;
+            b = Math.random()*(600 - 300) + 300;
+            iterations += 1; 
+            if(iterations>200){
+                continua = false; 
+                a = x+y+a1/3; 
+                b = pontoDeCima(point2,point).y;
+            }
         }
     }
 
     var ponto = new Phaser.Geom.Point(a, b);
 
-    if(quantos == 1){
-        return ponto; 
-    }
-
-    else{
-        iterations = 200; 
-        continua = true;
-        var a1 = Math.random()*(800 - 300) + 300;
-        var b1 = Math.random()*(600 - 300) + 300;
-
-        while((a1>700||b1>450 || b1<200 ||a1==x || a1==x1 || b1==y || b1==y1 ||a1==a || a1==b
-            || dist(a1,b1,x,y)<=50 || dist(a1,b1,a,b)<=50
-        || dist(a1,b1,x1,y1)<=50 )&&continua){
-            a1 = Math.random()*(800 - 300) + 300;
-            b1 = Math.random()*(600 - 300) + 300;
-            iterations += 1; 
-            if(iterations>200){
-                continua = false; 
-                a1 = x+x1/2; 
-                b1 = pontoDeCima(point2,ponto).y;
-            }
-        }
-    
-        var pontodois = new Phaser.Geom.Point(a1, b1);
-        return [ponto,pontodois];
-    }
+    return ponto; 
 }
 
 function textoLevel(level){
