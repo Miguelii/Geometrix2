@@ -4977,7 +4977,7 @@ function generateExtraPoint(pontos,quantos){
             iterations += 1; 
             if(iterations>200){
                 continua = false; 
-                a = x+y+a1/3; 
+                a = pontoEsquerda(point3,point).x+50; 
                 b = pontoDeCima(point2,point).y;
             }
         }
