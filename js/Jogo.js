@@ -796,7 +796,6 @@ class Jogo extends Phaser.Scene {
                        
                         for(var i=0;i<pontosLine.length;i++){
                             var mid = pontosLine[i];
-                            graphics.fillPointShape(mid,4);
                             if ((pointer.x<=mid.x+20 && pointer.x>=mid.x-20 && pointer.y<=mid.y+20 && pointer.y>=mid.y-20)){
                                 midlePoint = new Phaser.Geom.Point(mid.x,mid.y);
                                 if(sgm){
@@ -3922,9 +3921,8 @@ class Jogo extends Phaser.Scene {
                                 graphics.clear(); 
                                 lines[j] = new Phaser.Geom.Line();
                                 line = lines[j];
-                                var aux = generateExtraPoint([point2,point3],2); 
-                                point = aux[0]; 
-                                point4 = aux[1];
+                                point = generateExtraPoint([point2,point3],1);
+                                point4 = generateExtraPoint([point2,point3,point],1);
                                 var a = point.x;
                                 var b = point.y; 
                                 var px = point4.x; 
@@ -4740,8 +4738,8 @@ function reta(a,b,line){ //Verifica se é uma reta que passa em a e em b
                     return true;
                 }
                 else{
-                    if (pontoDeCima(a,b)==b && ((line.getPointA().y<a && line.getPointB().y>b.y)|| (line.getPointA().y>b.y &&  
-                    line.getPointB().y>a.y))){
+                    if (pontoDeCima(a,b)==b && ((line.getPointA().y<a.y && line.getPointB().y>b.y)|| (line.getPointA().y>b.y &&  
+                    line.getPointB().y<a.y))){
                         return true;
                     }
                 }
@@ -4978,7 +4976,7 @@ function generateExtraPoint(pontos,quantos){
             if(iterations>200){
                 continua = false; 
                 a = pontoEsquerda(point3,point).x+50; 
-                b = pontoDeCima(point2,point).y;
+                b = pontoDeCima(point2,point3).y + 200;
             }
         }
     }
