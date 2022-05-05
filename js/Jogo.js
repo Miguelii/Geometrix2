@@ -38,6 +38,7 @@ var levelText;
 var changeLevel = false; 
 var changeLives = true; 
 var naoMexe = false; 
+var pts; 
 
 class Jogo extends Phaser.Scene {
 
@@ -157,7 +158,11 @@ class Jogo extends Phaser.Scene {
         this.coracaovazio3 = this.add.sprite(0.26 * game.config.width, 0.17 * game.config.height, 'coracao2');
         this.coracaovazio3.setScale(0.3);
         this.coracaovazio3.visible = false;
-        textScore = this.add.text(0.88 * game.config.width, 55, score + " pts",{
+        pts = this.add.text(0.92 * game.config.width, 55, " pts",{
+            fontFamily: 'font1',
+        });
+
+        textScore = this.add.text(0.9 * game.config.width, 55, score,{
             fontFamily: 'font1',
         });
 
@@ -4408,8 +4413,17 @@ class Jogo extends Phaser.Scene {
 
     update(){
         timer.setText([segundos]);
-        textScore.setText([score + " pts" ]);
+        textScore.setText([score]);
         levelText.setText(['Level: ' + level ]);
+        if (score>99){
+            textScore.x = 0.89 * game.config.width;;
+            if(score>999){
+                textScore.x = 0.88 * game.config.width;
+            }
+        }
+        else{
+            textScore.x = 0.9 * game.config.width;
+        }
     
         switch (vidas){
             case 0: 
