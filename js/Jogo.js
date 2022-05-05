@@ -122,11 +122,11 @@ class Jogo extends Phaser.Scene {
         this.btnao.visible = false;
         this.btnao.name = 'btnao';
 
-        timer = this.add.text(0.065 * game.config.width, 43, segundos,{
+        timer = this.add.text(0.064 * game.config.width, 36, segundos,{
             fontFamily: 'font1',
         });
 
-        timer.setFontSize(25);
+        timer.setFontSize(30);
         
         this.clock = this.add.sprite(0.12 * game.config.width, 60, 'clock');
         this.clock.setScale(0.4);
@@ -158,13 +158,17 @@ class Jogo extends Phaser.Scene {
         this.coracaovazio3 = this.add.sprite(0.26 * game.config.width, 0.17 * game.config.height, 'coracao2');
         this.coracaovazio3.setScale(0.3);
         this.coracaovazio3.visible = false;
-        pts = this.add.text(0.92 * game.config.width, 55, " pts",{
+        pts = this.add.text(0.93 * game.config.width, 50, " pts",{
             fontFamily: 'font1',
         });
 
-        textScore = this.add.text(0.9 * game.config.width, 55, score,{
+        pts.setFontSize(20);
+
+        textScore = this.add.text(0.89 * game.config.width, 36, score,{
             fontFamily: 'font1',
         });
+        
+        textScore.setFontSize(30);
 
         sim = this.add.sprite(-10000,-100000, 'btsim');
         nao = this.add.sprite(-10000,-100000, 'btnao');
@@ -4415,16 +4419,36 @@ class Jogo extends Phaser.Scene {
         timer.setText([segundos]);
         textScore.setText([score]);
         levelText.setText(['Level: ' + level ]);
-        if (score>99){
-            textScore.x = 0.89 * game.config.width;;
-            if(score>999){
-                textScore.x = 0.88 * game.config.width;
+        
+        if(score>0) {
+            textScore.x = 0.88 * game.config.width;
+            if (score>99){
+                textScore.x = 0.87 * game.config.width;
+                if(score>999){
+                    textScore.x = 0.86 * game.config.width;
+                    if(score>9999) {
+                        textScore.x = 0.84 * game.config.width;
+                        if(score>99999) {
+                            textScore.x = 0.83 * game.config.width;
+                        }
+                    }
+                }
+                
             }
         }
         else{
             textScore.x = 0.9 * game.config.width;
         }
-    
+        
+        if(segundos>99) {
+            timer.x = 0.050 * game.config.width;
+            if(segundos>999) {
+                timer.x = 0.036 * game.config.width;
+                if(segundos>9999) {
+                    timer.x = 0.022 * game.config.width;
+                }
+            }
+        }
         switch (vidas){
             case 0: 
                 this.coracaocheio3.visible = false;
