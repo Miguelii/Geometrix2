@@ -4421,9 +4421,9 @@ class Jogo extends Phaser.Scene {
         levelText.setText(['Level: ' + level ]);
         
         if(score>0) {
-            textScore.x = 0.88 * game.config.width;
+            textScore.x = 0.89 * game.config.width;
             if (score>99){
-                textScore.x = 0.87 * game.config.width;
+                textScore.x = 0.88 * game.config.width;
                 if(score>999){
                     textScore.x = 0.86 * game.config.width;
                     if(score>9999) {
