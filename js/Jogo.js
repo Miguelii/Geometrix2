@@ -14,7 +14,7 @@ var timer;
 var score = 0; 
 var textScore;
 var pause = false; 
-var level = 1; 
+var level = 2; 
 var sim;
 var nao;
 var info;
@@ -64,6 +64,7 @@ class Jogo extends Phaser.Scene {
         this.load.image('coracao1', 'assets/coracao1.png');
         this.load.image('coracao2', 'assets/coracao2.png');
         this.load.image('btExtra', 'assets/btExtra.png');
+        this.load.image('circulo', 'assets/circulo.png');
     }
         
     create (){
@@ -71,28 +72,30 @@ class Jogo extends Phaser.Scene {
         segundos = 0;
         
         this.background = this.add.sprite(0.5 * game.config.width, 0.5 *game.config.height, 'background');
-        this.background.setScale(0.79);
+        this.background.setScale(1);
+
         this.titulo1 = this.add.sprite(0.5 * game.config.width, 0.15 *game.config.height, 'titulo1');
-        this.titulo1.setScale(0.6);
-        info = this.add.sprite(-10000,-100000, 'info');
-        info.setScale(0.7);
+        this.titulo1.setScale(0.9);
+        
+        
 
         var color =  0xffffff;
-        var texto = this.add.text(780, 150, '', { fontFamily: 'font1',align: 'right'});
-        levelText = this.add.text(950, 120, '', { fontFamily: 'font1',align: 'right'});
-        texto.setFontSize(15);
-        levelText.setFontSize(15);
+        var texto = this.add.text(0.465 * game.config.width, 0.24 *game.config.height, '', { fontFamily: 'font1',align: 'right'});
+        texto.setFontSize(30);
+
+        levelText = this.add.text(0.465 * game.config.width, 0.17 *game.config.height, '', { fontFamily: 'font1',align: 'right'});
+        levelText.setFontSize(45);
         
         var graphics = this.add.graphics({fillStyle: { color: 0x2266aa } });
 
         // menu/bases
-        this.base1=this.add.sprite(0.91 * game.config.width, 100, "base1");
-        this.base1.setScale(0.5);
-        this.base4=this.add.sprite(0.09 * game.config.width, 100, "base4");
-        this.base4.setScale(0.5);
+        this.base1=this.add.sprite(0.91 * game.config.width, 0.17 *game.config.height, "base1");
+        this.base1.setScale(1);
+        this.base4=this.add.sprite(0.09 * game.config.width, 0.17 *game.config.height, "base4");
+        this.base4.setScale(1);
 
-        this.btHome = this.add.sprite(0.05 * game.config.width, 535, "btHome");
-        this.btHome.setScale(0.5);
+        this.btHome = this.add.sprite(0.05 * game.config.width, 0.9*game.config.height, "btHome");
+        this.btHome.setScale(1);
         this.btHome.setInteractive({ useHandCursor: true });
         this.btHome.name = 'btHome';
 
@@ -107,75 +110,77 @@ class Jogo extends Phaser.Scene {
         });
 
         //Exit
-        this.infoexit = this.add.sprite(0.5 * game.config.width, 0.55 *game.config.height, "infoexit");
-        this.infoexit.setScale(0.7);
+        this.infoexit = this.add.sprite(0.5 * game.config.width, 0.6 *game.config.height, "infoexit");
+        this.infoexit.setScale(1.3);
         this.infoexit.visible = false;
         this.infoexit.name = 'infoexit';
 
-        this.btsim = this.add.sprite(0.56 * game.config.width, 0.68 * game.config.height, 'btsim');
-        this.btsim.setScale(0.45);
+        this.btsim = this.add.sprite(0.56 * game.config.width, 0.72 * game.config.height, 'btsim');
+        this.btsim.setScale(0.9);
         this.btsim.visible = false;
         this.btsim.name = 'btsim';
 
-        this.btnao = this.add.sprite(0.44 * game.config.width, 0.68 * game.config.height, 'btnao');
-        this.btnao.setScale(0.45);
+        this.btnao = this.add.sprite(0.44 * game.config.width, 0.72 * game.config.height, 'btnao');
+        this.btnao.setScale(0.9);
         this.btnao.visible = false;
         this.btnao.name = 'btnao';
 
-        timer = this.add.text(0.064 * game.config.width, 36, segundos,{
+        timer = this.add.text(0.064 * game.config.width, 0.06 * game.config.height, segundos,{
             fontFamily: 'font1',
         });
 
-        timer.setFontSize(30);
+        timer.setFontSize(60);
         
-        this.clock = this.add.sprite(0.12 * game.config.width, 60, 'clock');
-        this.clock.setScale(0.4);
+        this.clock = this.add.sprite(0.12 * game.config.width, 0.1 * game.config.height, 'clock');
+        this.clock.setScale(0.9);
 
+
+        pts = this.add.text(0.93 * game.config.width, 0.08 * game.config.height, " pts",{
+            fontFamily: 'font1',
+        });
+
+        pts.setFontSize(40);
+
+        textScore = this.add.text(0.89 * game.config.width, 0.06 * game.config.height, score,{
+            fontFamily: 'font1',
+        });
+        
+        textScore.setFontSize(60);
 
         // --- vidas ---
         //Coracao cheio
         this.coracaocheio1 = this.add.sprite(0.18 * game.config.width, 0.17 * game.config.height, 'coracao1');
-        this.coracaocheio1.setScale(0.3);
+        this.coracaocheio1.setScale(0.7);
         this.coracaocheio1.visible = true;
 
         this.coracaocheio2 = this.add.sprite(0.22 * game.config.width, 0.17 * game.config.height, 'coracao1');
-        this.coracaocheio2.setScale(0.3);
+        this.coracaocheio2.setScale(0.7);
         this.coracaocheio2.visible = true;
 
         this.coracaocheio3 = this.add.sprite(0.26 * game.config.width, 0.17 * game.config.height, 'coracao1');
-        this.coracaocheio3.setScale(0.3);
+        this.coracaocheio3.setScale(0.7);
         this.coracaocheio3.visible = true;
 
         //Coracao vazio
         this.coracaovazio1 = this.add.sprite(0.18 * game.config.width, 0.17 * game.config.height, 'coracao2');
-        this.coracaovazio1.setScale(0.3);
+        this.coracaovazio1.setScale(0.7);
         this.coracaovazio1.visible = false;
 
         this.coracaovazio2 = this.add.sprite(0.22 * game.config.width, 0.17 * game.config.height, 'coracao2');
-        this.coracaovazio2.setScale(0.3);
+        this.coracaovazio2.setScale(0.7);
         this.coracaovazio2.visible = false;
 
         this.coracaovazio3 = this.add.sprite(0.26 * game.config.width, 0.17 * game.config.height, 'coracao2');
-        this.coracaovazio3.setScale(0.3);
+        this.coracaovazio3.setScale(0.7);
         this.coracaovazio3.visible = false;
-        pts = this.add.text(0.93 * game.config.width, 50, " pts",{
-            fontFamily: 'font1',
-        });
 
-        pts.setFontSize(20);
-
-        textScore = this.add.text(0.89 * game.config.width, 36, score,{
-            fontFamily: 'font1',
-        });
-        
-        textScore.setFontSize(30);
 
         sim = this.add.sprite(-10000,-100000, 'btsim');
         nao = this.add.sprite(-10000,-100000, 'btnao');
         sim.name = 'sim';
         nao.name = 'nao';
-        nao.setScale(0.45);
-        sim.setScale(0.45);
+        nao.setScale(1);
+        sim.setScale(1);
         sim.setInteractive({ useHandCursor: true});
         nao.setInteractive({ useHandCursor: true });
 
@@ -191,6 +196,7 @@ class Jogo extends Phaser.Scene {
         });
 
         nao.on('pointerdown', () => {
+            
             if(!changeLevel){
                 aceita = true; 
                 changeLevel = true;
@@ -199,10 +205,13 @@ class Jogo extends Phaser.Scene {
             segundos = 0;
             certas = -1;
             changeLives = false;
+            
         });
+        
         nao.on('pointerup', () => {
             armazenado = 0;
         });
+        
         
         var letras = pontosAleatorios(); 
         var letra1 = letras[0];
@@ -243,12 +252,12 @@ class Jogo extends Phaser.Scene {
         var ponto5   = this.add.sprite(10000,10000,"ponto");
 
         var pontoExtra = this.add.sprite(10000,10000,"btExtra");
-        pontoExtra.setScale(0.5);
-        ponto1.setScale(0.5);
-        ponto2.setScale(0.5);
-        ponto3.setScale(0.5);
-        ponto4.setScale(0.5);
-        ponto5.setScale(0.5);
+        pontoExtra.setScale(1.2);
+        ponto1.setScale(1.3);
+        ponto2.setScale(1.3);
+        ponto3.setScale(1.3);
+        ponto4.setScale(1.3);
+        ponto5.setScale(1.3);
 
         var line = new Phaser.Geom.Line(); 
         var point; 
@@ -4418,7 +4427,7 @@ class Jogo extends Phaser.Scene {
     update(){
         timer.setText([segundos]);
         textScore.setText([score]);
-        levelText.setText(['Level: ' + level ]);
+        levelText.setText(['Nivel ' + level ]);
         
         if(score>0) {
             textScore.x = 0.89 * game.config.width;
@@ -4427,7 +4436,7 @@ class Jogo extends Phaser.Scene {
                 if(score>999){
                     textScore.x = 0.86 * game.config.width;
                     if(score>9999) {
-                        textScore.x = 0.84 * game.config.width;
+                        textScore.x = 0.85 * game.config.width;
                         if(score>99999) {
                             textScore.x = 0.83 * game.config.width;
                         }
@@ -4439,16 +4448,20 @@ class Jogo extends Phaser.Scene {
         else{
             textScore.x = 0.9 * game.config.width;
         }
-        
-        if(segundos>99) {
-            timer.x = 0.050 * game.config.width;
-            if(segundos>999) {
-                timer.x = 0.036 * game.config.width;
-                if(segundos>9999) {
-                    timer.x = 0.022 * game.config.width;
+
+        if(segundos>9) {
+            timer.x = 0.060 * game.config.width;
+            if(segundos>99) {
+                timer.x = 0.044 * game.config.width;
+                if(segundos>999) {
+                    timer.x = 0.016 * game.config.width;
+                    if(segundos>9999) {
+                        timer.x = 0.022 * game.config.width;
+                    }
                 }
             }
         }
+        
         switch (vidas){
             case 0: 
                 this.coracaocheio3.visible = false;
@@ -4493,11 +4506,11 @@ class Jogo extends Phaser.Scene {
             }
             else{
                 info.x = 0.5 * game.config.width;
-                info.y = 0.5 *game.config.height;
-                sim.x = 0.6 * game.config.width;
-                sim.y = 0.7 * game.config.height;
-                nao.x = 0.4 * game.config.width;
-                nao.y = 0.7 * game.config.height;
+                info.y = 0.6 *game.config.height;
+                sim.x = 0.56 * game.config.width;
+                sim.y = 0.70 * game.config.height;
+                nao.x = 0.44 * game.config.width;
+                nao.y = 0.70 * game.config.height;
             }
         }
 

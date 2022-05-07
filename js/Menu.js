@@ -21,12 +21,12 @@ class Menu extends Phaser.Scene {
 
     create() {
         this.background = this.add.sprite(0.5 * game.config.width, 0.5 *game.config.height, 'background');
-        this.background.setScale(0.79);
+        this.background.setScale(1);
 
-        this.btplay = this.add.sprite(0.5 * game.config.width, 175, "btplay");
-        this.btplay.setScale(0.8);
+        this.btplay = this.add.sprite(0.5 * game.config.width, 0.3 *game.config.height, "btplay");
+        this.btplay.setScale(1.3);
         this.btplay.setInteractive({ useHandCursor: true });
-        this.btplay.name = 'btplay'; // É necessário ter isto para o ciclo gameobjectdown funcionar
+        this.btplay.name = 'btplay';
 
         this.btplay.on('pointerover', () => {
         this.btplay.displayHeight += 5;
@@ -38,12 +38,11 @@ class Menu extends Phaser.Scene {
         this.btplay.displayWidth -= 5;
         });
 
-        this.title = this.add.sprite(0.5 * game.config.width, 510, "titulo1");
-        this.title.setScale(0.8);
+        this.title = this.add.sprite(0.5 * game.config.width, 0.85   *game.config.height, "titulo1");
+        this.title.setScale(1);
 
-
-        this.btcreditos = this.add.sprite(0.5 * game.config.width - 200, 320, "btcredittos");
-        this.btcreditos.setScale(0.65);
+        this.btcreditos = this.add.sprite(0.30 * game.config.width, 0.5*game.config.height, "btcredittos");
+        this.btcreditos.setScale(1.3);
         this.btcreditos.setInteractive({ useHandCursor: true });
         this.btcreditos.name = 'btcreditos';
 
@@ -57,13 +56,13 @@ class Menu extends Phaser.Scene {
         });
 
         this.creditos = this.add.sprite(0.5 * game.config.width, 0.4 * game.config.height, 'creditos');
-        this.creditos.setScale(0.75);
+        this.creditos.setScale(1.5);
         this.creditos.visible = false;
         this.creditos.name = 'creditos';
 
 
-        this.bttop = this.add.sprite(0.5 * game.config.width, 365, "bttop");
-        this.bttop.setScale(0.65);
+        this.bttop = this.add.sprite(0.5 * game.config.width, 0.6*game.config.height, "bttop");
+        this.bttop.setScale(1.3);
         this.bttop.setInteractive({ useHandCursor: true });
 
         
@@ -77,8 +76,8 @@ class Menu extends Phaser.Scene {
         });
 
 
-        this.btinfo = this.add.sprite(0.5 * game.config.width + 200, 320, "btinfo");
-        this.btinfo.setScale(0.65);
+        this.btinfo = this.add.sprite(0.7 * game.config.width, 0.5*game.config.height, "btinfo");
+        this.btinfo.setScale(1.3);
         this.btinfo.setInteractive({ useHandCursor: true });
 
         this.btinfo.on('pointerover', () => {
@@ -90,8 +89,8 @@ class Menu extends Phaser.Scene {
             this.btinfo.displayWidth -= 5;
         });
 
-        this.nave = this.add.sprite(0.5 * game.config.width + 390, 480, "nave");
-        this.nave.setScale(0.5);
+        this.nave = this.add.sprite(0.87 * game.config.width ,0.8 * game.config.height, "nave");
+        this.nave.setScale(1);
 
 
         //LOGIN
@@ -147,7 +146,7 @@ class Menu extends Phaser.Scene {
         ////
 
         this.btclose = this.add.sprite(0.69 * game.config.width, 0.18 * game.config.height, 'btclose');
-        this.btclose.setScale(0.4);
+        this.btclose.setScale(0.9);
         this.btclose.visible = false;
         this.btclose.name = 'btclose';
 
