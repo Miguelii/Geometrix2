@@ -100,7 +100,7 @@ class Menu extends Phaser.Scene {
         this.btlogin.name = 'btlogin';
 
         this.quadrologin = this.add.sprite(0.5 * game.config.width, 0.4 * game.config.height, "quadrologin");
-        this.quadrologin.setScale(0.75);
+        this.quadrologin.setScale(1.5);
         this.quadrologin.visible = false;
 
         this.loginfinal = this.add.sprite(0.5 * game.config.width, 0.58 * game.config.height, "btlogin");
@@ -122,10 +122,10 @@ class Menu extends Phaser.Scene {
         this.loginErrorMsg = this.add.text(0.40 * game.config.width, 0.51 * game.config.height,"Utilizador ou Password Errados",{ fontFamily: 'font1',fontSize: 15,color: '#ff0000',align: 'center'});
         this.loginErrorMsg.visible = false;
 
-        this.utilizador = this.add.text(0.44 * game.config.width, 0.2 * game.config.height, "Utilizador:", { fontFamily: 'font1', fontSize: 25, color: '#403217' })
+        this.utilizador = this.add.text(0.46 * game.config.width, 0.22 * game.config.height, "Utilizador:", { fontFamily: 'font1', fontSize: 40, color: '#403217' })
         this.utilizador.visible = false;
 
-        this.password = this.add.text(0.44 * game.config.width, 0.35 * game.config.height, "Password:", { fontFamily: 'font1', fontSize: 25, color: '#403217' })
+        this.password = this.add.text(0.46 * game.config.width, 0.37 * game.config.height, "Password:", { fontFamily: 'font1', fontSize: 40, color: '#403217' })
         this.password.visible = false;
            
         let user = `
@@ -137,11 +137,11 @@ class Menu extends Phaser.Scene {
         `;      
                 
         var x = this.add.dom(0.5 * game.config.width, 0.3 * game.config.height).createFromHTML(user);
-        x.setScale(1);
+        x.setScale(2.5);
         x.visible = false;
         
         var y = this.add.dom(0.5 * game.config.width, 0.45 * game.config.height).createFromHTML(pass);
-        y.setScale(1);
+        y.setScale(2.5);
         y.visible = false;
         ////
 
