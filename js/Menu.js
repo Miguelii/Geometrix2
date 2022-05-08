@@ -225,13 +225,15 @@ class Menu extends Phaser.Scene {
                     
                     this.loginfinal.on('pointerup', function () {
                         let user = x.getChildByName("username").value
-                        let password = y.getChildByName("passwor").value
+                        let password = y.getChildByName("password").value
+
                         if (user != '' && password != '') {
-            
                             let r = login(user, password,this);
                             x.getChildByName("username").value = '';
-                            y.getChildByName("passwor").value = '';
+                            y.getChildByName("password").value = '';
                         }
+                        console.log(user,password);
+
                     }, this);
 
                     break;
