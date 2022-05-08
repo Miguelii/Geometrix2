@@ -9,7 +9,7 @@
     $.ajax
     ({
         type: "POST",
-        url: "",
+        url: "https://www.hypatiamat.com/loginActionVH.php",
         data: "action=dologin&u=" + username + "&p=" + password,
         crossDomain: true,
         cache: false,
@@ -50,7 +50,7 @@ function sessionVerify() {
     $.ajax
     ({
 	type: "POST",
-	url: "",
+	url: "https://www.hypatiamat.com/loginActionVH.php",
 	data: "action=verify",
 	cache: false,
         success: function (response) {
@@ -78,7 +78,7 @@ function destroySession() {
     $.ajax
     ({
         type: "POST",
-        url: "",
+        url: "https://www.hypatiamat.com/loginActionVH.php",
         data: "action=des",
         cache: false,
         success: function (response) {
