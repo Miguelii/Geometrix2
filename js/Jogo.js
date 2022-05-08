@@ -5187,7 +5187,7 @@ function generate2points(){
     let x1 =Math.random()*(2024 - 300) + 300;
     let y1 = Math.random()*(1200 - 300) + 300;
 
-    while (x>2000|| y > 1000 || y<300 || y1>1000 ||y1<300 || x==x1 || x==y || x==y1 || x1==y1 || y==x1 || y==y1 || dist(x,y,x1,y1)<=300){
+    while (x>1700||x1>1700 || y > 900 || y<400 || y1>900 ||y1<400 || x==x1 || x==y || x==y1 || x1==y1 || y==x1 || y==y1 || dist(x,y,x1,y1)<=300){
         x = Math.random()*(2024 - 300) + 300;
         y = Math.random()*(1200 - 300) + 300;
         x1 = Math.random()*(2024 - 300) + 300;
@@ -5232,7 +5232,7 @@ function generateExtraPoint(pontos,quantos){
     var continua = true; 
 
     if(point==null){
-        while((a>2000||b>1000 || b<300 ||a==x || a==x1 || b==y || b==y1 || dist(a,b,point2.x,point2.y)<=50 || dist(a,b,point3.x,point3.y)<=50 ||(b<=teste.y+50 && b>=teste2.y-50))&&continua){
+        while((a>1700||b>900 || b<400 ||a==x || a==x1 || b==y || b==y1 || dist(a,b,point2.x,point2.y)<=50 || dist(a,b,point3.x,point3.y)<=50 ||(b<=teste.y+50 && b>=teste2.y-50))&&continua){
             a = Math.random()*(2024 - 300) + 300;
             b = Math.random()*(1200 - 300) + 300;
             iterations += 1; 
@@ -5253,14 +5253,14 @@ function generateExtraPoint(pontos,quantos){
     if(point!=null){
         a1 = point.x;
         b1=point.y;        
-        while((a>2000||b>1000 || b<300 ||a==x || a==x1 || b==y || b==y1 || a==a1 || a==b1 || dist(a,b,point2.x,point2.y)<=50 || dist(a,b,point3.x,point3.y)<=50 || dist(a,b,point.x,point.y)<=50||(b<=teste.y+50 && b>=teste2.y-50))&&continua){
+        while((a>1700||b>900 || b<400 ||a==x || a==x1 || b==y || b==y1 || a==a1 || a==b1 || dist(a,b,point2.x,point2.y)<=50 || dist(a,b,point3.x,point3.y)<=50 || dist(a,b,point.x,point.y)<=50||(b<=teste.y+50 && b>=teste2.y-50))&&continua){
             a = Math.random()*(2024 - 300) + 300;
             b = Math.random()*(1200 - 300) + 300;
             iterations += 1; 
             if(iterations>300){
                 continua = false; 
                 a = pontoEsquerda(point3,point).x+50; 
-                b = pontoDeCima(point2,point3).y + 300;
+                b = pontoDeCima(point2,point3).y +100;
             }
         }
     }
