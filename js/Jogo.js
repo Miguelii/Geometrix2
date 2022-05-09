@@ -4916,7 +4916,7 @@ function getPretendedLine (level,ponto1,ponto2){
             linha.setTo(ponto1.x,ponto1.y,ponto2.x,ponto2.y);
             var ang = Phaser.Geom.Line.Angle(linha);
             var nova =new Phaser.Geom.Line(); 
-            Phaser.Geom.Line.SetToAngle(nova,x,y,ang,dist(ponto1.x,ponto1.y,ponto2.x,ponto2.y));
+            Phaser.Geom.Line.SetToAngle(nova,x,y,ang,2000);
 
             var inversa = new Phaser.Geom.Line();
             inversa.setTo(ponto2.x,ponto2.y,ponto1.x,ponto1.y);
@@ -4924,7 +4924,7 @@ function getPretendedLine (level,ponto1,ponto2){
             var angInv = Phaser.Geom.Line.Angle(inversa);
             var novaInv =new Phaser.Geom.Line();
 
-            Phaser.Geom.Line.SetToAngle(novaInv,x1,y1,angInv,dist(ponto1.x,ponto1.y,ponto2.x,ponto2.y));
+            Phaser.Geom.Line.SetToAngle(novaInv,x1,y1,angInv,2000);
             var acaba1 = nova.getPointB(); 
             var acaba2 = novaInv.getPointB();
             var pretended = new Phaser.Geom.Line();
