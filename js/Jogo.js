@@ -14,7 +14,7 @@ var timer;
 var score = 0; 
 var textScore;
 var pause = false; 
-var level = 5; 
+var level = 4; 
 var sim;
 var nao;
 var info;
@@ -5102,12 +5102,25 @@ function pontosParalelo(x,y,x1,y1){
     Phaser.Geom.Line.SetToAngle(paralela,x,y -k,angle,dist(x,y,x1,y1));
     var pontoA = paralela.getPointA();
     var pontoB = paralela.getPointB(); 
-    var z = dist(x,y,x1,y1)
-    while(pontoB.y<300 || pontoB.y>1000 || pontoA.y<300 || pontoA.y>1000){
-        k -= 10;
-        Phaser.Geom.Line.SetToAngle(paralela,x,y -k,angle,z);
-        pontoA = paralela.getPointA();
-        pontoB = paralela.getPointB();
+    var z = dist(x,y,x1,y1);
+    var flag = false;
+
+    while(pontoB.y<400 || pontoB.y>800 || pontoA.y<400 || pontoA.y>800||dist(pontoA.x,pontoA.y,x,y)<=150){
+        if(flag){
+            k+=30;
+            Phaser.Geom.Line.SetToAngle(paralela,x,y +k,angle,z);
+            pontoA = paralela.getPointA();
+            pontoB = paralela.getPointB();
+        }
+        else{
+            k -= 10;
+            Phaser.Geom.Line.SetToAngle(paralela,x,y -k,angle,z);
+            pontoA = paralela.getPointA();
+            pontoB = paralela.getPointB();
+        }
+        if(dist(pontoA.x,pontoA.y,x,y)<=150){
+            flag = true; 
+        }
     }
     
     return [pontoA,pontoB];
@@ -5142,7 +5155,7 @@ function perpendicular(ponto1,ponto2){
     pointerLine.setTo(ponto1.x,ponto1.y,ponto2.x,ponto2.y);
     var normalAngle = Phaser.Geom.Line.NormalAngle(pointerLine);
     var ponto = pointerLine.getRandomPoint(); 
-    while((dist(ponto.x,ponto.y,ponto1.x,ponto1.y)<50 && dist(ponto.x,ponto.y,ponto2.x,ponto2.y)<50) || !entre(ponto,ponto1) ||
+    while((dist(ponto.x,ponto.y,ponto1.x,ponto1.y)<150 && dist(ponto.x,ponto.y,ponto2.x,ponto2.y)<150) || !entre(ponto,ponto1) ||
     !entre(ponto,ponto2)
     ){    
         ponto = pointerLine.getRandomPoint(); 
@@ -5155,7 +5168,7 @@ function perpendicular(ponto1,ponto2){
     var pontoA = perp.getPointA();
     var pontoB = perp.getPointB(); 
 
-    while (pontoB.x>2000 ||pontoA.x>2000 ||pontoB.y<300 || pontoB.y>1000 || (dist(pontoB.x,pontoB.y,ponto1.x,ponto1.y)<50 && dist(pontoB.x,pontoB.y,ponto2.x,ponto2.y)<50) ||!entre(ponto,ponto1) ||
+    while (pontoB.x>1700 ||pontoA.x>1700 ||pontoB.y<400 || pontoB.y>800 || (dist(pontoB.x,pontoB.y,ponto1.x,ponto1.y)<150 && dist(pontoB.x,pontoB.y,ponto2.x,ponto2.y)<150) ||!entre(ponto,ponto1) ||
     !entre(ponto,ponto2) ){
         distancia -= 10;
         Phaser.Geom.Line.SetToAngle(perp,ponto.x,ponto.y,normalAngle,distancia);
@@ -5204,7 +5217,7 @@ function generateExtraPointAlign(pontos){
 
     var ponto = linha.getRandomPoint(); 
 
-    while(dist(ponto.x,ponto.y,pontos[0].x,pontos[0].y)<30 ||dist(ponto.x,ponto.y,pontos[1].x,pontos[1].y)<30){
+    while(dist(ponto.x,ponto.y,pontos[0].x,pontos[0].y)<50 ||dist(ponto.x,ponto.y,pontos[1].x,pontos[1].y)<50){
         ponto = linha.getRandomPoint(); 
     }
     return ponto;
@@ -5233,12 +5246,11 @@ function generateExtraPoint(pontos,quantos){
     var continua = true; 
 
     if(point==null){
-        while((a>1700||b>800 || b<400 ||a==x || a==x1 || b==y || b==y1 || dist(a,b,point2.x,point2.y)<=50 || dist(a,b,point3.x,point3.y)<=50 ||(b<=teste.y+50 && b>=teste2.y-50))&&continua){
+        while(( (b<y+50 && b>y-50) || (b<y1+50 && b>y1-50) ||a>1700||b>800 || b<400 ||a==x || a==x1 || b==y || b==y1 || dist(a,b,point2.x,point2.y)<=150 || dist(a,b,point3.x,point3.y)<=150 ||(b<=teste.y+50 && b>=teste2.y-50))&&continua){
             a = Math.random()*(2024 - 300) + 300;
             b = Math.random()*(1200 - 300) + 300;
             iterations += 1; 
             if(iterations>300){
-                console.log("ola");
                 continua = false; 
                 a = x+y/2; 
                 b = pontoDeCima(point2,point3).y;
@@ -5255,7 +5267,7 @@ function generateExtraPoint(pontos,quantos){
     if(point!=null){
         a1 = point.x;
         b1=point.y;        
-        while((a>1700||b>800 || b<400 ||a==x || a==x1 || b==y || b==y1 || a==a1 || a==b1 || dist(a,b,point2.x,point2.y)<=50 || dist(a,b,point3.x,point3.y)<=50 || dist(a,b,point.x,point.y)<=50||(b<=teste.y+50 && b>=teste2.y-50))&&continua){
+        while(( (b<y+50 && b>y-50) || (b<y1+50 && b>y1-50) || a>1700||b>800 || b<400 ||a==x || a==x1 || b==y || b==y1 || a==a1 || a==b1 || dist(a,b,point2.x,point2.y)<=150 || dist(a,b,point3.x,point3.y)<=150 || dist(a,b,point.x,point.y)<=150||(b<=teste.y+50 && b>=teste2.y-50))&&continua){
             a = Math.random()*(2024 - 300) + 300;
             b = Math.random()*(1200 - 300) + 300;
             iterations += 1; 
