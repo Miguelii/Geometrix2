@@ -5053,8 +5053,8 @@ function getPointsOnLine(a,b){
     var lineAuxInverse = new Phaser.Geom.Line();
     var lineaux =new Phaser.Geom.Line();   
     
-    Phaser.Geom.Line.SetToAngle(lineAuxInverse,x1,y1,angleInverse,1000);
-    Phaser.Geom.Line.SetToAngle(lineaux,x,y,angle,1000);
+    Phaser.Geom.Line.SetToAngle(lineAuxInverse,x1,y1,angleInverse,3000);
+    Phaser.Geom.Line.SetToAngle(lineaux,x,y,angle,3000);
 
 
     var end = lineaux.getPointB();
@@ -5062,7 +5062,7 @@ function getPointsOnLine(a,b){
     var lineTeste =new Phaser.Geom.Line();   
 
     lineTeste.setTo(end.x,end.y,end2.x,end2.y);
-    return lineTeste.getPoints(1000);
+    return lineTeste.getPoints(1500);
 }
 
 function dist(x,y,x1,y1){
