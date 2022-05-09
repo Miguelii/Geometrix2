@@ -126,6 +126,8 @@ class Jogo extends Phaser.Scene {
         this.btnao.name = 'btnao';
 
         info = this.add.sprite(10000, 10000, 'info');
+        info.setScale(1.3);
+
         timer = this.add.text(0.064 * game.config.width, 0.06 * game.config.height, segundos,{
             fontFamily: 'font1',
         });
@@ -699,7 +701,7 @@ class Jogo extends Phaser.Scene {
                         escondePontos([letraa,letrab,letrac,letrad,ponto1,ponto2,ponto3,ponto4]);
                         clearInterval(contaTempo);
                         vidas += 1; 
-                        score += 5;
+                        //score += 5;
                         break;
                     case 'btsim':
                         lines = [];
