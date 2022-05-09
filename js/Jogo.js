@@ -14,7 +14,7 @@ var timer;
 var score = 0; 
 var textScore;
 var pause = false; 
-var level = 15; 
+var level = 4; 
 var sim;
 var nao;
 var info;
@@ -4088,7 +4088,7 @@ class Jogo extends Phaser.Scene {
                                 graphics.clear(); 
                                 lines[j] = new Phaser.Geom.Line();
                                 line = lines[j];
-                                var aux = pontosParalelo(point2.x+30,point2.y,point3.x-80,point3.y+80); 
+                                var aux = pontosParalelo(point2.x+30,point2.y,point3.x+80,point3.y+80); 
                                 point = aux[1]; 
                                 point4 = aux[0];
                                 var a = point.x;
@@ -5182,28 +5182,49 @@ function pontosParalelo(x,y,x1,y1){
     var linha = new Phaser.Geom.Line(x, y, x1, y1);
     var angle = Phaser.Geom.Line.Angle(linha);
     var paralela = new Phaser.Geom.Line();
-    var k = 300;
+    var k = -500;
     Phaser.Geom.Line.SetToAngle(paralela,x,y -k,angle,dist(x,y,x1,y1));
     var pontoA = paralela.getPointA();
     var pontoB = paralela.getPointB(); 
     var z = dist(x,y,x1,y1);
-    var flag = false;
+    var iterations = 0; 
+    var acaba = false;
+    while((pontoB.y<400 || pontoB.y>800 || pontoA.y<400 || pontoA.y>800||dist(pontoA.x,pontoA.y,x,y)<=180)&&!acaba){
 
-    while(pontoB.y<400 || pontoB.y>800 || pontoA.y<400 || pontoA.y>800||dist(pontoA.x,pontoA.y,x,y)<=180){
-        if(flag){
+        iterations += 1; 
+        if(iterations==200){
+            if(y>600){
+                if(y1>y){
+                    Phaser.Geom.Line.SetToAngle(paralela,x,y-100,angle,z);
+                }
+                else{
+                    Phaser.Geom.Line.SetToAngle(paralela,x,y1-100,angle,z);
+                }
+            }
+            else{
+                if(y1>y){
+                    if(y1<700){
+                        Phaser.Geom.Line.SetToAngle(paralela,x,y1+100,angle,z);
+                    }
+                    else{
+                        Phaser.Geom.Line.SetToAngle(paralela,x,y+100,angle,z);
+                    }
+                }
+                else{
+                    Phaser.Geom.Line.SetToAngle(paralela,x,y+100,angle,z);
+                }
+            }
+            pontoA = paralela.getPointA();
+            pontoB = paralela.getPointB();
+            acaba = true; 
+        }
+        else{
             k+=30;
             Phaser.Geom.Line.SetToAngle(paralela,x,y +k,angle,z);
             pontoA = paralela.getPointA();
             pontoB = paralela.getPointB();
-        }
-        else{
-            k -= 10;
-            Phaser.Geom.Line.SetToAngle(paralela,x,y -k,angle,z);
-            pontoA = paralela.getPointA();
-            pontoB = paralela.getPointB();
-        }
-        if(dist(pontoA.x,pontoA.y,x,y)<=180){
-            flag = true; 
+            console.log(pontoA.x,pontoA.y);
+            console.log(pontoB.x,pontoB.y);
         }
     }
     
