@@ -4088,7 +4088,7 @@ class Jogo extends Phaser.Scene {
                                 graphics.clear(); 
                                 lines[j] = new Phaser.Geom.Line();
                                 line = lines[j];
-                                var aux = pontosParalelo(point2.x+30,point2.y,point3.x+80,point3.y+80); 
+                                var aux = pontosParalelo(point2.x-50,point2.y,point3.x+80,point3.y+80); 
                                 point = aux[1]; 
                                 point4 = aux[0];
                                 var a = point.x;
