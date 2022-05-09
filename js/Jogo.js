@@ -470,13 +470,13 @@ class Jogo extends Phaser.Scene {
             case 9: 
                 escondePontos([ponto3,ponto4,letrac,letrad]);
                 texto.setText([
-                    textoLevel(level)[0] + letra1 + '\n' + textoLevel(level)[1] + letra2
+                    textoLevel(level)[0] + letra1 + textoLevel(level)[1] + letra2
                 ]);
                 break;
             case 10: 
                 escondePontos([ponto3,letrac]);
                 texto.setText([
-                    textoLevel(level)[0] + letra1 + '\n' + textoLevel(level)[1] + letra2
+                    textoLevel(level)[0] + letra1 +  textoLevel(level)[1] + letra2
                 ]);
                 graphics.clear();
                 lines[j] = new Phaser.Geom.Line();
@@ -500,7 +500,7 @@ class Jogo extends Phaser.Scene {
                 break;
             case 11: 
                 texto.setText([
-                textoLevel(level)[0] + letra1 + '\n' + textoLevel(level)[1] + letra2
+                textoLevel(level)[0] + letra1 +  textoLevel(level)[1] + letra2
                 ]);
                 graphics.clear();
                 lines[j] = new Phaser.Geom.Line();
@@ -525,7 +525,7 @@ class Jogo extends Phaser.Scene {
                 break;
             case 12: 
                 texto.setText([
-                    textoLevel(level)[0] + letra1 + '\n'+ textoLevel(level)[1] + letra2
+                    textoLevel(level)[0] + letra1 + textoLevel(level)[1] + letra2
                 ]);
                 graphics.clear(); 
                 lines[j] = new Phaser.Geom.Line();
@@ -2897,7 +2897,7 @@ class Jogo extends Phaser.Scene {
                                 texto.x = 0.34 * game.config.width;
 
                                 texto.setText([
-                                    'Traça a reta SUPORTE da \nsemirreta |' + letra1 + letra2
+                                    'Traça a reta SUPORTE da semirreta |' + letra1 + letra2
                                 ]);
                                 pointsLine = [];
                                 var pointsLine3 = getPointsOnLine(point2,point3);
