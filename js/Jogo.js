@@ -5351,14 +5351,24 @@ function generateExtraPoint(pontos,quantos){
     var continua = true; 
 
     if(point==null){
-        while(( (b<y+80 && b>y-80) || (b<y1+80 && b>y1-80) ||a>1700||b>800 || b<400 ||a==x || a==x1 || b==y || b==y1 || dist(a,b,point2.x,point2.y)<=180 || dist(a,b,point3.x,point3.y)<=180 ||(b<=teste.y+80 && b>=teste2.y-80))&&continua){
+        while(( (b<y+100 && b>y-100) || (b<y1+80 && b>y1-80) ||a>1700||b>800 || b<400 ||a==x || a==x1 || b==y || b==y1 || dist(a,b,point2.x,point2.y)<=180 || dist(a,b,point3.x,point3.y)<=180 ||(b<=teste.y+80 && b>=teste2.y-80))&&continua){
             a = Math.random()*(2024 - 300) + 300;
             b = Math.random()*(1200 - 300) + 300;
             iterations += 1; 
             if(iterations>300){
                 continua = false; 
                 a = x+y/2; 
-                b = pontoDeCima(point2,point3).y;
+                if(pontoDeCima(point2,point3).y<600){
+                    b = pontoDeCima(point2,point3).y+180;
+                }
+                else{
+                    if(teste2.y>600){
+                        b = teste2.y - 200; 
+                    }
+                    else{
+                        b = teste2.y + 100; 
+                    }
+                }
             }
         }
         var ponto = new Phaser.Geom.Point(a, b);
@@ -5379,7 +5389,17 @@ function generateExtraPoint(pontos,quantos){
             if(iterations>300){
                 continua = false; 
                 a = pontoEsquerda(point3,point).x+80; 
-                b = pontoDeCima(point2,point3).y +100;
+                if(pontoDeCima(point2,point3).y<600){
+                    b = pontoDeCima(point2,point3).y+180;
+                }
+                else{
+                    if(teste2.y>600){
+                        b = teste2.y - 200; 
+                    }
+                    else{
+                        b = teste2.y + 100; 
+                    }
+                }
             }
         }
     }
