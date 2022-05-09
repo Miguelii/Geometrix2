@@ -14,7 +14,7 @@ var timer;
 var score = 0; 
 var textScore;
 var pause = false; 
-var level = 4; 
+var level = 1; 
 var sim;
 var nao;
 var info;
@@ -80,7 +80,7 @@ class Jogo extends Phaser.Scene {
         
 
         var color =  0xffffff;
-        var texto = this.add.text(0.465 * game.config.width, 0.24 *game.config.height, '', { fontFamily: 'font1',align: 'right'});
+        var texto = this.add.text(0.35 * game.config.width, 0.26 *game.config.height, '', { fontFamily: 'font1',align: 'right'});
         texto.setFontSize(30);
 
         levelText = this.add.text(0.465 * game.config.width, 0.17 *game.config.height, '', { fontFamily: 'font1',align: 'right'});
@@ -273,13 +273,13 @@ class Jogo extends Phaser.Scene {
 
         switch(level){
             case 1:
-                texto.x = 1650;
                 texto.setText([
                 textoLevel(level) + letra1 + ' e ' + letra2
                 ]);
                 break;
             case 2: 
-                texto.x = 1650;
+                texto.x = 0.36 * game.config.width;
+
                 texto.setText([
                     textoLevel(level) + letra1 + ' e ' + letra2
                 ]);
@@ -305,16 +305,16 @@ class Jogo extends Phaser.Scene {
                 segundos = 0;
                 break;
             case 3: 
-                texto.x = 1650;
+                texto.x = 0.34 * game.config.width; 
+
                 texto.setText([
                     textoLevel(level) + letra1 + ' e ' + letra2
                 ]);
                 graphics.clear(); 
                 lines[j] = new Phaser.Geom.Line();
                 line = lines[j];
-                var aux = generateExtraPoint([point2,point3],2); 
-                point = aux[0]; 
-                point4 = aux[1];
+                point = generateExtraPoint([point2,point3],1); 
+                point4 = generateExtraPoint([point2,point3,point],1); 
                 var a = point.x;
                 var b = point.y; 
                 var px = point4.x; 
@@ -339,7 +339,8 @@ class Jogo extends Phaser.Scene {
                 segundos = 0;
                 break; 
             case 4: 
-                texto.x = 1650;
+                texto.x = 0.34 * game.config.width; 
+
                 texto.setText([
                     textoLevel(level) + letra1 + ' e ' + letra2
                 ]);
@@ -373,13 +374,14 @@ class Jogo extends Phaser.Scene {
                 segundos = 0;
                 break; 
             case 5: 
-                texto.x = 1550;
+                texto.x = 0.39 * game.config.width; 
+
                 texto.setText([
                     textoLevel(level) + letra1 + ' e ' +  letra2
                 ]);
                 break; 
             case 6: 
-                texto.x = 1550;
+                
 
                 texto.setText([
                     textoLevel(level) + letra1 + ' e ' + letra2
@@ -406,7 +408,7 @@ class Jogo extends Phaser.Scene {
                 segundos = 0;
                 break;
             case 7: 
-                texto.x = 1550;
+                
 
                 texto.setText([
                     textoLevel(level) + letra1 + ' e ' + letra2
@@ -433,16 +435,15 @@ class Jogo extends Phaser.Scene {
                 segundos = 0;
                 break;
             case 8: 
-                texto.x = 1550;
+                
                 texto.setText([
                     textoLevel(level) + letra1 + ' e ' + letra2
                 ]);
                     graphics.clear(); 
                     lines[j] = new Phaser.Geom.Line();
                     line = lines[j];
-                    var aux = generateExtraPoint([point2,point3],2); 
-                    point = aux[0]; 
-                    point4 = aux[1];
+                    point = generateExtraPoint([point2,point3],1); 
+                    point4 = generateExtraPoint([point2,point3,point],1); 
                     var a = point.x;
                     var b = point.y; 
                     var px = point4.x; 
@@ -555,7 +556,7 @@ class Jogo extends Phaser.Scene {
                 segundos = 0;
                 break;    
             case 13: 
-                texto.x = 1550;
+                
                 texto.setText([
                     textoLevel(level) + letra1 + ' e ' + letra2
                 ]);
@@ -2083,9 +2084,10 @@ class Jogo extends Phaser.Scene {
 
                                     graphics.strokeLineShape(line);
                                 }
-                                texto.x = 1600;
+                                texto.x = 0.3 * game.config.width;
+
                                 texto.setText([
-                                    'Marca um ponto do segmento \nde reta [' + letra1 + letra2 + '] que não seja\n um extremo'
+                                    'Marca um ponto do segmento de reta [' + letra1 + letra2 + '] que não seja um extremo'
                                 ]);
                                 if(sgm){
                                     graphics.lineStyle(10, color);
@@ -2138,8 +2140,10 @@ class Jogo extends Phaser.Scene {
                         }
                         contador = 1;
                         if(segmentoReta(point2,point3,line)){
+                            texto.x = 0.4 * game.config.width;
+
                             um = true; 
-                            texto.x = 1600;
+                            
                             texto.setText([
                                 'Traça o segmento de reta [' + letra1 + letra3 + ']'
                             ]);
@@ -2152,7 +2156,6 @@ class Jogo extends Phaser.Scene {
                         else{
                             if(segmentoReta(point2,point,line) && um == true){
                                 dois = true; 
-                                texto.x = 1500;
                                 texto.setText([
                                     'Termina a representação do triângulo'
                                 ]);
@@ -2211,7 +2214,8 @@ class Jogo extends Phaser.Scene {
                                 pointsLine.push(pointsLine2[i]);
                             }
                             um = true; 
-                            texto.x = 2024;
+                            texto.x = 0.4 * game.config.width; 
+
                             texto.setText([
                                 'Traça o segmento de reta [' + letra2 + letra4 + ']'
                             ]);
@@ -2276,7 +2280,8 @@ class Jogo extends Phaser.Scene {
                                 pointsLine.push(pointsLine2[i]);
                             }
                             um = true; 
-                            texto.x = 2024;
+                            texto.x = 0.42 * game.config.width; 
+
                             texto.setText([
                                 'Traça o segmento de reta [' + letra2 + letra3 + ']'
                             ]);
@@ -2296,7 +2301,8 @@ class Jogo extends Phaser.Scene {
                             }
                             else{
                                 if(segmentoReta(point2,point4,line) && dois==true){
-                                    texto.x = 735;
+                                    texto.x = 0.4 * game.config.width; 
+
                                     texto.setText([
                                         'Termina a representação do quadrilátero'
                                     ]);
@@ -2366,7 +2372,7 @@ class Jogo extends Phaser.Scene {
 
                                     graphics.strokeLineShape(line);
                                 }
-                                texto.x = 760;
+                                
                                 naoMexe = true;
                                 texto.setText([
                                     'Marca um ponto alinhado com ' + letra1 + ' e ' +  letra2
@@ -2423,7 +2429,7 @@ class Jogo extends Phaser.Scene {
                         contador = 1;
                         if(reta(point2,point3,line)){
                             um = true; 
-                            texto.x = 2024;
+                            
                             texto.setText([
                                 'Traça o segmento de reta [' + letra2 + letra3 + ']'
                             ]);
@@ -2436,7 +2442,8 @@ class Jogo extends Phaser.Scene {
                         else{
                             if(segmentoReta(point3,point,line) && um == true){
                                 dois = true;
-                                texto.x = 800;
+                                texto.x = 0.44 * game.config.width; 
+
                                 texto.setText([
                                     'Traça a reta ' + letra1 + letra3 
                                 ]); 
@@ -2488,7 +2495,7 @@ class Jogo extends Phaser.Scene {
                         contador = 1;
                         if(reta(point2,point3,line)){
                             um = true; 
-                            texto.x = 2024
+                            
                             texto.setText([
                                 'Traça o segmento de reta [' + letra2 + letra3 + ']'
                             ]);
@@ -2502,10 +2509,10 @@ class Jogo extends Phaser.Scene {
                             if(segmentoReta(point3,point,line) && um == true){
                                 dois = true;
                                 certas = 1;
-                                texto.x = 760;
+                                texto.x = 0.32 * game.config.width; 
                                 naoMexe = true;
                                 texto.setText([
-                                    'Marca um ponto alinhado com ' + letra1 +' e ' + letra2 + '\n e que não pertence a [' + letra1 + letra2 + ']'
+                                    'Marca um ponto alinhado com ' + letra1 +' e ' + letra2 + ' e que não pertence a [' + letra1 + letra2 + ']'
                                 ]); 
                                 sgm = true;
                             }
@@ -2600,7 +2607,8 @@ class Jogo extends Phaser.Scene {
                         contador = 1;
                         if(reta(point2,point3,line)){
                             um = true; 
-                            texto.x = 800;
+                            texto.x = 0.44 * game.config.width; 
+
                             texto.setText([
                                 'Traça a reta ' + letra1 + letra3 
                             ]);
@@ -2613,7 +2621,8 @@ class Jogo extends Phaser.Scene {
                         else{
                             if(reta(point2,point,line) && um == true){
                                 dois = true;
-                                texto.x = 2024;
+                                texto.x = 0.4 * game.config.width; 
+
                                 texto.setText([
                                     'Traça o segmento de reta [' + letra2 + letra4 +']'
                                 ]); 
@@ -2627,11 +2636,12 @@ class Jogo extends Phaser.Scene {
                                 if(segmentoReta(point3,point4,line)&&dois){
                                     tres = true; 
                                     sgm = true; 
-                                    texto.x = 1550;
+                                    texto.x = 0.32 * game.config.width; 
+
                                     certas = 1; 
                                     naoMexe = true;
                                     texto.setText([
-                                        'Marca um ponto alinhado com ' + letra1 + letra3 +' \ne que não pertence a '
+                                        'Marca um ponto alinhado com ' + letra1 + letra3 +' e que não pertence a '
                                         + '[' + letra1 + letra3 + ']'
                                     ]); 
                                 }
@@ -2742,8 +2752,9 @@ class Jogo extends Phaser.Scene {
 
                                     graphics.strokeLineShape(line);
                                 }
-                                texto.x = 760;
+                                
                                 naoMexe = true;
+                                texto.x = 0.38 * game.config.width; 
 
                                 texto.setText([
                                     'Marca outro ponto da semirreta |' + letra1 + letra2
@@ -2805,7 +2816,8 @@ class Jogo extends Phaser.Scene {
                                 pointsLine.push(pointsLine2[i]);
                             }
                             um = true; 
-                            texto.x = 800;
+                            texto.x = 0.44 * game.config.width; 
+
                             texto.setText([
                                 'Traça a reta ' + letra1 + letra3
                             ]);
@@ -2813,7 +2825,7 @@ class Jogo extends Phaser.Scene {
                         else{
                             if(reta(point2,point,line) && um == true){
                                 dois = true; 
-                                texto.x = 2024;
+                                texto.x = 0.38 * game.config.width;
 
                                 texto.setText([
                                     'Traça o segmento de reta [' + letra2 + letra3 + ']'
@@ -2873,6 +2885,8 @@ class Jogo extends Phaser.Scene {
                                 pointsLine.push(pointsLine2[i]);
                             }
                             um = true; 
+                            texto.x = 0.38 * game.config.width;
+
                             texto.setText([
                                 'Traça o segmento de reta [' + letra2 + letra3 + ']'
                             ]);
@@ -2880,7 +2894,8 @@ class Jogo extends Phaser.Scene {
                         else{
                             if(segmentoReta(point3,point,line) && um == true){
                                 dois = true; 
-                                texto.x = 820;
+                                texto.x = 0.34 * game.config.width;
+
                                 texto.setText([
                                     'Traça a reta SUPORTE da \nsemirreta |' + letra1 + letra2
                                 ]);
@@ -2939,6 +2954,8 @@ class Jogo extends Phaser.Scene {
                                 pointsLine.push(pointsLine2[i]);
                             }
                             um = true; 
+                            texto.x = 0.38 * game.config.width;
+
                             texto.setText([
                                 'Traça o segmento de reta [' + letra1 + letra4 +']'
                             ]);
@@ -2946,7 +2963,8 @@ class Jogo extends Phaser.Scene {
                         else{
                             if(segmentoReta(point2,point4,line) && um == true){
                                 dois = true; 
-                                texto.x = 800;
+                                texto.x = 0.44 * game.config.width; 
+
                                 texto.setText([
                                     'Traça a reta ' + letra2 + letra4 
                                 ]);
@@ -3000,7 +3018,8 @@ class Jogo extends Phaser.Scene {
                         contador = 1;
                         if(reta(point2,point3,line)){
                             um = true; 
-                            texto.x = 860;
+                            texto.x = 0.42 * game.config.width; 
+
                             texto.setText([
                                 'Traça a semirreta |' + letra1 + letra3 
                             ]);
@@ -3013,7 +3032,8 @@ class Jogo extends Phaser.Scene {
                         else{
                             if(comecaAntesAcabaNoPonto(point2,point,line) && um == true){
                                 dois = true;
-                                texto.x = 2024;
+                                texto.x = 0.38 * game.config.width;
+
                                 texto.setText([
                                     'Traça o segmento de reta [' + letra2 + letra4 +']'
                                 ]); 
@@ -3029,9 +3049,10 @@ class Jogo extends Phaser.Scene {
                                     sgm = true; 
                                     certas = 1; 
                                     naoMexe = true;
-                                    texto.x = 1550;
+                                    texto.x = 0.32 * game.config.width;
+
                                     texto.setText([
-                                        'Marca um ponto alinhado com ' + letra1 + letra2 +' \ne que não pertence a '
+                                        'Marca um ponto alinhado com ' + letra1 + letra2 +' e que não pertence a '
                                         + '|' + letra1 + letra2
                                     ]); 
                                 }
@@ -3134,13 +3155,17 @@ class Jogo extends Phaser.Scene {
                                 pointsLine.push(pointsLine2[i]);
                             }
                             um = true; 
+                            texto.x = 0.32 * game.config.width;
+
                             texto.setText([
-                                'Traça a reta perpendicular a ' + letra1 + letra2 +'\nque passa por ' + letra4 
+                                'Traça a reta perpendicular a ' + letra1 + letra2 +' que passa por ' + letra4 
                             ]);
                         }
                         else{
                             if(reta(point,point4,line) && um == true){
                                 dois = true; 
+                                texto.x = 0.38 * game.config.width;
+
                                 texto.setText([
                                     'Traça o segmento de reta [' + letra2 + letra4 + ']'
                                 ]);
@@ -3194,9 +3219,10 @@ class Jogo extends Phaser.Scene {
                         contador = 1;
                         if(reta(point2,point3,line)){
                             um = true; 
-                            texto.x = 2024;
+                            texto.x = 0.32 * game.config.width;
+
                             texto.setText([
-                                'Traça a reta perpendicular a ' + letra1 + letra2 + '\nque passa por ' + letra4
+                                'Traça a reta perpendicular a ' + letra1 + letra2 + ' que passa por ' + letra4
                             ]);
                             pointsLine = [];
                             var pointsLine2 = getPointsOnLine(point4,point);
@@ -3208,9 +3234,10 @@ class Jogo extends Phaser.Scene {
                             if(reta(point4,point,line) && um == true){
                                 dois = true;
                                 naoMexe = true;
-                                texto.x = 750;
+                                texto.x = 0.3 * game.config.width;
+
                                 texto.setText([
-                                    'Marca um ponto da reta perpendicular\n a ' + letra1 + letra2 +' que passa por '+ letra4
+                                    'Marca um ponto da reta perpendicular a ' + letra1 + letra2 +' que passa por '+ letra4
                                 ]); 
                                 sgm = true; 
                                 certas = 1; 
@@ -3312,15 +3339,17 @@ class Jogo extends Phaser.Scene {
                                 pointsLine.push(pointsLine2[i]);
                             }
                             um = true; 
-                            texto.x = 820;
+                            texto.x = 0.32 * game.config.width;
+
                             texto.setText([
-                                'Traça a reta paralela a ' + letra1 + letra2 +'\nque passa por ' + letra3
+                                'Traça a reta paralela a ' + letra1 + letra2 +'que passa por ' + letra3
                             ]);
                         }
                         else{
                             if(reta(point,point4,line) && um == true){
                                 dois = true; 
-                                texto.x = 2024;
+                                texto.x = 0.38 * game.config.width;
+
                                 texto.setText([
                                     'Traça o segmento de reta [' + letra2 + letra3 + ']'
                                 ]);
@@ -3374,9 +3403,10 @@ class Jogo extends Phaser.Scene {
                         contador = 1;
                         if(reta(point2,point3,line)){
                             um = true; 
-                            texto.x = 820;
+                            texto.x = 0.32 * game.config.width;
+
                             texto.setText([
-                                'Traça a reta paralela a ' + letra1 + letra2 + '\nque passa por ' + letra3
+                                'Traça a reta paralela a ' + letra1 + letra2 + ' que passa por ' + letra3
                             ]);
                             pointsLine = [];
                             var pointsLine2 = getPointsOnLine(point4,point);
@@ -3387,10 +3417,10 @@ class Jogo extends Phaser.Scene {
                         else{
                             if(reta(point4,point,line) && um == true){
                                 dois = true;
-                                texto.x = 760;
+                                texto.x = 0.3 * game.config.width;
 
                                 texto.setText([
-                                    'Marca um ponto da reta paralela\n a ' + letra1 + letra2 +' que passa por '+ letra3
+                                    'Marca um ponto da reta paralela a ' + letra1 + letra2 +' que passa por '+ letra3
                                 ]); 
                                 sgm = true; 
                                 certas = 1; 
@@ -3492,16 +3522,18 @@ class Jogo extends Phaser.Scene {
                                 pointsLine.push(pointsLine2[i]);
                             }
                             um = true; 
+                            texto.x = 0.32 * game.config.width;
+
                             texto.setText([
-                                'Traça a reta perpendicular a ' + letra1 + letra2 +'\nque passa por ' + letra3
+                                'Traça a reta perpendicular a ' + letra1 + letra2 +' que passa por ' + letra3
                             ]);
                         }
                         else{
                             if(reta(point,point4,line) && um == true){
                                 dois = true; 
-                                texto.x = 2024;
+                                
                                 texto.setText([
-                                    'Traça a reta paralela a ' + letra1 + letra2 +'\nque passa por ' + letra3
+                                    'Traça a reta paralela a ' + letra1 + letra2 +' que passa por ' + letra3
                                 ]);
                                 pointsLine = [];
                                 var pointsLine3 = getPointsOnLine(point4,point5);
@@ -3513,6 +3545,8 @@ class Jogo extends Phaser.Scene {
                             else{
                                 if(reta(point4,point5,line) && dois==true){
                                     tres = true; 
+                                    texto.x = 0.38 * game.config.width;
+
                                     texto.setText([
                                         'Traça o segmento de reta [' + letra2 + letra3 + ']'
                                     ]);
@@ -3565,7 +3599,8 @@ class Jogo extends Phaser.Scene {
                         contador = 1;
                         if(reta(point2,point3,line)){
                             um = true; 
-                            texto.x = 860;
+                            texto.x = 0.42 * game.config.width;
+
                             texto.setText([
                                 'Traça a semirreta |' + letra1 + letra3 
                             ]);
@@ -3578,7 +3613,8 @@ class Jogo extends Phaser.Scene {
                         else{
                             if(comecaAntesAcabaNoPonto(point2,point,line) && um == true){
                                 dois = true;
-                                texto.x = 2024;
+                                texto.x = 0.38 * game.config.width;
+
                                 texto.setText([
                                     'Traça o segmento de reta [' + letra2 + letra4 +']'
                                 ]); 
@@ -3594,10 +3630,11 @@ class Jogo extends Phaser.Scene {
                                     sgm = true; 
                                     certas = 1; 
                                     naoMexe = true;
-                                    texto.x = 1550;
+                                    
+                                    texto.x = 0.32 * game.config.width;
 
                                     texto.setText([
-                                        'Marca um ponto alinhado com ' + letra1 + letra2 +' \ne que não pertence a '
+                                        'Marca um ponto alinhado com ' + letra1 + letra2 +' e que não pertence a '
                                         + '|' + letra1 + letra2 
                                     ]); 
                                 }
@@ -3625,9 +3662,10 @@ class Jogo extends Phaser.Scene {
                                                 for(var i=0;i<pointsLine2.length;i++){
                                                     pointsLine.push(pointsLine2[i]);
                                                 }
-                                                texto.x = 1650;
+                                                texto.x = 0.32 * game.config.width;
+
                                                 texto.setText([
-                                                    'Traça a reta paralela a ' + letra1 + letra2 +'\nque passa por '
+                                                    'Traça a reta paralela a ' + letra1 + letra2 +' que passa por '
                                                     + letra3
                                                 ]); 
                                                 if(reta(point,point4,line)){
@@ -3711,7 +3749,8 @@ class Jogo extends Phaser.Scene {
                         contador = 1;
                         if(reta(point2,point3,line)&&(!um)){
                             um = true; 
-                            texto.x = 860;
+                            texto.x = 0.42 * game.config.width;
+
                             texto.setText([
                                 'Traça a semirreta |' + letra1 + letra3 
                             ]);
@@ -3725,10 +3764,11 @@ class Jogo extends Phaser.Scene {
                             if(comecaAntesAcabaNoPonto(point2,point,line) && um == true && dois==false){
                                 dois = true;
                                 graphics.clear(); 
-                                texto.x = 720;
+                                texto.x = 0.3 * game.config.width;
+
                                 lines.pop();
                                 texto.setText([
-                                    'Traça a semirreta OPOSTA à semirreta \ncom origem em ' + letra1 + ' e que \npassa por ' + letra2
+                                    'Traça a semirreta OPOSTA à semirreta com origem em ' + letra1 + ' e que passa por ' + letra2
                                 ]); 
                                 pointsLine = [];
                                 var pointsLine2 = getPointsOnLine(point2,point);
@@ -3741,10 +3781,12 @@ class Jogo extends Phaser.Scene {
                                     tres = true; 
                                     sgm = true; 
                                     certas = 1; 
-                                    texto.x = 2024;
+                                    
                                     for(var i= 0;i<lines.length;i++){
                                         graphics.strokeLineShape(lines[i]);
                                     }
+                                    texto.x = 0.38 * game.config.width;
+
                                     texto.setText([
                                         'Traça o segmento de reta [' + letra2 + letra4 + ']'
                                     ]); 
@@ -3758,9 +3800,10 @@ class Jogo extends Phaser.Scene {
                                     if(segmentoReta(point3,point4,line)&&tres){
                                         quatro = true; 
                                         naoMexe = true;
-                                        texto.x = 760;
+                                        texto.x = 0.3 * game.config.width;
+
                                         texto.setText([
-                                            'Marca um ponto alinhado com ' + letra1 + ' e '  + letra3 +'\n e que não pertence a |' + letra1 + letra3 
+                                            'Marca um ponto alinhado com ' + letra1 + ' e '  + letra3 +' e que não pertence a |' + letra1 + letra3 
                                         ]); 
                                     }
                                     else{
@@ -3787,15 +3830,18 @@ class Jogo extends Phaser.Scene {
                                                     for(var i=0;i<pointsLine2.length;i++){
                                                         pointsLine.push(pointsLine2[i]);
                                                     }
+                                                    texto.x = 0.38 * game.config.width;
+
                                                     texto.setText([
-                                                        'Traça a reta SUPORTE da semirreta \n|' + letra1 + letra5
+                                                        'Traça a reta SUPORTE da semirreta |' + letra1 + letra5
                                                     ]); 
 
                                                     if(reta(point2,point5,line)&&quatro){
                                                         cinco=true;
-                                                        texto.x = 2024;
+                                                        texto.x = 0.32 * game.config.width;
+
                                                         texto.setText([
-                                                            'Traça a reta paralela a ' + letra1 + letra2 + '\nque passa por ' + letra3 
+                                                            'Traça a reta paralela a ' + letra1 + letra2 + ' que passa por ' + letra3 
                                                         ]); 
                                                         var pointsLine2 = getPointsOnLine(point,point4);
                                                         for(var i=0;i<pointsLine2.length;i++){
@@ -3946,7 +3992,8 @@ class Jogo extends Phaser.Scene {
                                         ]);
                                 }
                                 if(certas == 1){
-                                    texto.x = 1550;
+                                    texto.x = 0.4 * game.config.width;
+                                    
                                     texto.setText([
                                         'Traça o segmento de reta [' + letra1 + letra2 + ']'
                                     ]);
@@ -3961,7 +4008,8 @@ class Jogo extends Phaser.Scene {
                                 letrab.y = y1+15;
                                 break;
                             case 2: 
-                                texto.x = 1650;
+                                texto.x = 0.36 * game.config.width;
+
                                 texto.setText([
                                     textoLevel(level) + letra1 + ' e ' + letra2
                                 ]);
@@ -3988,9 +4036,10 @@ class Jogo extends Phaser.Scene {
                                 segundos = 0;
                                 break;
                             case 3: 
+                                texto.x = 0.34 * game.config.width; 
+
                                 clearInterval(contaTempo);
                                 escondePontos([info]);
-                                texto.x = 825;
 
                                 texto.setText([
                                     textoLevel(level) + letra1 + ' e ' + letra2
@@ -4027,7 +4076,8 @@ class Jogo extends Phaser.Scene {
                                 segundos = 0;
                                 break; 
                             case 4: 
-                                texto.x = 825;
+                                texto.x = 0.34 * game.config.width; 
+
                                 clearInterval(contaTempo);
                                 escondePontos([info]);
 
@@ -4065,7 +4115,8 @@ class Jogo extends Phaser.Scene {
 
                                 break; 
                             case 5: 
-                                texto.x = 1550;
+                                texto.x = 0.39 * game.config.width; 
+
                                 escondePontos([ponto3,ponto4,letrac,letrad]); 
                                 if(certas == 0 || certas == 1){
                                     texto.setText([
@@ -4085,7 +4136,7 @@ class Jogo extends Phaser.Scene {
                                 segundos = 0;
                                 break;
                             case 6: 
-                                texto.x = 1550;
+                                
                                 clearInterval(contaTempo);
 
                                 texto.setText([
@@ -4114,8 +4165,10 @@ class Jogo extends Phaser.Scene {
                                 segundos = 0;
                                 break;
                             case 7: 
+                                texto.x = 0.4 * game.config.width; 
+
                                 clearInterval(contaTempo);
-                                texto.x = 1550;
+                                
                                 texto.setText([
                                     textoLevel(level) + letra1 + ' e ' + letra2
                                 ]);
@@ -4142,8 +4195,7 @@ class Jogo extends Phaser.Scene {
                                 segundos = 0;
                                 break;
                             case 8: 
-                                texto.x = 1550;
-
+                                texto.x = 0.4 * game.config.width; 
                                 clearInterval(contaTempo);
                                 texto.setText([
                                         textoLevel(level) + letra1 + ' e ' + letra2
@@ -4177,16 +4229,15 @@ class Jogo extends Phaser.Scene {
                                 segundos = 0;
                                 break; 
                             case 9: 
-                                texto.x = 760;
                                 escondePontos([ponto2,ponto3,letrac,letrad]);
                                 if (certas==0){
-                                    texto.x = 1550;
+                                    
                                     texto.setText([
                                         textoLevel(level)[0] + letra1 + textoLevel(level)[1] + letra2
                                     ]);
                                 }
                                 if(certas==1){
-                                    texto.x = 860;
+                                    texto.x = 0.42 * game.config.width; 
 
                                     texto.setText([
                                         'Traça a semirreta |' + letra1 + letra2 
@@ -4202,7 +4253,7 @@ class Jogo extends Phaser.Scene {
                                 letrab.y = y1+15;
                                 break;
                             case 10:
-                                texto.x = 790;
+                                texto.x = 0.32 * game.config.width;
                                 clearInterval(contaTempo);
                                 texto.setText([
                                     textoLevel(level)[0] + letra1 + textoLevel(level)[1] + letra2
@@ -4229,7 +4280,7 @@ class Jogo extends Phaser.Scene {
                                 segundos = 0;
                                 break;
                             case 11: 
-                                texto.x = 790;
+                                texto.x = 0.32 * game.config.width; 
                                 clearInterval(contaTempo);
                                 texto.setText([
                                 textoLevel(level)[0] + letra1 + textoLevel(level)[1] + letra2
@@ -4257,7 +4308,7 @@ class Jogo extends Phaser.Scene {
                                 segundos = 0;
                                 break;
                             case 12: 
-                                texto.x = 810;
+                                texto.x = 0.32 * game.config.width; 
                                 clearInterval(contaTempo);
                                 texto.setText([
                                     textoLevel(level)[0] + letra1 + textoLevel(level)[1] + letra2
@@ -4292,7 +4343,8 @@ class Jogo extends Phaser.Scene {
                                 segundos = 0;
                                 break;    
                             case 13: 
-                                texto.x = 1550;
+                                texto.x = 0.39 * game.config.width; 
+
                                 clearInterval(contaTempo);
 
                                 texto.setText([
@@ -4326,6 +4378,9 @@ class Jogo extends Phaser.Scene {
                                 segundos = 0;
                                 break; 
                             case 14: 
+
+                                texto.x = 0.39 * game.config.width; 
+
                                 escondePontos([letrac,ponto3]);
                                 clearInterval(contaTempo);
                                 texto.setText([
@@ -4347,6 +4402,8 @@ class Jogo extends Phaser.Scene {
                                 segundos = 0;
                                 break; 
                             case 15: 
+                                texto.x = 0.39 * game.config.width; 
+
                                 clearInterval(contaTempo);
                                 texto.setText([
                                     textoLevel(level) + letra1 + ' e ' + letra2
@@ -4368,8 +4425,9 @@ class Jogo extends Phaser.Scene {
                                 segundos = 0;
                                 break;
                             case 16:
+                                texto.x = 0.39 * game.config.width; 
+
                                 escondePontos([letrad,ponto4]);
-                                texto.x = 790;
                                 clearInterval(contaTempo); 
                                 texto.setText([
                                     textoLevel(level) + letra1 + ' e ' + letra2
@@ -4386,8 +4444,10 @@ class Jogo extends Phaser.Scene {
                                 segundos = 0;
                                 break;
                             case 17: 
+                                texto.x = 0.39 * game.config.width; 
+
                                 clearInterval(contaTempo); 
-                                texto.x = 1550;
+                                
                                 texto.setText([
                                     textoLevel(level) + letra1 + ' e ' + letra2
                                 ]);
@@ -4403,8 +4463,10 @@ class Jogo extends Phaser.Scene {
                                 segundos = 0;
                                 break; 
                             case 18: 
+                                texto.x = 0.39 * game.config.width; 
+
                                 clearInterval(contaTempo); 
-                                texto.x = 1550;
+                                
                                 texto.setText([
                                     textoLevel(level) + letra1 + ' e ' + letra2
                                 ]);
@@ -4421,7 +4483,8 @@ class Jogo extends Phaser.Scene {
                                 segundos = 0;
                                 break;
                             case 19: 
-                                texto.x = 1550;
+                                texto.x = 0.39 * game.config.width; 
+
                                 clearInterval(contaTempo); 
                                 texto.setText([
                                     textoLevel(level) + letra1 + ' e ' + letra2
@@ -4441,8 +4504,10 @@ class Jogo extends Phaser.Scene {
                                 segundos = 0; 
                                 break; 
                             case 20: 
+                                texto.x = 0.39 * game.config.width; 
+
                                 clearInterval(contaTempo); 
-                                texto.x = 1550;
+                                
                                 texto.setText([
                                     textoLevel(level) + letra1 + ' e ' + letra2
                                 ]);
@@ -4777,14 +4842,14 @@ function getPretendedLine (level,ponto1,ponto2){
     var lineAuxInverse = new Phaser.Geom.Line();
     var lineaux =new Phaser.Geom.Line();   
     
-    Phaser.Geom.Line.SetToAngle(lineAuxInverse,x1,y1,angleInverse,1000);
-    Phaser.Geom.Line.SetToAngle(lineaux,x,y,angle,1000);
+    Phaser.Geom.Line.SetToAngle(lineAuxInverse,x1,y1,angleInverse,3000);
+    Phaser.Geom.Line.SetToAngle(lineaux,x,y,angle,3000);
 
     var otherLine=new Phaser.Geom.Line(); 
-    Phaser.Geom.Line.SetToAngle(otherLine,x,y,angleInverse,1000);
+    Phaser.Geom.Line.SetToAngle(otherLine,x,y,angleInverse,3000);
 
     var otherLine2=new Phaser.Geom.Line(); 
-    Phaser.Geom.Line.SetToAngle(otherLine2,x1,y1,angle,1000);
+    Phaser.Geom.Line.SetToAngle(otherLine2,x1,y1,angle,3000);
 
     var end = lineaux.getPointB();
     var end2 = lineAuxInverse.getPointB(); 
@@ -5288,13 +5353,13 @@ function textoLevel(level){
     
     switch (level){
         case 1: 
-            return 'Traça o segmento de reta \ncom extremos em ';
+            return 'Traça o segmento de reta com extremos em ';
         case 2:
-            return 'Traça o segmento de reta \ncom extremos em ';
+            return 'Traça o segmento de reta com extremos em ';
         case 3: 
-            return 'Traça o segmento de reta \ncom extremos em ';
+            return 'Traça o segmento de reta com extremos em ';
         case 4: 
-            return 'Traça o segmento de reta \ncom extremos em ';
+            return 'Traça o segmento de reta com extremos em ';
         case 5: 
             return 'Traça a reta que passa por ';
         case 6:
@@ -5304,13 +5369,13 @@ function textoLevel(level){
         case 8: 
             return 'Traça a reta que passa por ';
         case 9: 
-            return ['Traça a semirreta com origem ','\n e que passa por '];
+            return ['Traça a semirreta com origem ',' e que passa por '];
         case 10: 
-            return ['Traça a semirreta com origem ','\n e que passa por '];
+            return ['Traça a semirreta com origem ',' e que passa por '];
         case 11: 
-            return ['Traça a semirreta com origem ','\n e que passa por '];
+            return ['Traça a semirreta com origem ',' e que passa por '];
         case 12: 
-            return ['Traça a semirreta OPOSTA à \nsemirreta com origem em ',' \ne que passa por '];
+            return ['Traça a semirreta OPOSTA à semirreta com origem em ',' ne que passa por '];
         case 13: 
             return 'Traça a reta que passa por ';
         case 14: 
