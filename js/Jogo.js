@@ -32,7 +32,7 @@ var sgm = false;
 var posto = false;
 var midlePoint = null;
 var contaTempo;
-var disable = false; 
+var disable = false;    
 var signal = false; 
 var levelText; 
 var changeLevel = false; 
@@ -1338,7 +1338,6 @@ class Jogo extends Phaser.Scene {
                                 }   
                             }
                         }
-                    
                     switch(level){
                         case 1: 
                             graphics.clear();
@@ -2088,8 +2087,10 @@ class Jogo extends Phaser.Scene {
                 if(line.x2==55 && line.y2==600){
                     erro = true;
                     color = 0xff2401;
-                    lines.pop();
                     graphics.clear();
+                    if(contador==0){
+                        lines.pop();
+                    }
                 }
                 if(!erro){
                     switch (level){
@@ -5238,14 +5239,16 @@ function pontosParalelo(x,y,x1,y1){
             else{
                 if(y1>y){
                     if(y1<700){
-                        Phaser.Geom.Line.SetToAngle(paralela,x,y1+100,angle,z);
+                        Phaser.Geom.Line.SetToAngle(paralela,x,y1-100,angle,z);
                     }
                     else{
                         Phaser.Geom.Line.SetToAngle(paralela,x,y+100,angle,z);
                     }
                 }
                 else{
-                    Phaser.Geom.Line.SetToAngle(paralela,x,y+100,angle,z);
+                    if(y<y1){
+                        Phaser.Geom.Line.SetToAngle(paralela,x,y+100,angle,z);
+                    }
                 }
             }
             pontoA = paralela.getPointA();
