@@ -70,7 +70,7 @@ class Jogo extends Phaser.Scene {
     create (){
         contaTempo = setInterval(function(){ segundo() },1000);
         segundos = 0;
-        
+        var timeout = 1000; 
         this.background = this.add.sprite(0.5 * game.config.width, 0.5 *game.config.height, 'background');
         this.background.setScale(1);
 
@@ -80,8 +80,8 @@ class Jogo extends Phaser.Scene {
         
 
         var color =  0xffffff;
-        var texto = this.add.text(0.35 * game.config.width, 0.26 *game.config.height, '', { fontFamily: 'font1',align: 'right'});
-        texto.setFontSize(30);
+        var texto = this.add.text(0.35 * game.config.width, 0.24 *game.config.height, '', { fontFamily: 'font1',align: 'right'});
+        texto.setFontSize(35);
 
         levelText = this.add.text(0.465 * game.config.width, 0.17 *game.config.height, '', { fontFamily: 'font1',align: 'right'});
         levelText.setFontSize(45);
@@ -188,6 +188,7 @@ class Jogo extends Phaser.Scene {
         nao.setInteractive({ useHandCursor: true });
 
         sim.on('pointerdown', () => {
+            timeout = 0;
             if(!changeLevel){
                 level += 1;
                 changeLevel = true;
@@ -199,7 +200,7 @@ class Jogo extends Phaser.Scene {
         });
 
         nao.on('pointerdown', () => {
-            
+            timeout = 0;
             if(!changeLevel){
                 aceita = true; 
                 changeLevel = true;
@@ -1624,7 +1625,7 @@ class Jogo extends Phaser.Scene {
                                 graphics.strokeLineShape(lines[i]);
                             }
                             if(certas==1){
-                                if (comecaAntesAcabaNoPonto(point2,point3,line)){
+                                if (semiReta(point2,point3,line)){
                                     sgm = true;
                                     lines.push(line);
                                 }
@@ -2764,7 +2765,6 @@ class Jogo extends Phaser.Scene {
                                 ]);
                                 if(sgm){
                                     graphics.lineStyle(10, color);
-
                                     graphics.strokeLineShape(lines[0]);
                                     if(aceitaMidle){
                                         certas+=1;
@@ -2950,7 +2950,7 @@ class Jogo extends Phaser.Scene {
                             lines.push(line);
                         }
                         contador = 1;
-                        if(comecaAntesAcabaNoPonto(point2,point,line)){
+                        if(semiReta(point2,point,line)){
                             pointsLine = [];
                             var pointsLine2 = getPointsOnLine(point2,point4);
                             for(var i=0;i<pointsLine2.length;i++){
@@ -3033,7 +3033,7 @@ class Jogo extends Phaser.Scene {
                             }
                         }
                         else{
-                            if(comecaAntesAcabaNoPonto(point2,point,line) && um == true){
+                            if(semiReta(point2,point,line) && um == true){
                                 dois = true;
                                 texto.x = 0.38 * game.config.width;
 
@@ -3614,7 +3614,7 @@ class Jogo extends Phaser.Scene {
                             }
                         }
                         else{
-                            if(comecaAntesAcabaNoPonto(point2,point,line) && um == true){
+                            if(semiReta(point2,point,line) && um == true){
                                 dois = true;
                                 texto.x = 0.38 * game.config.width;
 
@@ -3764,7 +3764,7 @@ class Jogo extends Phaser.Scene {
                             }
                         }
                         else{
-                            if(comecaAntesAcabaNoPonto(point2,point,line) && um == true && dois==false){
+                            if(semiReta(point2,point,line) && um == true && dois==false){
                                 dois = true;
                                 graphics.clear(); 
                                 texto.x = 0.3 * game.config.width;
@@ -3780,7 +3780,7 @@ class Jogo extends Phaser.Scene {
                                 }
                             }
                             else{
-                                if(comecaAntesAcabaNoPonto(point2,point,line)&&dois==true){
+                                if(semiReta(point2,point,line)&&dois==true){
                                     tres = true; 
                                     sgm = true; 
                                     certas = 1; 
@@ -4547,7 +4547,8 @@ class Jogo extends Phaser.Scene {
             
                       
                     }
-                },1000); 
+                },timeout); 
+                timeout = 1000;
                 contaTempo = setInterval(function(){ segundo() },1000);
                 f1 = false; 
                 f2 = false;
@@ -4910,10 +4911,9 @@ function getPretendedLine (level,ponto1,ponto2){
             
             return pontos; 
         case 9: 
-            return lineAuxInverse.getPoints(300);
-        case 13: 
-            Phaser.Geom.Line.SetToAngle(lineaux,x1,y1,angle,1000);
             return lineaux.getPoints(300);
+        case 13: 
+            return otherLine.getPoints(300);
         case 15: 
             linha.setTo(ponto1.x,ponto1.y,ponto2.x,ponto2.y);
             var ang = Phaser.Geom.Line.Angle(linha);
@@ -4936,11 +4936,9 @@ function getPretendedLine (level,ponto1,ponto2){
 
         return pontos;
         case 19: 
-            Phaser.Geom.Line.SetToAngle(lineaux,x1,y1,angle,1000);
-            return lineaux.getPoints(300);
+            return otherLine.getPoints(300);
         case 20: 
-            Phaser.Geom.Line.SetToAngle(lineaux,x1,y1,angle,1000);
-            return lineaux.getPoints(300);
+            return otherLine.getPoints(300);
     }
 }
 
@@ -5225,8 +5223,6 @@ function pontosParalelo(x,y,x1,y1){
             Phaser.Geom.Line.SetToAngle(paralela,x,y +k,angle,z);
             pontoA = paralela.getPointA();
             pontoB = paralela.getPointB();
-            console.log(pontoA.x,pontoA.y);
-            console.log(pontoB.x,pontoB.y);
         }
     }
     
@@ -5353,13 +5349,25 @@ function generateExtraPoint(pontos,quantos){
     var continua = true; 
 
     if(point==null){
-        while(( (b<y+100 && b>y-100) || (b<y1+80 && b>y1-80) ||a>1700||b>800 || b<400 ||a==x || a==x1 || b==y || b==y1 || dist(a,b,point2.x,point2.y)<=180 || dist(a,b,point3.x,point3.y)<=180 ||(b<=teste.y+80 && b>=teste2.y-80))&&continua){
-            a = Math.random()*(2024 - 300) + 300;
+        while(((b<y+100 && b>y-100) || (b<y1+80 && b>y1-80) ||a>1700||b>800 || b<400 || b==y || b==y1 || dist(a,b,point2.x,point2.y)<=180 || dist(a,b,point3.x,point3.y)<=180 ||(b<=teste.y+80 && b>=teste2.y-80))&&continua){
+            a = Math.random();
+            if(a<0.3){
+                a = x1;
+            }
+            else{
+                if(a>0.3&&a<0.5){
+                    a = x; 
+                }
+                else{
+                    a = x+x1/2;
+                }
+            }
+            
             b = Math.random()*(1200 - 300) + 300;
             iterations += 1; 
             if(iterations>300){
                 continua = false; 
-                a = x+y/2; 
+                a = x+x1/2; 
                 if(pontoDeCima(point2,point3).y<600){
                     b = pontoDeCima(point2,point3).y+180;
                 }
