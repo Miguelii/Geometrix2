@@ -5247,6 +5247,9 @@ function pontosParalelo(x,y,x1,y1){
                 }
                 else{
                     if(y<y1){
+                        Phaser.Geom.Line.SetToAngle(paralela,x,y1+100,angle,z);
+                    }
+                    else{
                         Phaser.Geom.Line.SetToAngle(paralela,x,y+100,angle,z);
                     }
                 }
