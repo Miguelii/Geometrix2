@@ -24,7 +24,7 @@ var muda = false;
 var armazenado = 0;
 var aux = false; 
 var aceita = false; 
-var vidas = 3; 
+var vidas = 10000; 
 var contador = 0;
 var certas = 0; 
 var aceitaMidle = false;
@@ -80,7 +80,7 @@ class Jogo extends Phaser.Scene {
         
 
         var color =  0xffffff;
-        var texto = this.add.text(0.35 * game.config.width, 0.24 *game.config.height, '', { fontFamily: 'font1',align: 'right'});
+        var texto = this.add.text(0.31 * game.config.width, 0.25 *game.config.height, '', { fontFamily: 'font1',align: 'right'});
         texto.setFontSize(35);
 
         levelText = this.add.text(0.465 * game.config.width, 0.17 *game.config.height, '', { fontFamily: 'font1',align: 'right'});
@@ -2088,7 +2088,7 @@ class Jogo extends Phaser.Scene {
 
                                     graphics.strokeLineShape(line);
                                 }
-                                texto.x = 0.3 * game.config.width;
+                                texto.x = 0.28 * game.config.width;
 
                                 texto.setText([
                                     'Marca um ponto do segmento de reta [' + letra1 + letra2 + '] que não seja um extremo'
@@ -3995,7 +3995,7 @@ class Jogo extends Phaser.Scene {
                                         ]);
                                 }
                                 if(certas == 1){
-                                    texto.x = 0.4 * game.config.width;
+                                    texto.x = 0.38 * game.config.width;
                                     
                                     texto.setText([
                                         'Traça o segmento de reta [' + letra1 + letra2 + ']'
@@ -4011,7 +4011,7 @@ class Jogo extends Phaser.Scene {
                                 letrab.y = y1+15;
                                 break;
                             case 2: 
-                                texto.x = 0.36 * game.config.width;
+                                texto.x = 0.34 * game.config.width;
 
                                 texto.setText([
                                     textoLevel(level) + letra1 + ' e ' + letra2
