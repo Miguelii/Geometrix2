@@ -39,6 +39,7 @@ var changeLevel = false;
 var changeLives = true; 
 var naoMexe = false; 
 var pts; 
+var erro = false;
 
 class Jogo extends Phaser.Scene {
 
@@ -64,6 +65,8 @@ class Jogo extends Phaser.Scene {
         this.load.image('coracao1', 'assets/coracao1.png');
         this.load.image('coracao2', 'assets/coracao2.png');
         this.load.image('btExtra', 'assets/btExtra.png');
+        this.load.image('erro', 'assets/x.png');
+
         //this.load.image('circulo', 'assets/circulo.png');
     }
         
@@ -77,7 +80,8 @@ class Jogo extends Phaser.Scene {
         this.titulo1 = this.add.sprite(0.5 * game.config.width, 0.15 *game.config.height, 'titulo1');
         this.titulo1.setScale(0.9);
         
-        
+        this.x = this.add.sprite(55, 600, 'erro');
+        this.x.setScale(0.3);
 
         var color =  0xffffff;
         var texto = this.add.text(0.31 * game.config.width, 0.25 *game.config.height, '', { fontFamily: 'font1',align: 'right'});
@@ -350,7 +354,7 @@ class Jogo extends Phaser.Scene {
                 graphics.clear(); 
                 lines[j] = new Phaser.Geom.Line();
                 line = lines[j];
-                var aux = pontosParalelo(point2.x+30,point2.y,point3.x-20,point3.y-80);
+                var aux = pontosParalelo(point2.x+30,point2.y,point3.x-20,point3.y-50);
                 point = aux[1]; 
                 point4 = aux[0];
                 var a = point.x;
@@ -806,6 +810,8 @@ class Jogo extends Phaser.Scene {
 
         this.input.on('pointerdown', function (pointer) {
             if(!muda){
+                erro = false; 
+                color = 0xffffff;
                 var ultimo = false;
                 if(ultimo==false){
                     line.setTo(pointer.x, pointer.y, pointer.x, pointer.y);
@@ -849,30 +855,30 @@ class Jogo extends Phaser.Scene {
                 }
 
                 for(var i=0;i<=pointsLine.length;i++){
-                    if (pointer.x <= x+80 && pointer.x >= x-80 && pointer.y <= y+80 && pointer.y >= y-80){
+                    if (pointer.x <= x+50 && pointer.x >= x-50 && pointer.y <= y+50 && pointer.y >= y-50){
                         line.setTo(x, y, x, y);
                     }
                     else {
-                        if (pointer.x <= x1+80 && pointer.x >= x1-80 && pointer.y <= y1+80 && pointer.y >= y1-80){
+                        if (pointer.x <= x1+50 && pointer.x >= x1-50 && pointer.y <= y1+50 && pointer.y >= y1-50){
                         line.setTo(x1, y1, x1, y1);
                         }
                         else{
                             if ((level == 2||level==3||level==4||level==6||level==7||level==8||
                                 level == 10 || level==11 || level==12||level==13||level==16||level==17||level==19||level==20
-                                ) && pointer.x <= point.x+80 && pointer.x >= point.x-80 && pointer.y <= point.y+80 && pointer.y >= point.y-80){
+                                ) && pointer.x <= point.x+50 && pointer.x >= point.x-50 && pointer.y <= point.y+50 && pointer.y >= point.y-50){
                                 line.setTo(point.x, point.y, point.x, point.y);
                             }
                             else{ 
                                 if((level==3 ||level==4||level==8||level==12||level==13
-                                    ||level==14||level==15||level==18||level==19||level==20)&& pointer.x <= point4.x+80 && pointer.x >= point4.x-80 && pointer.y <= point4.y+80 && pointer.y >= point4.y-80){
+                                    ||level==14||level==15||level==18||level==19||level==20)&& pointer.x <= point4.x+50 && pointer.x >= point4.x-50 && pointer.y <= point4.y+50 && pointer.y >= point4.y-50){
                                     line.setTo(point4.x, point4.y, point4.x, point4.y);
                                 }
                                 else{
-                                    if(level==20&& pointer.x <= point5.x+80 && pointer.x >= point5.x-80 && pointer.y <= point5.y+80 && pointer.y >= point5.y-80){
+                                    if(level==20&& pointer.x <= point5.x+50 && pointer.x >= point5.x-50 && pointer.y <= point5.y+50 && pointer.y >= point5.y-50){
                                         line.setTo(point5.x, point5.y, point5.x, point5.y);
                                     }
                                     else{
-                                        if(pointer.x<=pointsLine[i].x+80 &&pointer.x >= pointsLine[i].x-80 && pointer.y <= pointsLine[i].y+80 && pointer.y >= pointsLine[i].y-80 ){
+                                        if(pointer.x<=pointsLine[i].x+50 &&pointer.x >= pointsLine[i].x-50 && pointer.y <= pointsLine[i].y+50 && pointer.y >= pointsLine[i].y-50 ){
                                             line.setTo(pointsLine[i].x, pointsLine[i].y, pointsLine[i].x, pointsLine[i].y);
                                             ultimo = true;
                                         }
@@ -1281,38 +1287,45 @@ class Jogo extends Phaser.Scene {
                     }
 
                     for (var i=0;i<pointsLine.length;i++){
-                        if (pointer.x <= x+80 && pointer.x >= x-80 && pointer.y <= y+80 && pointer.y >= y-80){
+                        if (pointer.x <= x+50 && pointer.x >= x-50 && pointer.y <= y+50 && pointer.y >= y-50){
                             line.x2 = x; 
                             line.y2 = y; 
                         }
                         else {
-                            if (pointer.x <= x1+80 && pointer.x >= x1-80 && pointer.y <= y1+80 && pointer.y >= y1-80){
+                            if (pointer.x <= x1+50 && pointer.x >= x1-50 && pointer.y <= y1+50 && pointer.y >= y1-50){
                                 line.x2 = x1; 
                                 line.y2 = y1; 
                             }
                             else{
                                 if((level == 2|| level==3 || level==4||level==6||level==7||level==8
                                     ||level==10||level==11||level == 12||level==13||level==16||level==17||level==19||level==20) && 
-                                    pointer.x <= point.x+80 && pointer.x >= point.x-80 && pointer.y <= point.y+80 && pointer.y >= point.y-80){
+                                    pointer.x <= point.x+50 && pointer.x >= point.x-50 && pointer.y <= point.y+50 && pointer.y >= point.y-50){
                                     line.x2 = point.x; 
                                     line.y2 = point.y; 
                                 }
                                 else{
                                     if((level==3||level==4||level==8||level==12||level==13||level==14||level==15||level==18||level==19||level==20
-                                        ) && pointer.x <= point4.x+80 && pointer.x >= point4.x-80 && pointer.y <= point4.y+80 && pointer.y >= point4.y-80){
+                                        ) && pointer.x <= point4.x+50 && pointer.x >= point4.x-50 && pointer.y <= point4.y+50 && pointer.y >= point4.y-50){
                                         line.x2 = point4.x; 
                                         line.y2 = point4.y; 
                                     }
                                     else{
-                                        if(level==20 && pointer.x <= point5.x+80 && pointer.x >= point5.x-80 && pointer.y <= point5.y+80 && pointer.y >= point5.y-80){
+                                        if(level==20 && pointer.x <= point5.x+50 && pointer.x >= point5.x-50 && pointer.y <= point5.y+50 && pointer.y >= point5.y-50){
                                             line.x2 = point5.x; 
                                             line.y2 = point5.y; 
                                         }
                                         else{
-                                            if(pointer.x<=pointsLine[i].x+80 &&pointer.x >= pointsLine[i].x-80 && pointer.y <= pointsLine[i].y+80 && pointer.y >= pointsLine[i].y-80){
+                                            if(pointer.x<=pointsLine[i].x+50 &&pointer.x >= pointsLine[i].x-50 && pointer.y <= pointsLine[i].y+50 && pointer.y >= pointsLine[i].y-50){
                                                 line.x2 = pointsLine[i].x;
                                                 line.y2 = pointsLine[i].y;
-                                                
+                                                }
+                                                else{
+                                                    if(pointer.x<=55+50 &&pointer.x >= 55-50 && pointer.y <= 600+50 && pointer.y >= 600-50){
+                                                        line.x2 = 55;
+                                                        line.y2 = 600;
+                                                        erro = true;
+                                                        color = 0xff2401;
+                                                    }
                                                 }
                                             }
                                         }
@@ -2067,6 +2080,7 @@ class Jogo extends Phaser.Scene {
 
         this.input.on('pointerup', function (pointer) {
             if(!muda){
+                if(!erro){
                 switch (level){
                     case 1: 
                         if (segmentoReta(point2,point3,line) && certas == 0){
@@ -3345,7 +3359,7 @@ class Jogo extends Phaser.Scene {
                             texto.x = 0.32 * game.config.width;
 
                             texto.setText([
-                                'Traça a reta paralela a ' + letra1 + letra2 +'que passa por ' + letra3
+                                'Traça a reta paralela a ' + letra1 + letra2 +' que passa por ' + letra3
                             ]);
                         }
                         else{
@@ -3926,6 +3940,12 @@ class Jogo extends Phaser.Scene {
                         
                         break;
                 }
+            }
+            else{
+                graphics.clear();
+                line = new Phaser.Geom.Line();
+
+            }
 
                 line = new Phaser.Geom.Line(); 
             }
@@ -4090,7 +4110,7 @@ class Jogo extends Phaser.Scene {
                                 graphics.clear(); 
                                 lines[j] = new Phaser.Geom.Line();
                                 line = lines[j];
-                                var aux = pontosParalelo(point2.x-50,point2.y,point3.x+80,point3.y+80); 
+                                var aux = pontosParalelo(point2.x-50,point2.y,point3.x+50,point3.y+50); 
                                 point = aux[1]; 
                                 point4 = aux[0];
                                 var a = point.x;
@@ -4864,7 +4884,7 @@ function getPretendedLine (level,ponto1,ponto2){
             linha.setTo(ponto1.x,ponto1.y,ponto2.x,ponto2.y);
             var ang = Phaser.Geom.Line.Angle(linha);
             var nova =new Phaser.Geom.Line(); 
-            Phaser.Geom.Line.SetToAngle(nova,x,y,ang,dist(ponto1.x,ponto1.y,ponto2.x,ponto2.y)-80);
+            Phaser.Geom.Line.SetToAngle(nova,x,y,ang,dist(ponto1.x,ponto1.y,ponto2.x,ponto2.y)-50);
 
             var inversa = new Phaser.Geom.Line();
             inversa.setTo(ponto2.x,ponto2.y,ponto1.x,ponto1.y);
@@ -4872,7 +4892,7 @@ function getPretendedLine (level,ponto1,ponto2){
             var angInv = Phaser.Geom.Line.Angle(inversa);
             var novaInv =new Phaser.Geom.Line();
 
-            Phaser.Geom.Line.SetToAngle(novaInv,x1,y1,angInv,dist(ponto1.x,ponto1.y,ponto2.x,ponto2.y)-80);
+            Phaser.Geom.Line.SetToAngle(novaInv,x1,y1,angInv,dist(ponto1.x,ponto1.y,ponto2.x,ponto2.y)-50);
             var acaba1 = nova.getPointB(); 
             var acaba2 = novaInv.getPointB();
             var pretended = new Phaser.Geom.Line();
@@ -4935,6 +4955,9 @@ function getPretendedLine (level,ponto1,ponto2){
             var pontos = pretended.getPoints(400);
 
         return pontos;
+        case 17: 
+            lineTeste.setTo(end.x,end.y,end2.x,end2.y);
+            return lineTeste.getPoints(1200);
         case 19: 
             return otherLine.getPoints(300);
         case 20: 
@@ -5234,7 +5257,7 @@ function pontosParaleloF(x,y,x1,y1,pF){
     var linha = new Phaser.Geom.Line(x, y, x1, y1);
     var angle = Phaser.Geom.Line.Angle(linha);
     var paralela = new Phaser.Geom.Line();
-    Phaser.Geom.Line.SetToAngle(paralela,pF.x,pF.y,angle,80);
+    Phaser.Geom.Line.SetToAngle(paralela,pF.x,pF.y,angle,50);
     var points = paralela.getPoints(); 
     var pontoA = paralela.getPointA();
     var pontoB = paralela.getPointB(); 
@@ -5249,7 +5272,7 @@ function escondePontos(pontos){
 }
 
 function entre (ponto,ponto2){
-    if (ponto.x<=ponto2.x+80 && ponto.x>=ponto2.x-80 && ponto.x<=ponto2.y+80 && ponto.y >= ponto2.y-80 ) return false; 
+    if (ponto.x<=ponto2.x+50 && ponto.x>=ponto2.x-50 && ponto.x<=ponto2.y+50 && ponto.y >= ponto2.y-50 ) return false; 
     return true;
 }
 
@@ -5320,7 +5343,7 @@ function generateExtraPointAlign(pontos){
 
     var ponto = linha.getRandomPoint(); 
 
-    while(dist(ponto.x,ponto.y,pontos[0].x,pontos[0].y)<80 ||dist(ponto.x,ponto.y,pontos[1].x,pontos[1].y)<80){
+    while(dist(ponto.x,ponto.y,pontos[0].x,pontos[0].y)<50 ||dist(ponto.x,ponto.y,pontos[1].x,pontos[1].y)<50){
         ponto = linha.getRandomPoint(); 
     }
     return ponto;
@@ -5349,7 +5372,7 @@ function generateExtraPoint(pontos,quantos){
     var continua = true; 
 
     if(point==null){
-        while(((b<y+100 && b>y-100) || (b<y1+80 && b>y1-80) ||a>1700||b>800 || b<400 || b==y || b==y1 || dist(a,b,point2.x,point2.y)<=180 || dist(a,b,point3.x,point3.y)<=180 ||(b<=teste.y+80 && b>=teste2.y-80))&&continua){
+        while(((b<y+100 && b>y-100) || (b<y1+50 && b>y1-50) ||a>1700||b>800 || b<400 || b==y || b==y1 || dist(a,b,point2.x,point2.y)<=180 || dist(a,b,point3.x,point3.y)<=180 ||(b<=teste.y+50 && b>=teste2.y-50))&&continua){
             a = Math.random();
             if(a<0.3){
                 a = x1;
@@ -5392,13 +5415,13 @@ function generateExtraPoint(pontos,quantos){
     if(point!=null){
         a1 = point.x;
         b1=point.y;        
-        while(( (b<y+80 && b>y-80) || (b<y1+80 && b>y1-80) || a>1700||b>800 || b<400 ||a==x || a==x1 || b==y || b==y1 || a==a1 || a==b1 || dist(a,b,point2.x,point2.y)<=180 || dist(a,b,point3.x,point3.y)<=180 || dist(a,b,point.x,point.y)<=180||(b<=teste.y+80 && b>=teste2.y-80))&&continua){
+        while(( (b<y+50 && b>y-50) || (b<y1+50 && b>y1-50) || a>1700||b>800 || b<400 ||a==x || a==x1 || b==y || b==y1 || a==a1 || a==b1 || dist(a,b,point2.x,point2.y)<=180 || dist(a,b,point3.x,point3.y)<=180 || dist(a,b,point.x,point.y)<=180||(b<=teste.y+50 && b>=teste2.y-50))&&continua){
             a = Math.random()*(2024 - 300) + 300;
             b = Math.random()*(1200 - 300) + 300;
             iterations += 1; 
             if(iterations>300){
                 continua = false; 
-                a = pontoEsquerda(point3,point).x+80; 
+                a = pontoEsquerda(point3,point).x+50; 
                 if(pontoDeCima(point2,point3).y<600){
                     b = pontoDeCima(point2,point3).y+180;
                 }
