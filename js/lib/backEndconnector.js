@@ -25,7 +25,7 @@
                 infoUser.setLocalData();
 
                 scene.scene.stop();
-                scene.scene.resume("startScene");
+                scene.scene.resume("Menu");
             }
             else {
                 // alert("Utilizador ou Password Errados");
