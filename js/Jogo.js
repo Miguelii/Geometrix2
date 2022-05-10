@@ -14,7 +14,7 @@ var timer;
 var score = 0; 
 var textScore;
 var pause = false; 
-var level = 4; 
+var level = 1; 
 var sim;
 var nao;
 var info;
@@ -5245,7 +5245,6 @@ function pontosParalelo(x,y,x1,y1){
             Phaser.Geom.Line.SetToAngle(paralela,x,y +k,angle,z);
             pontoA = paralela.getPointA();
             pontoB = paralela.getPointB();
-
         }
     }
     return [pontoA,pontoB];
