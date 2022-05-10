@@ -16,6 +16,8 @@ class Menu extends Phaser.Scene {
         this.load.image('btclose', 'assets/btclose.png');
         this.load.image('btlogin', 'assets/login.png');
         this.load.image('quadrologin', 'assets/quadrologin.png');
+        this.load.image('btlogout', 'assets/logout.png');
+
     }
 
 
@@ -94,8 +96,8 @@ class Menu extends Phaser.Scene {
 
 
         //LOGIN
-        this.btlogin = this.add.sprite(0.85 * game.config.width ,0.15 * game.config.height, "btlogin");
-        this.btlogin.setScale(0.65);
+        this.btlogin = this.add.sprite(0.95 * game.config.width ,0.11 * game.config.height, "btlogin");
+        this.btlogin.setScale(0.8);
         this.btlogin.setInteractive({ useHandCursor: true });
         this.btlogin.name = 'btlogin';
 
@@ -105,8 +107,13 @@ class Menu extends Phaser.Scene {
 
         this.loginfinal = this.add.sprite(0.5 * game.config.width, 0.58 * game.config.height, "btlogin");
         this.loginfinal.setInteractive({ useHandCursor: true });
-        this.loginfinal.setScale(0.5);
+        this.loginfinal.setScale(0.8);
         this.loginfinal.visible = false;
+
+        this.logout = this.add.sprite(0.95 * game.config.width ,0.11 * game.config.height, "btlogout");
+        this.logout.setInteractive({ useHandCursor: true });
+        this.logout.setScale(0.8);
+        this.logout.visible = false;
 
         this.loginfinal.on('pointerover', () => {
             this.loginfinal.displayHeight += 5;
@@ -116,6 +123,26 @@ class Menu extends Phaser.Scene {
         this.loginfinal.on('pointerout', () => {
             this.loginfinal.displayHeight -= 5;
             this.loginfinal.displayWidth -= 5;
+
+        });
+        this.btlogin.on('pointerover', () => {
+            this.btlogin.displayHeight += 5;
+            this.btlogin.displayWidth += 5;
+
+        });
+        this.btlogin.on('pointerout', () => {
+            this.btlogin.displayHeight -= 5;
+            this.btlogin.displayWidth -= 5;
+
+        });
+        this.logout.on('pointerover', () => {
+            this.logout.displayHeight += 5;
+            this.logout.displayWidth += 5;
+
+        });
+        this.logout.on('pointerout', () => {
+            this.logout.displayHeight -= 5;
+            this.logout.displayWidth -= 5;
 
         });
         
@@ -232,7 +259,6 @@ class Menu extends Phaser.Scene {
                             x.getChildByName("username").value = '';
                             y.getChildByName("password").value = '';
                         }
-                        console.log(user,password);
 
                     }, this);
 
