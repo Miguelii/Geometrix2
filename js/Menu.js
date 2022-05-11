@@ -169,9 +169,13 @@ class Menu extends Phaser.Scene {
         x.setScale(2.5);
         x.visible = false;
         
+
+
         y = this.add.dom(0.5 * game.config.width, 0.45 * game.config.height).createFromHTML(pass);
         y.setScale(2.5);
         y.visible = false;
+
+        
         ////
 
         this.btclose = this.add.sprite(0.69 * game.config.width, 0.18 * game.config.height, 'btclose');
@@ -234,6 +238,7 @@ class Menu extends Phaser.Scene {
                     this.utilizador.visible = false;
                     x.visible = false;
                     y.visible = false;
+                    this.loginErrorMsg.visible = false;
                     break;
 
                 case 'btlogin':
@@ -264,14 +269,21 @@ class Menu extends Phaser.Scene {
                             if (infoUser.user != '')
                                 {
                                     flag = true;
-                                } 
+                                    
+                                }
+                            
+                                this.ola = this.add.text(0.1 * game.config.width ,0.08 * game.config.height,"Olá " + user,{ fontFamily: 'font1',fontSize: 50,color: '#ffffff',align: 'center'});
+                                this.ola.visible = false;
                         }
+
+                        
                     }, this);
 
                     break;
                 case 'logout': 
                     this.logout.visible = false; 
                     this.btlogin.visible = true; 
+                    this.ola.visible = false;
                     infoUser.logout();
                     break;
         
@@ -294,6 +306,12 @@ class Menu extends Phaser.Scene {
             x.visible = false;
             y.visible = false;
             this.btlogin.visible = false;
+
+            this.btcreditos.setInteractive();
+            this.btinfo.setInteractive();
+            this.bttop.setInteractive();
+            this.btplay.setInteractive();
+
             let nome = infoUser.firstName.split(" ");
             let nome2 = nome[0] + " " + nome[nome.length - 1];
             this.logout.visible = true;

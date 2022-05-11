@@ -23,6 +23,7 @@
                 infoUser.turma = response.split(",")[3];
 
                 infoUser.setLocalData();
+                scene.ola.visible = true;
                 scene.scene.transition({ target: 'Menu', duration: 100 });
             }
             else {
@@ -101,7 +102,7 @@ function getTOP(di, df, globalCodTurma, globalCodEscola, tipoTOP,scene) {
     ({
         type: "POST",
         url: "",
-        data: "action=mostraNewA&anoLi=" + di + "&anoLf=" + df + "&mturma=" + globalCodTurma + "&mescola=" + globalCodEscola + "&flag=2" + "&tip=" + tipoTOP + "&tC=trapbeeTOP",
+        data: "action=mostraNewA&anoLi=" + di + "&anoLf=" + df + "&mturma=" + globalCodTurma + "&mescola=" + globalCodEscola + "&flag=2" + "&tip=" + tipoTOP + "&tC=geometrixTOP",
         crossDomain: true,
         cache: false,
         success: function (response) {
@@ -159,7 +160,7 @@ function updateTOP(di, df, globalCodTurma, globalCodEscola,flag, tipoTOP,scene) 
     ({
         type: "POST",
         url: "",
-        data: "action=mostraNewA&anoLi=" + di + "&anoLf=" + df + "&mturma=" + globalCodTurma + "&mescola=" + globalCodEscola + "&flag="+flag + "&tip=" + tipoTOP + "&tC=trapbeeTOP",
+        data: "action=mostraNewA&anoLi=" + di + "&anoLf=" + df + "&mturma=" + globalCodTurma + "&mescola=" + globalCodEscola + "&flag="+flag + "&tip=" + tipoTOP + "&tC=geometrixTOP",
         crossDomain: true,
         cache: false,
         success: function (response) {
@@ -216,7 +217,7 @@ function verificaRecords(username, globalCodTurma, globalCodEscola, pontuacao, t
     ({
         type: "POST",
         url: "",
-        data: "action=maximoGlobal&codAl=" + username + "&codTurma=" + globalCodTurma + "&codEscola=" + globalCodEscola + "&pont=" + pontuacao + "&tip=" + tipoTOP + "&t=trapbeeHypatia&tC=trapbeeTOP",
+        data: "action=maximoGlobal&codAl=" + username + "&codTurma=" + globalCodTurma + "&codEscola=" + globalCodEscola + "&pont=" + pontuacao + "&tip=" + tipoTOP + "&t=geometrixHypatiamat&tC=geometrixTOP",
         crossDomain: true,
         cache: false,
         success: function (response) {
@@ -302,7 +303,7 @@ function gravaRecords(username, globalCodTurma, globalCodEscola, pontuacao, tipo
     ({
         type: "POST",
         url: "",
-        data: "action=insereA&musername=" + username + "&mturma=" + globalCodTurma + "&mescola=" + globalCodEscola + "&mpontuacao=" + pontuacao + "&mtipo=" + tipoTop + "&t=trapbeeHypatia&tC=trapbeeTOP",
+        data: "action=insereA&musername=" + username + "&mturma=" + globalCodTurma + "&mescola=" + globalCodEscola + "&mpontuacao=" + pontuacao + "&mtipo=" + tipoTop + "&t=geometrixHypatiamat&tC=geometrixTOP",
         crossDomain: true,
         cache: false,
         success: function (response) {
@@ -321,7 +322,7 @@ function getRecords(username, globalCodTurma, globalCodEscola, tipoTOP, scene) {
     ({
         type: "POST",
         url: "",
-        data: "action=maximoGlobal&codAl=" + username + "&codTurma=" + globalCodTurma + "&codEscola=" + globalCodEscola + "&pont=" + 0 + "&tip=" + tipoTOP + "&t=trapbeeHypatia&tC=trapbeeTOP",
+        data: "action=maximoGlobal&codAl=" + username + "&codTurma=" + globalCodTurma + "&codEscola=" + globalCodEscola + "&pont=" + 0 + "&tip=" + tipoTOP + "&t=geometrixHypatiamat&tC=geometrixTOP",
         crossDomain: true,
         cache: false,
         success: function (response) {
