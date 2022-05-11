@@ -23,9 +23,7 @@
                 infoUser.turma = response.split(",")[3];
 
                 infoUser.setLocalData();
-
-                scene.scene.stop();
-                scene.scene.resume("Menu");
+                scene.scene.transition({ target: 'Menu', duration: 100 });
             }
             else {
                 // alert("Utilizador ou Password Errados");

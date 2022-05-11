@@ -1,4 +1,5 @@
-
+var x; 
+var y;
 class Menu extends Phaser.Scene {
     constructor() {
         super('Menu');
@@ -114,6 +115,7 @@ class Menu extends Phaser.Scene {
         this.logout.setInteractive({ useHandCursor: true });
         this.logout.setScale(0.8);
         this.logout.visible = false;
+        this.logout.name = 'logout';
 
         this.loginfinal.on('pointerover', () => {
             this.loginfinal.displayHeight += 5;
@@ -163,11 +165,11 @@ class Menu extends Phaser.Scene {
         <input type="password" name="password" style="font-size: 15px;font-family:'font1';text-align:center;">
         `;      
                 
-        var x = this.add.dom(0.5 * game.config.width, 0.3 * game.config.height).createFromHTML(user);
+        x = this.add.dom(0.5 * game.config.width, 0.3 * game.config.height).createFromHTML(user);
         x.setScale(2.5);
         x.visible = false;
         
-        var y = this.add.dom(0.5 * game.config.width, 0.45 * game.config.height).createFromHTML(pass);
+        y = this.add.dom(0.5 * game.config.width, 0.45 * game.config.height).createFromHTML(pass);
         y.setScale(2.5);
         y.visible = false;
         ////
@@ -185,6 +187,7 @@ class Menu extends Phaser.Scene {
             this.btclose.displayHeight -= 5;
             this.btclose.displayWidth -= 5;
         });
+        var flag = false; 
 
         this.input.on('gameobjectdown', function(pointer, gameObject) {
             switch (gameObject.name) {
@@ -258,19 +261,42 @@ class Menu extends Phaser.Scene {
                             let r = login(user, password,this);
                             x.getChildByName("username").value = '';
                             y.getChildByName("password").value = '';
+                            if (infoUser.user != '')
+                                {
+                                    flag = true;
+                                } 
                         }
-
                     }, this);
 
+                    break;
+                case 'logout': 
+                    this.logout.visible = false; 
+                    this.btlogin.visible = true; 
+                    infoUser.logout();
                     break;
         
                 default:
                     break;
             }
-        }, this);
+        }, this); 
+       
+          
     }
         
 
     update() {
+        if(infoUser.user!='')  {
+            this.quadrologin.visible = false;
+            this.btclose.visible = false;
+            this.loginfinal.visible = false;
+            this.password.visible = false;
+            this.utilizador.visible = false;
+            x.visible = false;
+            y.visible = false;
+            this.btlogin.visible = false;
+            let nome = infoUser.firstName.split(" ");
+            let nome2 = nome[0] + " " + nome[nome.length - 1];
+            this.logout.visible = true;
+        }      
     }
 }
