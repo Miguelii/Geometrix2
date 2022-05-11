@@ -1,5 +1,8 @@
 var x; 
 var y;
+var stop = false; 
+var flag = false; 
+
 class Menu extends Phaser.Scene {
     constructor() {
         super('Menu');
@@ -183,6 +186,11 @@ class Menu extends Phaser.Scene {
         this.btclose.visible = false;
         this.btclose.name = 'btclose';
 
+        this.btcloseLog = this.add.sprite(0.69 * game.config.width, 0.18 * game.config.height, 'btclose');
+        this.btcloseLog.setScale(0.9);
+        this.btcloseLog.visible = false;
+        this.btclose.name = 'btcloseLog';
+
         this.btclose.on('pointerover', () => {
             this.btclose.displayHeight += 5;
             this.btclose.displayWidth += 5;
@@ -191,11 +199,11 @@ class Menu extends Phaser.Scene {
             this.btclose.displayHeight -= 5;
             this.btclose.displayWidth -= 5;
         });
-        var flag = false; 
 
         this.input.on('gameobjectdown', function(pointer, gameObject) {
             switch (gameObject.name) {
                 case 'btplay':
+                    stop = true; 
                     this.scene.transition({ target: 'Jogo', duration: 100 });
                     this.btcreditos.disableInteractive();
                     this.btinfo.disableInteractive();
@@ -203,7 +211,6 @@ class Menu extends Phaser.Scene {
                     this.btplay.disableInteractive();
                     this.loginfinal.disableInteractive();
                     break;
-                
                 case 'btcreditos':
                     this.creditos.visible = true;
                     this.btclose.visible = true;
@@ -211,12 +218,36 @@ class Menu extends Phaser.Scene {
                     this.btinfo.visible = false;
                     this.bttop.visible = false;
                     this.btplay.visible = false;
-        
                     this.btclose.setInteractive({ useHandCursor: true });
                     
                     break;
 
                 case 'btclose':
+                    //Enable menu sprites
+                    this.btclose.disableInteractive();
+                    this.btcreditos.setInteractive();
+                    this.btinfo.setInteractive();
+                    this.bttop.setInteractive();
+                    this.btplay.setInteractive();
+
+                    this.creditos.visible = false;
+                    this.btclose.visible = false;
+                    this.quadrologin.visible = false;
+                    this.loginfinal.visible = false;
+                    this.btcreditos.visible = true;
+                    this.btinfo.visible = true;
+                    this.bttop.visible = true;
+                    this.btplay.visible = true;
+
+                    //Login hide
+                    this.password.visible = false;
+                    this.utilizador.visible = false;
+                    x.visible = false;
+                    y.visible = false;
+                    this.loginErrorMsg.visible = false;
+                    break;
+                    
+                case 'btcloseLog':
                     //Enable menu sprites
                     this.btclose.disableInteractive();
                     this.btcreditos.setInteractive();
@@ -250,8 +281,8 @@ class Menu extends Phaser.Scene {
                     this.btplay.disableInteractive();
 
                     this.quadrologin.visible = true;
-                    this.btclose.visible = true;
-                    this.btclose.setInteractive({ useHandCursor: true });
+                    this.btcloseLog.visible = true;
+                    this.btcloseLog.setInteractive({ useHandCursor: true });
                     this.loginfinal.visible = true;
                     this.password.visible = true;
                     this.utilizador.visible = true;
@@ -266,17 +297,9 @@ class Menu extends Phaser.Scene {
                             let r = login(user, password,this);
                             x.getChildByName("username").value = '';
                             y.getChildByName("password").value = '';
-                            if (infoUser.user != '')
-                                {
-                                    flag = true;
-                                    
-                                }
-                            
-                                this.ola = this.add.text(0.1 * game.config.width ,0.08 * game.config.height,"Olá " + user,{ fontFamily: 'font1',fontSize: 50,color: '#ffffff',align: 'center'});
-                                this.ola.visible = false;
-                        }
-
-                        
+                            this.ola = this.add.text(0.1 * game.config.width ,0.08 * game.config.height,"Olá " + user,{ fontFamily: 'font1',fontSize: 50,color: '#ffffff',align: 'center'});
+                            this.ola.visible = false;
+                    }
                     }, this);
 
                     break;
@@ -297,20 +320,21 @@ class Menu extends Phaser.Scene {
         
 
     update() {
-        if(infoUser.user!='')  {
+        if(infoUser.user!='') {
             this.quadrologin.visible = false;
-            this.btclose.visible = false;
+            this.btcloseLog.visible = false;
             this.loginfinal.visible = false;
             this.password.visible = false;
             this.utilizador.visible = false;
             x.visible = false;
             y.visible = false;
-            this.btlogin.visible = false;
-
-            this.btcreditos.setInteractive();
-            this.btinfo.setInteractive();
-            this.bttop.setInteractive();
-            this.btplay.setInteractive();
+            this.btlogin.visible = false;            
+            if(!stop){
+                this.btcreditos.setInteractive();
+                this.btinfo.setInteractive();
+                this.bttop.setInteractive();
+                this.btplay.setInteractive();
+            }
 
             let nome = infoUser.firstName.split(" ");
             let nome2 = nome[0] + " " + nome[nome.length - 1];
