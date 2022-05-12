@@ -254,8 +254,6 @@ class Menu extends Phaser.Scene {
                     break;
                     
                 case 'btcloseLog':
-                    console.log("ola");
-
                     //Enable menu sprites
                     this.btcloseLog.disableInteractive();
                     this.btcreditos.setInteractive();
@@ -271,7 +269,6 @@ class Menu extends Phaser.Scene {
                     this.btinfo.visible = true;
                     this.bttop.visible = true;
                     this.btplay.visible = true;
-
                     //Login hide
                     this.password.visible = false;
                     this.utilizador.visible = false;
@@ -294,6 +291,7 @@ class Menu extends Phaser.Scene {
                     this.utilizador.visible = true;
                     x.visible = true;
                     y.visible = true;
+                    console.log(this.btcloseLog);
 
                     this.loginfinal.on('pointerup', function () {
                         let user = x.getChildByName("username").value

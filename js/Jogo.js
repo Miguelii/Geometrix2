@@ -4833,7 +4833,6 @@ class Jogo extends Phaser.Scene {
         if(level==20 && certas == 2){
             this.scene.transition({ target: 'Menu', duration: 100 });
             reset();
-            
         }
         
         if(muda){
