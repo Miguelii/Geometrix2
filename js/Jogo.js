@@ -4805,6 +4805,11 @@ class Jogo extends Phaser.Scene {
                 this.coracaovazio1.visible = true;
                 this.coracaovazio2.visible = true;
                 this.coracaovazio3.visible = true;
+
+                if (infoUser.user != '') {
+                    gravaRecords(infoUser.user, infoUser.turma, infoUser.escola, score, 0);
+                }
+
                 this.scene.transition({ target: 'Menu', duration: 100 });  
                 reset();
                 aux = false;
@@ -5487,6 +5492,7 @@ function textoLevel(level){
 }
 
 function reset(){
+    stop = false; 
     midlePoint = null;
     f1 = false; 
     f2 = false; 
