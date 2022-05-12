@@ -3,6 +3,7 @@ var y;
 var flag = false; 
 var nome;
 var nome2;  
+var hide = false; 
 class Menu extends Phaser.Scene {
     constructor() {
         super('Menu');
@@ -252,30 +253,6 @@ class Menu extends Phaser.Scene {
                     this.bttop.visible = true;
                     this.btplay.visible = true;
                     break;
-                    
-                case 'btcloseLog':
-                    //Enable menu sprites
-                    this.btcloseLog.disableInteractive();
-                    this.btcreditos.setInteractive();
-                    this.btinfo.setInteractive();
-                    this.bttop.setInteractive();
-                    this.btplay.setInteractive();
-
-                    this.creditos.visible = false;
-                    this.btcloseLog.visible = false;
-                    this.quadrologin.visible = false;
-                    this.loginfinal.visible = false;
-                    this.btcreditos.visible = true;
-                    this.btinfo.visible = true;
-                    this.bttop.visible = true;
-                    this.btplay.visible = true;
-                    //Login hide
-                    this.password.visible = false;
-                    this.utilizador.visible = false;
-                    x.visible = false;
-                    y.visible = false;
-                    this.loginErrorMsg.visible = false;
-                    break;
 
                 case 'btlogin':
                     //Disable menu sprites
@@ -291,7 +268,6 @@ class Menu extends Phaser.Scene {
                     this.utilizador.visible = true;
                     x.visible = true;
                     y.visible = true;
-                    console.log(this.btcloseLog);
 
                     this.loginfinal.on('pointerup', function () {
                         let user = x.getChildByName("username").value
@@ -303,6 +279,10 @@ class Menu extends Phaser.Scene {
                             y.getChildByName("password").value = '';
                             
                     }
+                    }, this);
+
+                    this.btcloseLog.on('pointerup', function () {
+                        hide = true; 
                     }, this);
 
                     break;
@@ -323,6 +303,30 @@ class Menu extends Phaser.Scene {
         
 
     update() {
+        if(hide){
+
+            this.btcloseLog.disableInteractive();
+            this.btcreditos.setInteractive();
+            this.btinfo.setInteractive();
+            this.bttop.setInteractive();
+            this.btplay.setInteractive();
+
+            this.creditos.visible = false;
+            this.btcloseLog.visible = false;
+            this.quadrologin.visible = false;
+            this.loginfinal.visible = false;
+            this.btcreditos.visible = true;
+            this.btinfo.visible = true;
+            this.bttop.visible = true;
+            this.btplay.visible = true;
+            //Login hide
+            this.password.visible = false;
+            this.utilizador.visible = false;
+            x.visible = false;
+            y.visible = false;
+            this.loginErrorMsg.visible = false;
+            hide = false; 
+        }
         if(infoUser.user!='') {
             nome = infoUser.firstName.split(" ");
             nome2 = nome[0] + " " + nome[nome.length - 1];
