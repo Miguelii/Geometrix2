@@ -152,7 +152,7 @@ class Menu extends Phaser.Scene {
 
         });
         
-        this.loginErrorMsg = this.add.text(0.40 * game.config.width, 0.51 * game.config.height,"Utilizador ou Password Errados",{ fontFamily: 'font1',fontSize: 15,color: '#ff0000',align: 'center'});
+        this.loginErrorMsg = this.add.text(0.42 * game.config.width, 0.49 * game.config.height,"Utilizador ou Password Errados",{ fontFamily: 'font1',fontSize: 25,color: '#ff0000',align: 'center'});
         this.loginErrorMsg.visible = false;
 
         this.utilizador = this.add.text(0.46 * game.config.width, 0.22 * game.config.height, "Utilizador:", { fontFamily: 'font1', fontSize: 40, color: '#403217' })
@@ -325,11 +325,10 @@ class Menu extends Phaser.Scene {
         if(infoUser.user!='') {
             nome = infoUser.firstName.split(" ");
             nome2 = nome[0] + " " + nome[nome.length - 1];
-            this.ola.setText(['Ola ' + nome2]);
+            this.ola.setText(['Olá ' + nome2]);
 
             this.ola.visible = true;
-
-
+            this.loginErrorMsg.visible = false;
             this.quadrologin.visible = false;
             this.btcloseLog.visible = false;
             this.loginfinal.visible = false;
@@ -348,6 +347,6 @@ class Menu extends Phaser.Scene {
 
             
             this.logout.visible = true;
-        }      
+        } 
     }
 }

@@ -28,7 +28,7 @@
             }
             else {
                 // alert("Utilizador ou Password Errados");
-                scene.loginErrorMsg.visible = true; 
+                scene.loginErrorMsg.visible = true;
                 return -1;
             }
 
