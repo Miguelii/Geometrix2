@@ -2,7 +2,8 @@ var x;
 var y;
 var stop = false; 
 var flag = false; 
-
+var nome;
+var nome2;  
 class Menu extends Phaser.Scene {
     constructor() {
         super('Menu');
@@ -199,6 +200,8 @@ class Menu extends Phaser.Scene {
             this.btclose.displayHeight -= 5;
             this.btclose.displayWidth -= 5;
         });
+        this.ola = this.add.text(0.1 * game.config.width ,0.08 * game.config.height,"Olá " + nome2,{ fontFamily: 'font1',fontSize: 50,color: '#ffffff',align: 'center'});
+        this.ola.visible = false;
 
         this.input.on('gameobjectdown', function(pointer, gameObject) {
             switch (gameObject.name) {
@@ -297,8 +300,7 @@ class Menu extends Phaser.Scene {
                             let r = login(user, password,this);
                             x.getChildByName("username").value = '';
                             y.getChildByName("password").value = '';
-                            this.ola = this.add.text(0.1 * game.config.width ,0.08 * game.config.height,"Olá " + user,{ fontFamily: 'font1',fontSize: 50,color: '#ffffff',align: 'center'});
-                            this.ola.visible = false;
+                            
                     }
                     }, this);
 
@@ -315,29 +317,36 @@ class Menu extends Phaser.Scene {
             }
         }, this); 
        
-          
+        
     }
         
 
     update() {
         if(infoUser.user!='') {
+            nome = infoUser.firstName.split(" ");
+            nome2 = nome[0] + " " + nome[nome.length - 1];
+            this.ola.setText(['Ola ' + nome2]);
+
+            this.ola.visible = true;
+
+
             this.quadrologin.visible = false;
             this.btcloseLog.visible = false;
             this.loginfinal.visible = false;
             this.password.visible = false;
             this.utilizador.visible = false;
-            x.visible = false;
-            y.visible = false;
+            
             this.btlogin.visible = false;            
             if(!stop){
+                x.visible = false;
+                y.visible = false;
                 this.btcreditos.setInteractive();
                 this.btinfo.setInteractive();
                 this.bttop.setInteractive();
                 this.btplay.setInteractive();
             }
 
-            let nome = infoUser.firstName.split(" ");
-            let nome2 = nome[0] + " " + nome[nome.length - 1];
+            
             this.logout.visible = true;
         }      
     }
