@@ -233,7 +233,9 @@ class Menu extends Phaser.Scene {
                     this.bttop.visible = false;
                     this.btplay.visible = false;
                     this.btclose.setInteractive({ useHandCursor: true });
-                    
+                    this.btclose.on('pointerup', function () {
+                        hide = true; 
+                    }, this);
                     break;
 
                 case 'btclose':
@@ -303,8 +305,9 @@ class Menu extends Phaser.Scene {
         
 
     update() {
-        if(hide){
 
+        if(hide){
+            this.btclose.disableInteractive();
             this.btcloseLog.disableInteractive();
             this.btcreditos.setInteractive();
             this.btinfo.setInteractive();
@@ -312,6 +315,8 @@ class Menu extends Phaser.Scene {
             this.btplay.setInteractive();
 
             this.creditos.visible = false;
+            this.btclose.visible = false;
+
             this.btcloseLog.visible = false;
             this.quadrologin.visible = false;
             this.loginfinal.visible = false;
@@ -327,6 +332,7 @@ class Menu extends Phaser.Scene {
             this.loginErrorMsg.visible = false;
             hide = false; 
         }
+
         if(infoUser.user!='') {
             nome = infoUser.firstName.split(" ");
             nome2 = nome[0] + " " + nome[nome.length - 1];
