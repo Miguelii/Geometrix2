@@ -5247,8 +5247,6 @@ function pontosParalelo(x,y,x1,y1){
 
         iterations += 1; 
         if(iterations==200){
-            console.log("ola");
-
             if(y>500){
                 if(y1>y){
                     Phaser.Geom.Line.SetToAngle(paralela,x,y -175,angle,250);
