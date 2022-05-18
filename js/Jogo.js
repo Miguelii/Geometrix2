@@ -2299,7 +2299,7 @@ class Jogo extends Phaser.Scene {
                             contador = 1;
                             if(segmentoReta(point2,point3,line)){
                                 pointsLine = [];
-                                var pointsLine2 = getPointsOnLine(point3,point4);
+                                var pointsLine2 = getPointsOnLine(point3,point);
                                 for(var i=0;i<pointsLine2.length;i++){
                                     pointsLine.push(pointsLine2[i]);
                                 }
@@ -5243,26 +5243,36 @@ function pontosParalelo(x,y,x1,y1){
     var z = dist(x,y,x1,y1);
     var iterations = 0; 
     var acaba = false;
-    while((pontoB.y<400 || pontoB.y>920 || pontoA.y<400 || pontoA.y>920||dist(pontoA.x,pontoA.y,x,y)<=250)&&!acaba){
+    while((pontoB.y<400 || pontoB.y>920 || pontoA.y<400 || pontoA.y>920||dist(pontoA.x,pontoA.y,x,y)<=250 || z>250)&&!acaba){
 
         iterations += 1; 
         if(iterations==200){
             console.log("ola");
-            if(y>500 || y1>500){
-                Phaser.Geom.Line.SetToAngle(paralela,x,y -175,angle,250);
+
+            if(y>500){
+                if(y1>y){
+                    Phaser.Geom.Line.SetToAngle(paralela,x,y -175,angle,250);
+                }
+                else{
+                    Phaser.Geom.Line.SetToAngle(paralela,x,y -175,angle,250);
+                }
             }
             else{
-                Phaser.Geom.Line.SetToAngle(paralela,x,y+175,angle,250);
-
+                if(y1>500){
+                    Phaser.Geom.Line.SetToAngle(paralela,x1,y1 -175,angle,250);
+                }
+                else{
+                    Phaser.Geom.Line.SetToAngle(paralela,x1,y1 +175,angle,250);
+                }
             }
             pontoA = paralela.getPointA();
             pontoB = paralela.getPointB();
-            
             acaba = true; 
         }
         else{
             k+=10;
-            Phaser.Geom.Line.SetToAngle(paralela,x,y +k,angle,z);
+            z-=10;
+            Phaser.Geom.Line.SetToAngle(paralela,x,y+k,angle,z);
             pontoA = paralela.getPointA();
             pontoB = paralela.getPointB();
         }
