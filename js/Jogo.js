@@ -2180,6 +2180,7 @@ class Jogo extends Phaser.Scene {
                             else{
                                 if(segmentoReta(point2,point,line) && um == true){
                                     dois = true; 
+                                    texto.x = 0.36 * game.config.width;
                                     texto.setText([
                                         'Termina a representação do triângulo'
                                     ]);
@@ -2398,6 +2399,7 @@ class Jogo extends Phaser.Scene {
                                     }
                                     
                                     naoMexe = true;
+                                    texto.x = 0.36 * game.config.width;
                                     texto.setText([
                                         'Marca um ponto alinhado com ' + letra1 + ' e ' +  letra2
                                     ]);
@@ -4037,7 +4039,7 @@ class Jogo extends Phaser.Scene {
                                 letrab.y = y1+12;
                                 break;
                             case 2: 
-                                texto.x = 0.34 * game.config.width;
+                                texto.x = 0.32 * game.config.width;
 
                                 texto.setText([
                                     textoLevel(level) + letra1 + ' e ' + letra2
@@ -4065,7 +4067,7 @@ class Jogo extends Phaser.Scene {
                                 segundos = 0;
                                 break;
                             case 3: 
-                                texto.x = 0.34 * game.config.width; 
+                                texto.x = 0.32 * game.config.width; 
 
                                 clearInterval(contaTempo);
                                 escondePontos([info]);
@@ -4105,7 +4107,7 @@ class Jogo extends Phaser.Scene {
                                 segundos = 0;
                                 break; 
                             case 4: 
-                                texto.x = 0.34 * game.config.width; 
+                                texto.x = 0.32 * game.config.width; 
 
                                 clearInterval(contaTempo);
                                 escondePontos([info]);
@@ -4144,7 +4146,7 @@ class Jogo extends Phaser.Scene {
 
                                 break; 
                             case 5: 
-                                texto.x = 0.39 * game.config.width; 
+                                texto.x = 0.38 * game.config.width; 
 
                                 escondePontos([ponto3,ponto4,letrac,letrad]); 
                                 if(certas == 0 || certas == 1){
@@ -4167,6 +4169,7 @@ class Jogo extends Phaser.Scene {
                             case 6: 
                                 
                                 clearInterval(contaTempo);
+                                texto.x = 0.38 * game.config.width;
 
                                 texto.setText([
                                     textoLevel(level) + letra1 + ' e ' + letra2
@@ -4194,7 +4197,7 @@ class Jogo extends Phaser.Scene {
                                 segundos = 0;
                                 break;
                             case 7: 
-                                texto.x = 0.4 * game.config.width; 
+                                texto.x = 0.38 * game.config.width; 
 
                                 clearInterval(contaTempo);
                                 
@@ -4224,7 +4227,7 @@ class Jogo extends Phaser.Scene {
                                 segundos = 0;
                                 break;
                             case 8: 
-                                texto.x = 0.4 * game.config.width; 
+                                texto.x = 0.38 * game.config.width; 
                                 clearInterval(contaTempo);
                                 texto.setText([
                                         textoLevel(level) + letra1 + ' e ' + letra2
@@ -4260,7 +4263,7 @@ class Jogo extends Phaser.Scene {
                             case 9: 
                                 escondePontos([ponto2,ponto3,letrac,letrad]);
                                 if (certas==0){
-                                    
+                                    texto.x = 0.32 * game.config.width;
                                     texto.setText([
                                         textoLevel(level)[0] + letra1 + textoLevel(level)[1] + letra2
                                     ]);
@@ -4337,7 +4340,7 @@ class Jogo extends Phaser.Scene {
                                 segundos = 0;
                                 break;
                             case 12: 
-                                texto.x = 0.32 * game.config.width; 
+                                texto.x = 0.24 * game.config.width; 
                                 clearInterval(contaTempo);
                                 texto.setText([
                                     textoLevel(level)[0] + letra1 + textoLevel(level)[1] + letra2
@@ -4372,7 +4375,7 @@ class Jogo extends Phaser.Scene {
                                 segundos = 0;
                                 break;    
                             case 13: 
-                                texto.x = 0.39 * game.config.width; 
+                                texto.x = 0.38 * game.config.width; 
 
                                 clearInterval(contaTempo);
 
@@ -4408,7 +4411,7 @@ class Jogo extends Phaser.Scene {
                                 break; 
                             case 14: 
 
-                                texto.x = 0.39 * game.config.width; 
+                                texto.x = 0.38 * game.config.width; 
 
                                 escondePontos([letrac,ponto3]);
                                 clearInterval(contaTempo);
@@ -4431,7 +4434,7 @@ class Jogo extends Phaser.Scene {
                                 segundos = 0;
                                 break; 
                             case 15: 
-                                texto.x = 0.39 * game.config.width; 
+                                texto.x = 0.38 * game.config.width; 
 
                                 clearInterval(contaTempo);
                                 texto.setText([
@@ -4454,7 +4457,7 @@ class Jogo extends Phaser.Scene {
                                 segundos = 0;
                                 break;
                             case 16:
-                                texto.x = 0.39 * game.config.width; 
+                                texto.x = 0.38 * game.config.width; 
 
                                 escondePontos([letrad,ponto4]);
                                 clearInterval(contaTempo); 
@@ -4473,7 +4476,7 @@ class Jogo extends Phaser.Scene {
                                 segundos = 0;
                                 break;
                             case 17: 
-                                texto.x = 0.39 * game.config.width; 
+                                texto.x = 0.38 * game.config.width; 
 
                                 clearInterval(contaTempo); 
                                 
@@ -4492,7 +4495,7 @@ class Jogo extends Phaser.Scene {
                                 segundos = 0;
                                 break; 
                             case 18: 
-                                texto.x = 0.39 * game.config.width; 
+                                texto.x = 0.38 * game.config.width; 
 
                                 clearInterval(contaTempo); 
                                 
@@ -4512,7 +4515,7 @@ class Jogo extends Phaser.Scene {
                                 segundos = 0;
                                 break;
                             case 19: 
-                                texto.x = 0.39 * game.config.width; 
+                                texto.x = 0.38 * game.config.width; 
 
                                 clearInterval(contaTempo); 
                                 texto.setText([
@@ -4533,7 +4536,7 @@ class Jogo extends Phaser.Scene {
                                 segundos = 0; 
                                 break; 
                             case 20: 
-                                texto.x = 0.39 * game.config.width; 
+                                texto.x = 0.38 * game.config.width; 
 
                                 clearInterval(contaTempo); 
                                 
