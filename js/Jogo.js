@@ -14,7 +14,7 @@ var timer;
 var score = 0; 
 var textScore;
 var pause = false; 
-var level = 4; 
+var level = 1; 
 var sim;
 var nao;
 var info;
@@ -3666,7 +3666,6 @@ class Jogo extends Phaser.Scene {
                                             if(midlePoint!=null && sgm==true){
                                                 posto = true;
                                                 graphics.lineStyle(7, color);
-
                                                 graphics.strokeLineShape(line);
                                             }
                                             else{
@@ -4804,7 +4803,6 @@ class Jogo extends Phaser.Scene {
                 if (infoUser.user != '') {
                     gravaRecords(infoUser.user, infoUser.turma, infoUser.escola, score, 0);
                 }
-
                 this.scene.transition({ target: 'Menu', duration: 100 });  
                 reset();
                 aux = false;
@@ -4836,6 +4834,9 @@ class Jogo extends Phaser.Scene {
         }
         
         if(level==20 && certas == 2){
+            if (infoUser.user != '') {
+                gravaRecords(infoUser.user, infoUser.turma, infoUser.escola, score, 0);
+            }
             this.scene.transition({ target: 'Menu', duration: 100 });
             reset();
         }
@@ -5370,7 +5371,7 @@ function generateExtraPointAlign(pontos){
 
     var ponto = linha.getRandomPoint(); 
 
-    while(dist(ponto.x,ponto.y,pontos[0].x,pontos[0].y)<50 ||dist(ponto.x,ponto.y,pontos[1].x,pontos[1].y)<50){
+    while(dist(ponto.x,ponto.y,pontos[0].x,pontos[0].y)<70 ||dist(ponto.x,ponto.y,pontos[1].x,pontos[1].y)<70){
         ponto = linha.getRandomPoint(); 
     }
     return ponto;
