@@ -14,7 +14,7 @@ var timer;
 var score = 0; 
 var textScore;
 var pause = false; 
-var level = 1; 
+var level = 12; 
 var sim;
 var nao;
 var info;
@@ -77,7 +77,7 @@ class Jogo extends Phaser.Scene {
         this.background = this.add.sprite(0.5 * game.config.width, 0.5 *game.config.height, 'background');
         this.background.setScale(1);
 
-        this.titulo1 = this.add.sprite(0.5 * game.config.width, 0.14 *game.config.height, 'titulo1');
+        this.titulo1 = this.add.sprite(0.5 * game.config.width, 0.12 *game.config.height, 'titulo1');
         this.titulo1.setScale(0.9);
         
         this.x = this.add.sprite(55, 600, 'erro');
@@ -5508,7 +5508,7 @@ function textoLevel(level){
         case 11: 
             return ['Traça a semirreta com origem ',' e que passa por '];
         case 12: 
-            return ['Traça a semirreta OPOSTA à semirreta com origem em ',' ne que passa por '];
+            return ['Traça a semirreta OPOSTA à semirreta com origem em ',' e que passa por '];
         case 13: 
             return 'Traça a reta que passa por ';
         case 14: 
