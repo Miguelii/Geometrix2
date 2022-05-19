@@ -389,8 +389,6 @@ class Jogo extends Phaser.Scene {
                 ]);
                 break; 
             case 6: 
-                
-
                 texto.setText([
                     textoLevel(level) + letra1 + ' e ' + letra2
                 ]);
@@ -836,6 +834,7 @@ class Jogo extends Phaser.Scene {
                         signal = true; 
                        
                         for(var i=0;i<pontosLine.length;i++){
+                            graphics.fillPointShape(pontosLine[i], 20);
                             var mid = pontosLine[i];
                             if ((pointer.x<=mid.x+20 && pointer.x>=mid.x-20 && pointer.y<=mid.y+20 && pointer.y>=mid.y-20)){
                                 midlePoint = new Phaser.Geom.Point(mid.x,mid.y);
@@ -4910,7 +4909,7 @@ function getPretendedLine (level,ponto1,ponto2){
             linha.setTo(ponto1.x,ponto1.y,ponto2.x,ponto2.y);
             var ang = Phaser.Geom.Line.Angle(linha);
             var nova =new Phaser.Geom.Line(); 
-            Phaser.Geom.Line.SetToAngle(nova,x,y,ang,dist(ponto1.x,ponto1.y,ponto2.x,ponto2.y)-50);
+            Phaser.Geom.Line.SetToAngle(nova,x,y,ang,dist(ponto1.x,ponto1.y,ponto2.x,ponto2.y));
 
             var inversa = new Phaser.Geom.Line();
             inversa.setTo(ponto2.x,ponto2.y,ponto1.x,ponto1.y);
@@ -4918,13 +4917,15 @@ function getPretendedLine (level,ponto1,ponto2){
             var angInv = Phaser.Geom.Line.Angle(inversa);
             var novaInv =new Phaser.Geom.Line();
 
-            Phaser.Geom.Line.SetToAngle(novaInv,x1,y1,angInv,dist(ponto1.x,ponto1.y,ponto2.x,ponto2.y)-50);
+            Phaser.Geom.Line.SetToAngle(novaInv,x1,y1,angInv,dist(ponto1.x,ponto1.y,ponto2.x,ponto2.y));
             var acaba1 = nova.getPointB(); 
             var acaba2 = novaInv.getPointB();
             var pretended = new Phaser.Geom.Line();
             pretended.setTo(acaba1.x,acaba1.y,acaba2.x,acaba2.y);
 
             var pontos = pretended.getPoints(1200);
+            pontos.splice(pontos.indexOf(ponto1), 1);
+            pontos.splice(pontos.indexOf(ponto2), 1);
 
             return pontos;
         case 5: 
@@ -5321,6 +5322,7 @@ function generateExtraPoint(pontos,quantos){
     var y1 = point3.y;
     var a1; 
     var b1;
+    var pontos = getPointsOnLine(point2,point3);
 
     var a = Math.random()*(2024 - 300) + 300;
     var b = Math.random()*(1200 - 300) + 300;
@@ -5331,9 +5333,13 @@ function generateExtraPoint(pontos,quantos){
     }
     var iterations = 0; 
     var continua = true; 
+    var keepGoing = false; 
 
     if(point==null){
-        while(((b<y+100 && b>y-100) || (b<y1+50 && b>y1-50) ||a>1700||b>920 || b<460 || b==y || b==y1 || dist(a,b,point2.x,point2.y)<=250 || dist(a,b,point3.x,point3.y)<=250 ||(b<=teste.y+100 && b>=teste2.y-100))&&continua){
+        while(((b<y+100 && b>y-100) || (b<y1+50 && b>y1-50) ||a>1700||b>920 || b<460 || b==y || b==y1 
+        || dist(a,b,point2.x,point2.y)<=250 || dist(a,b,point3.x,point3.y)<=250 || keepGoing || 
+        (b<=teste.y+100 && b>=teste2.y-100))&&continua){
+            keepGoing = false; 
             a = Math.random();
             if(a<0.3){
                 a = x1;
@@ -5362,6 +5368,11 @@ function generateExtraPoint(pontos,quantos){
                     else{
                         b = teste2.y + 100; 
                     }
+                }
+            }
+            for(i=0; i<pontos.length;i++){
+                if(dist(pontos[i].x,pontos[i].y,a,b)<=250){
+                    keepGoing = true;
                 }
             }
         }
