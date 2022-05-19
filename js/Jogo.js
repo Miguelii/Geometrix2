@@ -3717,7 +3717,7 @@ class Jogo extends Phaser.Scene {
                                                         contaTempo = setInterval(function(){ segundo() },1000);
                                                         segundos = 0;
                                                     }
-                                                    
+                                                
                                                 }
                                             else{
                                                 midlePoint = null;
