@@ -4804,7 +4804,7 @@ class Jogo extends Phaser.Scene {
                 this.coracaovazio3.visible = true;
 
                 if (infoUser.user != '') {
-                    gravaRecords(infoUser.user, infoUser.turma, infoUser.escola, score, 0);
+                    gravaRecords(infoUser.user, infoUser.turma, infoUser.escola, score);
                 }
                 this.scene.transition({ target: 'Menu', duration: 100 });  
                 reset();
@@ -4838,7 +4838,7 @@ class Jogo extends Phaser.Scene {
         
         if(level==20 && certas == 2){
             if (infoUser.user != '') {
-                gravaRecords(infoUser.user, infoUser.turma, infoUser.escola, score, 0);
+                gravaRecords(infoUser.user, infoUser.turma, infoUser.escola, score);
             }
             this.scene.transition({ target: 'Menu', duration: 100 });
             reset();

@@ -96,13 +96,13 @@ function destroySession() {
  * @param {string} password Password to try to login with
  * @param {Phaser.Scene} scene scope in with the login is being made
  */
-function getTOP(di, df, globalCodTurma, globalCodEscola, tipoTOP,scene) {
+function getTOP(di, df, globalCodTurma, globalCodEscola,scene) {
     var data;
     $.ajax
     ({
         type: "POST",
         url: "",
-        data: "action=mostraNewA&anoLi=" + di + "&anoLf=" + df + "&mturma=" + globalCodTurma + "&mescola=" + globalCodEscola + "&flag=2" + "&tip=" + tipoTOP + "&tC=geometrixTOP",
+        data: "action=mostraNewA&anoLi=" + di + "&anoLf=" + df + "&mturma=" + globalCodTurma + "&mescola=" + globalCodEscola + "&flag=2"  + "&tC=geometrixTOP",
         crossDomain: true,
         cache: false,
         success: function (response) {
@@ -154,13 +154,13 @@ function getTOP(di, df, globalCodTurma, globalCodEscola, tipoTOP,scene) {
 }
 
 
-function updateTOP(di, df, globalCodTurma, globalCodEscola,flag, tipoTOP,scene) {
+function updateTOP(di, df, globalCodTurma, globalCodEscola,flag,scene) {
     var data;
     $.ajax
     ({
         type: "POST",
         url: "",
-        data: "action=mostraNewA&anoLi=" + di + "&anoLf=" + df + "&mturma=" + globalCodTurma + "&mescola=" + globalCodEscola + "&flag="+flag + "&tip=" + tipoTOP + "&tC=geometrixTOP",
+        data: "action=mostraNewA&anoLi=" + di + "&anoLf=" + df + "&mturma=" + globalCodTurma + "&mescola=" + globalCodEscola + "&flag="+flag + "&tC=geometrixTOP",
         crossDomain: true,
         cache: false,
         success: function (response) {
@@ -207,17 +207,13 @@ function updateTOP(di, df, globalCodTurma, globalCodEscola,flag, tipoTOP,scene) 
 }
 
 
-
-
-
-
-function verificaRecords(username, globalCodTurma, globalCodEscola, pontuacao, tipoTOP,scene) {
+function verificaRecords(username, globalCodTurma, globalCodEscola, pontuacao,scene) {
 
     $.ajax
     ({
         type: "POST",
         url: "",
-        data: "action=maximoGlobal&codAl=" + username + "&codTurma=" + globalCodTurma + "&codEscola=" + globalCodEscola + "&pont=" + pontuacao + "&tip=" + tipoTOP + "&t=geometrixHypatiamat&tC=geometrixTOP",
+        data: "action=maximoGlobal&codAl=" + username + "&codTurma=" + globalCodTurma + "&codEscola=" + globalCodEscola + "&pont=" + pontuacao + "&t=geometrixHypatiamat&tC=geometrixTOP",
         crossDomain: true,
         cache: false,
         success: function (response) {
@@ -297,13 +293,13 @@ function verificaRecords(username, globalCodTurma, globalCodEscola, pontuacao, t
 }
 
 
-function gravaRecords(username, globalCodTurma, globalCodEscola, pontuacao, tipoTop) {
+function gravaRecords(username, globalCodTurma, globalCodEscola, pontuacao) {
 
     $.ajax
     ({
         type: "POST",
         url: "",
-        data: "action=insereA&musername=" + username + "&mturma=" + globalCodTurma + "&mescola=" + globalCodEscola + "&mpontuacao=" + pontuacao + "&mtipo=" + tipoTop + "&t=geometrixHypatiamat&tC=geometrixTOP",
+        data: "action=insereA&musername=" + username + "&mturma=" + globalCodTurma + "&mescola=" + globalCodEscola + "&mpontuacao=" + pontuacao  + "&t=geometrixHypatiamat&tC=geometrixTOP",
         crossDomain: true,
         cache: false,
         success: function (response) {
@@ -316,7 +312,7 @@ function gravaRecords(username, globalCodTurma, globalCodEscola, pontuacao, tipo
 
 
 
-function getRecords(username, globalCodTurma, globalCodEscola, tipoTOP, scene) {
+function getRecords(username, globalCodTurma, globalCodEscola, scene) {
 
     $.ajax
     ({
