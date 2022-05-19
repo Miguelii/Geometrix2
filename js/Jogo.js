@@ -14,7 +14,7 @@ var timer;
 var score = 0; 
 var textScore;
 var pause = false; 
-var level = 12; 
+var level = 17; 
 var sim;
 var nao;
 var info;
@@ -77,14 +77,15 @@ class Jogo extends Phaser.Scene {
         this.background = this.add.sprite(0.5 * game.config.width, 0.5 *game.config.height, 'background');
         this.background.setScale(1);
 
-        this.titulo1 = this.add.sprite(0.5 * game.config.width, 0.12 *game.config.height, 'titulo1');
+        this.titulo1 = this.add.sprite(0.5 * game.config.width, 0.14 *game.config.height, 'titulo1');
         this.titulo1.setScale(0.9);
         
         this.x = this.add.sprite(55, 600, 'erro');
         this.x.setScale(0.5);
 
         var color =  0xffffff;
-        var texto = this.add.text(0.31 * game.config.width, 0.255 *game.config.height, '', { fontFamily: 'font1',align: 'right'});
+        var texto = this.add.text(0.31 * game.config.width, 0.255 *game.config.height, '', { fontFamily: 'font1',align: 'right', fixedHeight: 300 
+    });
         texto.setFontSize(35);
 
         levelText = this.add.text(0.465 * game.config.width, 0.17 *game.config.height, '', { fontFamily: 'font1',align: 'right'});
@@ -532,7 +533,7 @@ class Jogo extends Phaser.Scene {
                 break;
             case 12: 
                 texto.setText([
-                    textoLevel(level)[0] + letra1 + textoLevel(level)[1] + letra2
+                    textoLevel(level)[0] + letra3 + textoLevel(level)[1] + letra2
                 ]);
                 graphics.clear(); 
                 lines[j] = new Phaser.Geom.Line();
@@ -855,7 +856,7 @@ class Jogo extends Phaser.Scene {
                     }
                 }
 
-                for(var i=0;i<=pointsLine.length;i++){
+                for(var i=0;i<pointsLine.length;i++){
                     if (pointer.x <= x+50 && pointer.x >= x-50 && pointer.y <= y+50 && pointer.y >= y-50){
                         line.setTo(x, y, x, y);
                     }
@@ -879,7 +880,7 @@ class Jogo extends Phaser.Scene {
                                         line.setTo(point5.x, point5.y, point5.x, point5.y);
                                     }
                                     else{
-                                        if(pointer.x<=pointsLine[i].x+50 &&pointer.x >= pointsLine[i].x-50 && pointer.y <= pointsLine[i].y+50 && pointer.y >= pointsLine[i].y-50 ){
+                                        if(pointer.x<=(pointsLine[i].x+50) && pointer.x >= (pointsLine[i].x-50) && pointer.y <= (pointsLine[i].y+50) && pointer.y >= (pointsLine[i].y-50)){
                                             line.setTo(pointsLine[i].x, pointsLine[i].y, pointsLine[i].x, pointsLine[i].y);
                                             ultimo = true;
                                         }
@@ -2974,7 +2975,7 @@ class Jogo extends Phaser.Scene {
                                 lines.push(line);
                             }
                             contador = 1;
-                            if(semiReta(point2,point,line)){
+                            if(semiReta(point,point2,line)){
                                 pointsLine = [];
                                 var pointsLine2 = getPointsOnLine(point2,point4);
                                 for(var i=0;i<pointsLine2.length;i++){
@@ -3447,7 +3448,7 @@ class Jogo extends Phaser.Scene {
                                     texto.x = 0.3 * game.config.width;
 
                                     texto.setText([
-                                        'Marca um ponto da reta paralela a ' + letra1 + letra2 +' que passa por '+ letra3
+                                        'Marca um ponto da reta perpendicular a ' + letra1 + letra2 +' que passa por '+ letra3
                                     ]); 
                                     sgm = true; 
                                     certas = 1; 
@@ -3791,19 +3792,17 @@ class Jogo extends Phaser.Scene {
                                     dois = true;
                                     graphics.clear(); 
                                     texto.x = 0.22 * game.config.width;
-
-                                    lines.pop();
                                     texto.setText([
-                                        'Traça a semirreta OPOSTA à semirreta com origem em ' + letra1 + ' e que passa por ' + letra2
+                                        'Traça a semirreta OPOSTA à semirreta com origem em ' + letra5 + ' e que passa por ' + letra2
                                     ]); 
                                     pointsLine = [];
-                                    var pointsLine2 = getPointsOnLine(point2,point);
+                                    var pointsLine2 = getPointsOnLine(point5,point2);
                                     for(var i=0;i<pointsLine2.length;i++){
                                         pointsLine.push(pointsLine2[i]);
                                     }
                                 }
                                 else{
-                                    if(semiReta(point2,point,line)&&dois==true){
+                                    if(semiReta(point5,point2,line)&&dois==true){
                                         tres = true; 
                                         sgm = true; 
                                         certas = 1; 
@@ -4345,7 +4344,7 @@ class Jogo extends Phaser.Scene {
                                 texto.x = 0.24 * game.config.width; 
                                 clearInterval(contaTempo);
                                 texto.setText([
-                                    textoLevel(level)[0] + letra1 + textoLevel(level)[1] + letra2
+                                    textoLevel(level)[0] + letra3 + textoLevel(level)[1] + letra2
                                 ]);
                                 graphics.clear(); 
                                 lines[j] = new Phaser.Geom.Line();
@@ -5151,38 +5150,8 @@ function reta(a,b,line){ //Verifica se é uma reta que passa em a e em b
         
     }
     
-    console.log(continua)
-    if(continua){
-        if (pontoEsquerda(a,b) == a && ((line.getPointA().x<a.x-30 && line.getPointB().x>b.x + 30) || (line.getPointA().x>b.x+30 &&  
-            line.getPointB().x<a.x-30))){
-            return true; 
-        }
-        else{
-            if (pontoEsquerda(a,b) == b && ((line.getPointA().x>a.x+30 && line.getPointB().x<b.x-30) || (line.getPointA().x<b.x-30 &&  
-            line.getPointB().x>a.x+30))){
-                return true;
-            }
-            else{
-                if (pontoDeCima(a,b)==a && ((line.getPointA().y<a.y && line.getPointB().y>b.y)|| (line.getPointA().y>b.y &&  
-                line.getPointB().y<a.y))){
-                    return true;
-                }
-                else{
-                    if (pontoDeCima(a,b)==b && ((line.getPointA().y>a.y && line.getPointB().y<b.y)|| (line.getPointA().y<b.y &&  
-                    line.getPointB().y>a.y))){
-                        return true;
-                    }
-                }
-            }
-        }
-    }
-    else{
-        if(dist(a.x,a.y,b.x,b.y) < dist(line.getPointA().x,
-        line.getPointA().y,line.getPointB().x,line.getPointB().y)){
-            return true; 
-        }
-    }
-    return false; 
+
+    return continua; 
 }
 
 
