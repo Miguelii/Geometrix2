@@ -593,7 +593,7 @@ class Jogo extends Phaser.Scene {
                 letrad.y = point4.y+12;
                 segundos = 0;
                 break;
-            case 12: 
+            case 15: 
                 texto.setText([
                     textoLevel(level) + letra1 + ' e ' + letra2
                 ]);
@@ -829,10 +829,8 @@ class Jogo extends Phaser.Scene {
                 }
 
                 if (((level == 1||level==5||level==7||level==8||level==9||level==13||level==15||level==17||level==19||level==20) && certas ==1)){
-                    
                     if(posto==false){
                         signal = true; 
-                       
                         for(var i=0;i<pontosLine.length;i++){
                             graphics.fillPointShape(pontosLine[i], 20);
                             var mid = pontosLine[i];
@@ -2165,7 +2163,7 @@ class Jogo extends Phaser.Scene {
                                 lines.push(line);
                             }
                             contador = 1;
-                            if(segmentoReta(point2,point3,line)){
+                            if(segmentoReta(point2,point3,line)&&!dois&&!tres){
                                 texto.x = 0.38 * game.config.width;
 
                                 um = true; 
@@ -2234,7 +2232,7 @@ class Jogo extends Phaser.Scene {
                                 lines.push(line);
                             }
                             contador = 1;
-                            if(segmentoReta(point2,point3,line)){
+                            if(segmentoReta(point2,point3,line)&&!dois&&!tres){
                                 pointsLine = [];
                                 var pointsLine2 = getPointsOnLine(point3,point4);
                                 for(var i=0;i<pointsLine2.length;i++){
@@ -2300,7 +2298,7 @@ class Jogo extends Phaser.Scene {
                                 lines.push(line);
                             }
                             contador = 1;
-                            if(segmentoReta(point2,point3,line)){
+                            if(segmentoReta(point2,point3,line)&&!dois&&!tres&&!quatro){
                                 pointsLine = [];
                                 var pointsLine2 = getPointsOnLine(point3,point);
                                 for(var i=0;i<pointsLine2.length;i++){
@@ -2314,7 +2312,7 @@ class Jogo extends Phaser.Scene {
                                 ]);
                             }
                             else{
-                                if(segmentoReta(point3,point,line) && um == true){
+                                if(segmentoReta(point3,point,line) && um == true &&!tres&&!quatro){
                                     dois = true; 
                                     texto.setText([
                                         'Traça o segmento de reta [' + letra1 + letra4 + ']'
@@ -2327,7 +2325,7 @@ class Jogo extends Phaser.Scene {
                                     }
                                 }
                                 else{
-                                    if(segmentoReta(point2,point4,line) && dois==true){
+                                    if(segmentoReta(point2,point4,line) && dois==true &&!quatro){
                                         texto.x = 0.35 * game.config.width; 
 
                                         texto.setText([
@@ -2468,7 +2466,7 @@ class Jogo extends Phaser.Scene {
                                 }
                             }
                             else{
-                                if(segmentoReta(point3,point,line) && um == true){
+                                if(segmentoReta(point3,point,line) && um == true&&!dois&&!tres){
                                     dois = true;
                                     texto.x = 0.44 * game.config.width; 
 
@@ -2482,7 +2480,7 @@ class Jogo extends Phaser.Scene {
                                     }
                                 }
                                 else{
-                                    if(reta(point2,point,line)&&dois){
+                                    if(reta(point2,point,line)&&dois &&!tres){
                                         tres = true;
                                     }
                                     else{
@@ -2534,7 +2532,7 @@ class Jogo extends Phaser.Scene {
                                 }
                             }
                             else{
-                                if(segmentoReta(point3,point,line) && um == true){
+                                if(segmentoReta(point3,point,line) && um == true &&!dois&&!tres){
                                     dois = true;
                                     certas = 1;
                                     texto.x = 0.28 * game.config.width; 
@@ -2647,7 +2645,7 @@ class Jogo extends Phaser.Scene {
                                 }
                             }
                             else{
-                                if(reta(point2,point,line) && um == true){
+                                if(reta(point2,point,line) && um == true &&!dois&&!tres&&!quatro){
                                     dois = true;
                                     texto.x = 0.38 * game.config.width; 
 
@@ -2661,7 +2659,7 @@ class Jogo extends Phaser.Scene {
                                     }
                                 }
                                 else{
-                                    if(segmentoReta(point3,point4,line)&&dois){
+                                    if(segmentoReta(point3,point4,line)&&dois &&!quatro &&!tres){
                                         tres = true; 
                                         sgm = true; 
                                         texto.x = 0.28 * game.config.width; 
@@ -2850,7 +2848,7 @@ class Jogo extends Phaser.Scene {
                                 ]);
                             }
                             else{
-                                if(reta(point2,point,line) && um == true){
+                                if(reta(point2,point,line) && um == true &&!dois&&!tres){
                                     dois = true; 
                                     texto.x = 0.38 * game.config.width;
 
@@ -2865,7 +2863,7 @@ class Jogo extends Phaser.Scene {
                                     }
                                 }
                                 else{
-                                    if(segmentoReta(point3,point,line) && dois==true){
+                                    if(segmentoReta(point3,point,line) && dois==true &&!tres){
                                         tres = true; 
                                     }
                                     else{
@@ -2919,7 +2917,7 @@ class Jogo extends Phaser.Scene {
                                 ]);
                             }
                             else{
-                                if(segmentoReta(point3,point,line) && um == true){
+                                if(segmentoReta(point3,point,line) && um == true &&!tres&&!dois){
                                     dois = true; 
                                     texto.x = 0.35 * game.config.width;
 
@@ -2934,7 +2932,7 @@ class Jogo extends Phaser.Scene {
                                     }
                                 }
                                 else{
-                                    if(reta(point2,point3,line) && dois==true){
+                                    if(reta(point2,point3,line) && dois==true &&!tres){
                                         tres = true; 
                                     }
                                     else{
@@ -2988,7 +2986,7 @@ class Jogo extends Phaser.Scene {
                                 ]);
                             }
                             else{
-                                if(segmentoReta(point2,point4,line) && um == true){
+                                if(segmentoReta(point2,point4,line) && um == true &&!tres&&!dois){
                                     dois = true; 
                                     texto.x = 0.44 * game.config.width; 
 
@@ -3003,7 +3001,7 @@ class Jogo extends Phaser.Scene {
                                     }
                                 }
                                 else{
-                                    if(reta(point3,point4,line) && dois==true){
+                                    if(reta(point3,point4,line) && dois==true &&!tres){
                                         tres = true; 
                                     }
                                     else{
@@ -3057,7 +3055,7 @@ class Jogo extends Phaser.Scene {
                                 }
                             }
                             else{
-                                if(semiReta(point2,point,line) && um == true){
+                                if(semiReta(point2,point,line) && um == true &&!tres&&!dois&&!quatro){
                                     dois = true;
                                     texto.x = 0.38 * game.config.width;
 
@@ -3071,7 +3069,7 @@ class Jogo extends Phaser.Scene {
                                     }
                                 }
                                 else{
-                                    if(segmentoReta(point3,point4,line)&&dois){
+                                    if(segmentoReta(point3,point4,line)&&dois &&!tres&&!quatro){
                                         tres = true; 
                                         sgm = true; 
                                         certas = 1; 
@@ -3189,7 +3187,7 @@ class Jogo extends Phaser.Scene {
                                 ]);
                             }
                             else{
-                                if(reta(point,point4,line) && um == true){
+                                if(reta(point,point4,line) && um == true &&!tres&&!dois){
                                     dois = true; 
                                     texto.x = 0.38 * game.config.width;
 
@@ -3204,7 +3202,7 @@ class Jogo extends Phaser.Scene {
                                     }
                                 }
                                 else{
-                                    if(segmentoReta(point3,point4,line) && dois==true){
+                                    if(segmentoReta(point3,point4,line) && dois==true &&!tres){
                                         tres = true; 
                                     }
                                     else{
@@ -3258,7 +3256,7 @@ class Jogo extends Phaser.Scene {
                                 }
                             }
                             else{
-                                if(reta(point4,point,line) && um == true){
+                                if(reta(point4,point,line) && um == true &&!tres&&!dois&&!quatro){
                                     dois = true;
                                     naoMexe = true;
                                     texto.x = 0.3 * game.config.width;
@@ -3359,8 +3357,11 @@ class Jogo extends Phaser.Scene {
                                 lines.push(line);
                             }
                             contador = 1;
-                            if(reta(point2,point3,line)){
+                            console.log(reta(point2,point3,line)&&!um&&!dois&&!tres);
+
+                            if(reta(point2,point3,line)&&!um&&!dois&&!tres){
                                 pointsLine = [];
+
                                 var pointsLine2 = getPointsOnLine(point,point4);
                                 for(var i=0;i<pointsLine2.length;i++){
                                     pointsLine.push(pointsLine2[i]);
@@ -3373,7 +3374,7 @@ class Jogo extends Phaser.Scene {
                                 ]);
                             }
                             else{
-                                if(reta(point,point4,line) && um == true){
+                                if(reta(point,point4,line) && um == true &&!tres&&!dois){
                                     dois = true; 
                                     texto.x = 0.38 * game.config.width;
 
@@ -3388,7 +3389,7 @@ class Jogo extends Phaser.Scene {
                                     }
                                 }
                                 else{
-                                    if(segmentoReta(point3,point,line) && dois==true){
+                                    if(segmentoReta(point3,point,line) && dois==true &&!tres){
                                         tres = true; 
                                     }
                                     else{
@@ -3428,12 +3429,12 @@ class Jogo extends Phaser.Scene {
                                 lines.push(line);
                             }
                             contador = 1;
-                            if(reta(point2,point3,line)){
+                            if(reta(point2,point3,line)&&!um&&!dois&&!tres&&!quatro){
                                 um = true; 
                                 texto.x = 0.32 * game.config.width;
 
                                 texto.setText([
-                                    'Traça a reta perpendicular a ' + letra1 + letra2 + ' que passa por ' + letra3
+                                    'Traça a reta paralela a ' + letra1 + letra2 + ' que passa por ' + letra3
                                 ]);
                                 pointsLine = [];
                                 var pointsLine2 = getPointsOnLine(point4,point);
@@ -3442,12 +3443,12 @@ class Jogo extends Phaser.Scene {
                                 }
                             }
                             else{
-                                if(reta(point4,point,line) && um == true){
+                                if(reta(point4,point,line) && um == true &&!tres&&!dois&&!quatro){
                                     dois = true;
                                     texto.x = 0.3 * game.config.width;
 
                                     texto.setText([
-                                        'Marca um ponto da reta perpendicular a ' + letra1 + letra2 +' que passa por '+ letra3
+                                        'Marca um ponto da reta paralela a ' + letra1 + letra2 +' que passa por '+ letra3
                                     ]); 
                                     sgm = true; 
                                     certas = 1; 
@@ -3556,7 +3557,7 @@ class Jogo extends Phaser.Scene {
                                 ]);
                             }
                             else{
-                                if(reta(point,point4,line) && um == true){
+                                if(reta(point,point4,line) && um == true &&!tres&&!dois&&!quatro){
                                     dois = true; 
                                     
                                     texto.setText([
@@ -3570,7 +3571,7 @@ class Jogo extends Phaser.Scene {
                                     }
                                 }
                                 else{
-                                    if(reta(point4,point5,line) && dois==true){
+                                    if(reta(point4,point5,line) && dois==true &&!tres&&!quatro){
                                         tres = true; 
                                         texto.x = 0.38 * game.config.width;
 
@@ -3584,7 +3585,7 @@ class Jogo extends Phaser.Scene {
                                         }
                                     }
                                     else{
-                                        if(segmentoReta(point3,point4,line)&&tres){
+                                        if(segmentoReta(point3,point4,line)&&tres&&!quatro){
                                             quatro = true;    
                                         }
                                         else{
@@ -3621,7 +3622,12 @@ class Jogo extends Phaser.Scene {
                             break;
                         case 19: 
                             if (contador==1){
-                                lines.push(line);
+                                if(um&&dois&&tres){
+
+                                }
+                                else{
+                                    lines.push(line);
+                                }
                             }
                             contador = 1;
                             if(reta(point2,point3,line)){
@@ -3638,7 +3644,7 @@ class Jogo extends Phaser.Scene {
                                 }
                             }
                             else{
-                                if(semiReta(point2,point,line) && um == true){
+                                if(semiReta(point2,point,line) && um == true &&!tres&&!quatro&&!dois){
                                     dois = true;
                                     texto.x = 0.38 * game.config.width;
 
@@ -3652,7 +3658,7 @@ class Jogo extends Phaser.Scene {
                                     }
                                 }
                                 else{
-                                    if(segmentoReta(point3,point4,line)&&dois){
+                                    if(segmentoReta(point3,point4,line)&&dois &&!tres&&!quatro){
                                         tres = true; 
                                         sgm = true; 
                                         certas = 1; 
@@ -3666,7 +3672,7 @@ class Jogo extends Phaser.Scene {
                                         ]); 
                                     }
                                     else{
-                                        if (sgm){
+                                        if (sgm && tres && !quatro){
                                             if(midlePoint!=null && sgm==true){
                                                 posto = true;
                                                 graphics.lineStyle(7, color);
@@ -3694,7 +3700,7 @@ class Jogo extends Phaser.Scene {
                                                         'Traça a reta paralela a ' + letra1 + letra2 +' que passa por '
                                                         + letra3
                                                     ]); 
-                                                    if(reta(point,point4,line)){
+                                                    if(reta(point,point4,line)&&!quatro){
                                                         lines.push(line);
                                                         quatro = true; 
                                                         aceita = true; 
@@ -3711,9 +3717,7 @@ class Jogo extends Phaser.Scene {
                                                         contaTempo = setInterval(function(){ segundo() },1000);
                                                         segundos = 0;
                                                     }
-                                                    else{
-                                                        lines.pop();
-                                                    }
+                                                    
                                                 }
                                             else{
                                                 midlePoint = null;
@@ -3731,8 +3735,7 @@ class Jogo extends Phaser.Scene {
                                             if(!sgm){
                                                 line = new Phaser.Geom.Line();
                                             }
-                                        }
-                                        
+                                        } 
                                     }
                                     else{
                                         lines.pop();
@@ -3770,7 +3773,12 @@ class Jogo extends Phaser.Scene {
                             var cinco = false; 
                             var seis = false; 
                             if (contador==1){
-                                lines.push(line);
+                                if(um&&dois&&tres&&quatro){
+
+                                }
+                                else{
+                                    lines.push(line);
+                                }
                             }
                             contador = 1;
                             if(reta(point2,point3,line)&&(!um)){
@@ -3787,7 +3795,7 @@ class Jogo extends Phaser.Scene {
                                 }
                             }
                             else{
-                                if(semiReta(point2,point,line) && um == true && dois==false){
+                                if(semiReta(point2,point,line) && um == true && !dois && !tres && !quatro && !cinco && !seis){
                                     dois = true;
                                     graphics.clear(); 
                                     texto.x = 0.22 * game.config.width;
@@ -3801,7 +3809,7 @@ class Jogo extends Phaser.Scene {
                                     }
                                 }
                                 else{
-                                    if(semiReta(point5,point2,line)&&dois==true){
+                                    if(semiReta(point5,point2,line)&&dois==true && !tres && !quatro && !cinco && !seis){
                                         tres = true; 
                                         sgm = true; 
                                         certas = 1; 
@@ -3821,7 +3829,7 @@ class Jogo extends Phaser.Scene {
                                         }
                                     }
                                     else{
-                                        if(segmentoReta(point3,point4,line)&&tres){
+                                        if(segmentoReta(point3,point4,line)&&tres && !quatro && !cinco && !seis){
                                             quatro = true; 
                                             naoMexe = true;
                                             texto.x = 0.3 * game.config.width;
@@ -3860,7 +3868,7 @@ class Jogo extends Phaser.Scene {
                                                             'Traça a reta SUPORTE da semirreta |' + letra1 + letra5
                                                         ]); 
 
-                                                        if(reta(point2,point5,line)&&quatro){
+                                                        if(reta(point2,point5,line)&&quatro && !cinco && !seis){
                                                             cinco=true;
                                                             texto.x = 0.32 * game.config.width;
 
@@ -3873,7 +3881,7 @@ class Jogo extends Phaser.Scene {
                                                             }
                                                         }
                                                         else{
-                                                            if(reta(point,point4,line)){
+                                                            if(reta(point,point4,line) && cinco && !seis){
                                                                 seis = true; 
                                                                 lines.push(line);
                                                                 aceita = true; 
@@ -3889,9 +3897,6 @@ class Jogo extends Phaser.Scene {
                                                                 clearInterval(contaTempo);
                                                                 contaTempo = setInterval(function(){ segundo() },1000);
                                                                 segundos = 0;
-                                                                }
-                                                                else{
-                                                                    lines.pop();
                                                                 }
                                                             }
                                                         }
@@ -4477,9 +4482,7 @@ class Jogo extends Phaser.Scene {
                                 break;
                             case 17: 
                                 texto.x = 0.38 * game.config.width; 
-
                                 clearInterval(contaTempo); 
-                                
                                 texto.setText([
                                     textoLevel(level) + letra1 + ' e ' + letra2
                                 ]);
@@ -4492,6 +4495,7 @@ class Jogo extends Phaser.Scene {
                                 letrac.x = point.x+12;
                                 letrac.y = point.y+12;
                                 contaTempo = setInterval(function(){ segundo() },1000); 
+
                                 segundos = 0;
                                 break; 
                             case 18: 
@@ -5093,14 +5097,16 @@ function reta(a,b,line){ //Verifica se é uma reta que passa em a e em b
         if (pontos[i].x <= fim.x+20 && pontos[i].x >= fim.x-20 && pontos[i].y <= fim.y+20 && pontos[i].y >= fim.y-20){
             continua3 = true; 
         }
-    }
-    if(continua1&&continua2&&continua3 &&  dist(a.x,a.y,b.x,b.y) < dist(line.getPointA().x,
-    line.getPointA().y,line.getPointB().x,line.getPointB().y)){
-        continua=true;
-        
-    }
-    
+    }    
 
+    if(continua1&&continua2&&continua3) {
+        continua=true;   
+    }
+
+    if(line.getPointA().x == a.x || line.getPointA().x == b.x || line.getPointB().x == a.x || line.getPointA().x == b.x||
+    line.getPointB().x == a.x || line.getPointB().x == b.x ){
+        continua = false;
+    }
     return continua; 
 }
 
@@ -5179,7 +5185,7 @@ function pontosParalelo(x,y,x1,y1){
 
         iterations += 1; 
         if(iterations==200){
-            if(y>500){
+            if(y>675){
                 if(y1>y){
                     Phaser.Geom.Line.SetToAngle(paralela,x,y -175,angle,250);
                 }
@@ -5188,7 +5194,7 @@ function pontosParalelo(x,y,x1,y1){
                 }
             }
             else{
-                if(y1>500){
+                if(y1>675){
                     Phaser.Geom.Line.SetToAngle(paralela,x1,y1 -175,angle,250);
                 }
                 else{
@@ -5301,6 +5307,7 @@ function generate2points(){
 }
 
 function generateExtraPointAlign(pontos){
+
     var linha = new Phaser.Geom.Line(pontos[0].x, pontos[0].y, pontos[1].x, pontos[1].y);
 
     var ponto = linha.getRandomPoint(); 
@@ -5382,10 +5389,15 @@ function generateExtraPoint(pontos,quantos){
 
                 if((x<=x1+250 && x>=x1-250) || (x1<=x+250 && x1>=x-250)){
                     if(dir<1200){
-                        a = dir + 200; 
+                        a = dir.x + 200; 
                     }
                     else{
-                        a = pontoEsquerda(point2,point3) - 500;
+                        if(pontoEsquerda(point2,point3).x>800){
+                            a = pontoEsquerda(point2,point3).x - 500;
+                        }
+                        else{
+                            a = pontoEsquerda(point2,point3).x + 200;
+                        }
                     }
                 }
                 else{
