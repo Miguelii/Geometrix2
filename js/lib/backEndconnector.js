@@ -101,7 +101,7 @@ function getTOP(di, df, globalCodTurma, globalCodEscola,scene) {
     $.ajax
     ({
         type: "POST",
-        url: "",
+        url: "https://www.hypatiamat.com/newHRecords.php",
         data: "action=mostraNewA&anoLi=" + di + "&anoLf=" + df + "&mturma=" + globalCodTurma + "&mescola=" + globalCodEscola + "&flag=2"  + "&tC=geometrixTOP",
         crossDomain: true,
         cache: false,
@@ -159,7 +159,7 @@ function updateTOP(di, df, globalCodTurma, globalCodEscola,flag,scene) {
     $.ajax
     ({
         type: "POST",
-        url: "",
+        url: "https://www.hypatiamat.com/newHRecords.php",
         data: "action=mostraNewA&anoLi=" + di + "&anoLf=" + df + "&mturma=" + globalCodTurma + "&mescola=" + globalCodEscola + "&flag="+flag + "&tC=geometrixTOP",
         crossDomain: true,
         cache: false,
@@ -212,7 +212,7 @@ function verificaRecords(username, globalCodTurma, globalCodEscola, pontuacao,sc
     $.ajax
     ({
         type: "POST",
-        url: "",
+        url: "https://www.hypatiamat.com/newHRecords.php",
         data: "action=maximoGlobal&codAl=" + username + "&codTurma=" + globalCodTurma + "&codEscola=" + globalCodEscola + "&pont=" + pontuacao + "&t=geometrixHypatiamat&tC=geometrixTOP",
         crossDomain: true,
         cache: false,
@@ -298,7 +298,7 @@ function gravaRecords(username, globalCodTurma, globalCodEscola, pontuacao) {
     $.ajax
     ({
         type: "POST",
-        url: "",
+        url: "https://www.hypatiamat.com/newHRecords.php",
         data: "action=insereA&musername=" + username + "&mturma=" + globalCodTurma + "&mescola=" + globalCodEscola + "&mpontuacao=" + pontuacao  + "&t=geometrixHypatiamat&tC=geometrixTOP",
         crossDomain: true,
         cache: false,
@@ -317,7 +317,7 @@ function getRecords(username, globalCodTurma, globalCodEscola, scene) {
     $.ajax
     ({
         type: "POST",
-        url: "",
+        url: "https://www.hypatiamat.com/newHRecords.php",
         data: "action=maximoGlobal&codAl=" + username + "&codTurma=" + globalCodTurma + "&codEscola=" + globalCodEscola + "&pont=" + 0 + "&tip=" + tipoTOP + "&t=geometrixHypatiamat&tC=geometrixTOP",
         crossDomain: true,
         cache: false,
