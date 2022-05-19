@@ -14,7 +14,7 @@ var timer;
 var score = 0; 
 var textScore;
 var pause = false; 
-var level = 1; 
+var level = 2; 
 var sim;
 var nao;
 var info;
@@ -5333,13 +5333,11 @@ function generateExtraPoint(pontos,quantos){
     }
     var iterations = 0; 
     var continua = true; 
-    var keepGoing = false; 
 
     if(point==null){
-        while(((b<y+100 && b>y-100) || (b<y1+50 && b>y1-50) ||a>1700||b>920 || b<460 || b==y || b==y1 
-        || dist(a,b,point2.x,point2.y)<=250 || dist(a,b,point3.x,point3.y)<=250 || keepGoing || 
+        while(((b<y+100 && b>y-100) || (b<y1+100 && b>y1-100) ||a>1700||b>920 || b<460 || b==y || b==y1 
+        || dist(a,b,point2.x,point2.y)<=250 || dist(a,b,point3.x,point3.y)<=250 || 
         (b<=teste.y+100 && b>=teste2.y-100))&&continua){
-            keepGoing = false; 
             a = Math.random();
             if(a<0.3){
                 a = x1;
@@ -5359,7 +5357,7 @@ function generateExtraPoint(pontos,quantos){
                 continua = false; 
                 a = x+x1/2; 
                 if(pontoDeCima(point2,point3).y<460){
-                    b = pontoDeCima(point2,point3).y+180;
+                    b = pontoDeCima(point2,point3).y+dist(point2.x,point2.y,point3.x,point3.y)/2;
                 }
                 else{
                     if(teste2.y>600){
@@ -5368,11 +5366,6 @@ function generateExtraPoint(pontos,quantos){
                     else{
                         b = teste2.y + 100; 
                     }
-                }
-            }
-            for(i=0; i<pontos.length;i++){
-                if(dist(pontos[i].x,pontos[i].y,a,b)<=250){
-                    keepGoing = true;
                 }
             }
         }
@@ -5387,7 +5380,7 @@ function generateExtraPoint(pontos,quantos){
     if(point!=null){
         a1 = point.x;
         b1=point.y;        
-        while(( (b<y+50 && b>y-50) || (b<y1+50 && b>y1-50) || a>1700||b>920 || b<460 ||a==x || a==x1 || b==y || b==y1 || a==a1 || a==b1 || dist(a,b,point2.x,point2.y)<=250 || dist(a,b,point3.x,point3.y)<=250 || dist(a,b,point.x,point.y)<=250||(b<=teste.y+100 && b>=teste2.y-100))&&continua){
+        while(( (b<y+100 && b>y-100) || (b<y1+100 && b>y1-100) || a>1700||b>920 || b<460 ||a==x || a==x1 || b==y || b==y1 || a==a1 || a==b1 || dist(a,b,point2.x,point2.y)<=250 || dist(a,b,point3.x,point3.y)<=250 || dist(a,b,point.x,point.y)<=250||(b<=teste.y+100 && b>=teste2.y-100))&&continua){
             a = Math.random()*(2024 - 300) + 300;
             b = Math.random()*(1200 - 300) + 300;
             iterations += 1; 
