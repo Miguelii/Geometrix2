@@ -825,11 +825,11 @@ class Jogo extends Phaser.Scene {
                 if(level==8||level==20){
                     pontosLine= getPretendedLine(level,point2,point);
                 }
-                if(level==12||level==17){
+                if(level==15||level==17){
                     pontosLine= getPretendedLine(level,point4,point);
                 }
 
-                if (((level == 1||level==5||level==7||level==8||level==9||level==13||level==12||level==17||level==19||level==20) && certas ==1)){
+                if (((level == 1||level==5||level==7||level==8||level==9||level==13||level==15||level==17||level==19||level==20) && certas ==1)){
                     
                     if(posto==false){
                         signal = true; 
@@ -5051,12 +5051,12 @@ function semiReta(a,b,line){ //Verifica se é semi-reta que começa em a e passa
             }
             else{
                 if (pontoDeCima(a,b)==a &&  (line.getPointA().x<=a.x+30 && line.getPointA().x>=a.x-30)
-                &&  (line.getPointA().y<=a.y+30 && line.getPointA().y>=a.y-30 )&& line.getPointB().y<b.y){
+                &&  (line.getPointA().y<=a.y+30 && line.getPointA().y>=a.y-30 )&& line.getPointB().y>b.y){
                     return true;
                 }
                 else{
                     if (pontoDeCima(a,b)==b &&  (line.getPointA().x<=a.x+30 && line.getPointA().x>=a.x-30)
-                    &&  (line.getPointA().y<=a.y+30 && line.getPointA().y>=a.y-30 ) && line.getPointB().y>b.y){
+                    &&  (line.getPointA().y<=a.y+30 && line.getPointA().y>=a.y-30 ) && line.getPointB().y<b.y){
                         return true;
                     }
                 }
@@ -5157,13 +5157,13 @@ function reta(a,b,line){ //Verifica se é uma reta que passa em a e em b
                 return true;
             }
             else{
-                if (pontoDeCima(a,b)==a && ((line.getPointA().y>a.y && line.getPointB().y<b.y)|| (line.getPointA().y<b.y &&  
-                line.getPointB().y>a.y))){
+                if (pontoDeCima(a,b)==a && ((line.getPointA().y<a.y && line.getPointB().y>b.y)|| (line.getPointA().y>b.y &&  
+                line.getPointB().y<a.y))){
                     return true;
                 }
                 else{
-                    if (pontoDeCima(a,b)==b && ((line.getPointA().y<a.y && line.getPointB().y>b.y)|| (line.getPointA().y>b.y &&  
-                    line.getPointB().y<a.y))){
+                    if (pontoDeCima(a,b)==b && ((line.getPointA().y>a.y && line.getPointB().y<b.y)|| (line.getPointA().y<b.y &&  
+                    line.getPointB().y>a.y))){
                         return true;
                     }
                 }
@@ -5215,7 +5215,7 @@ function dist(x,y,x1,y1){
 }
 
 function pontoDeCima(a,b){
-    if (a.y>b.y){
+    if (a.y<b.y){
         return a;
     }
     else{
@@ -5419,7 +5419,7 @@ function generateExtraPoint(pontos,quantos){
             if(iterations>300){
                 continua = false; 
                 a = x+x1/2; 
-                if(pontoDeCima(point2,point3).y<600){
+                if(pontoDeCima(point2,point3).y<400){
                     b = pontoDeCima(point2,point3).y+180;
                 }
                 else{
@@ -5450,7 +5450,7 @@ function generateExtraPoint(pontos,quantos){
             if(iterations>300){
                 continua = false; 
                 a = pontoEsquerda(point3,point).x+50; 
-                if(pontoDeCima(point2,point3).y<600){
+                if(pontoDeCima(point2,point3).y<400){
                     b = pontoDeCima(point2,point3).y+180;
                 }
                 else{
