@@ -14,7 +14,7 @@ var timer;
 var score = 0; 
 var textScore;
 var pause = false; 
-var level = 1; 
+var level = 4; 
 var sim;
 var nao;
 var info;
@@ -5247,7 +5247,7 @@ function pontosParalelo(x,y,x1,y1){
     var z = dist(x,y,x1,y1);
     var iterations = 0; 
     var acaba = false;
-    while((pontoB.y<400 || pontoB.y>920 || pontoA.y<400 || pontoA.y>920||dist(pontoA.x,pontoA.y,x,y)<=250 || z>250)&&!acaba){
+    while((pontoB.y<400 || pontoB.y>920 || pontoA.y<400 || pontoA.y>920||dist(pontoA.x,pontoA.y,x,y)<=250 || z<250)&&!acaba){
 
         iterations += 1; 
         if(iterations==200){
