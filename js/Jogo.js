@@ -14,7 +14,7 @@ var timer;
 var score = 0; 
 var textScore;
 var pause = false; 
-var level = 1; 
+var level = 20; 
 var sim;
 var nao;
 var info;
@@ -40,7 +40,8 @@ var changeLives = true;
 var naoMexe = false; 
 var pts; 
 var erro = false;
-
+var cinco = false; 
+var seis = false; 
 class Jogo extends Phaser.Scene {
 
     constructor() {
@@ -3770,8 +3771,7 @@ class Jogo extends Phaser.Scene {
                             
                             break;
                         case 20: 
-                            var cinco = false; 
-                            var seis = false; 
+                            
                             if (contador==1){
                                 if(um&&dois&&tres&&quatro){
 
@@ -3839,7 +3839,7 @@ class Jogo extends Phaser.Scene {
                                             ]); 
                                         }
                                         else{
-                                            if (sgm && !cinco){ 
+                                            if (sgm && quatro && !cinco && !seis){ 
                                                 if(midlePoint!=null && sgm==true){
                                                     posto = true;
                                                     graphics.lineStyle(7, color);
@@ -3854,10 +3854,12 @@ class Jogo extends Phaser.Scene {
                                                     graphics.strokeLineShape(line);
                                                 }
                                                 if(sgm&& !cinco && !seis){
+                        
                                                     graphics.lineStyle(7, color);
 
                                                     graphics.strokeLineShape(lines[0]);
-                                                    if(aceitaMidle){
+
+                                                    if(aceitaMidle && !cinco && !seis){
                                                         var pointsLine2 = getPointsOnLine(point2,point5);
                                                         for(var i=0;i<pointsLine2.length;i++){
                                                             pointsLine.push(pointsLine2[i]);
@@ -3869,18 +3871,22 @@ class Jogo extends Phaser.Scene {
                                                         ]); 
 
                                                         if(reta(point2,point5,line)&&quatro && !cinco && !seis){
+                                                            console.log(cinco);
                                                             cinco=true;
                                                             texto.x = 0.32 * game.config.width;
+                                                            certas += 1; 
 
                                                             texto.setText([
                                                                 'Traça a reta paralela a ' + letra1 + letra2 + ' que passa por ' + letra3 
                                                             ]); 
                                                             var pointsLine2 = getPointsOnLine(point,point4);
+                                                            pointsLine = [];
                                                             for(var i=0;i<pointsLine2.length;i++){
                                                                 pointsLine.push(pointsLine2[i]);
                                                             }
                                                         }
                                                         else{
+                                                            console.log(reta(point,point4,line));
                                                             if(reta(point,point4,line) && cinco && !seis){
                                                                 seis = true; 
                                                                 lines.push(line);
@@ -3995,6 +4001,8 @@ class Jogo extends Phaser.Scene {
                     letraa.y = y+12;
                     letrab.x = x1+12;
                     letrab.y = y1+12;
+                    cinco = false; 
+                    seis = false; 
                     if (certas == 3){
                         graphics.clear();
                         clearInterval(contaTempo);
