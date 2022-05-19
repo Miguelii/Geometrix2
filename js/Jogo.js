@@ -14,7 +14,7 @@ var timer;
 var score = 0; 
 var textScore;
 var pause = false; 
-var level = 17; 
+var level = 1; 
 var sim;
 var nao;
 var info;
@@ -4924,7 +4924,7 @@ function getPretendedLine (level,ponto1,ponto2){
             var pretended = new Phaser.Geom.Line();
             pretended.setTo(acaba1.x,acaba1.y,acaba2.x,acaba2.y);
 
-            var pontos = pretended.getPoints(440);
+            var pontos = pretended.getPoints(1200);
 
             return pontos;
         case 5: 
@@ -4978,7 +4978,7 @@ function getPretendedLine (level,ponto1,ponto2){
             var pretended = new Phaser.Geom.Line();
             pretended.setTo(acaba1.x,acaba1.y,acaba2.x,acaba2.y);
 
-            var pontos = pretended.getPoints(440);
+            var pontos = pretended.getPoints(1200);
 
         return pontos;
         case 17: 
@@ -5069,57 +5069,6 @@ function semiReta(a,b,line){ //Verifica se é semi-reta que começa em a e passa
     }
     return false; 
 }  
-
-function comecaAntesAcabaNoPonto(a,b,line){ //começa antes de a e acaba em b
-    lineAux = new Phaser.Geom.Line(); 
-    lineAux.setTo(a.x,a.y,b.x,b.y);
-    var midPoint = Phaser.Geom.Line.GetMidPoint(lineAux);
-    var pontos = line.getPoints(1000); 
-    var continua = false;
-    var continua1 = false;
-    var continua2 = false;
-    var continua3 = false; 
-    var inicio = lineAux.getPointA();
-    var fim = lineAux.getPointB();
-
-    for (var i=0;i<pontos.length;i++){
-        if (pontos[i].x <= midPoint.x+2 && pontos[i].x >= midPoint.x-2 && pontos[i].y <= midPoint.y+2 && pontos[i].y >= midPoint.y-2){
-            continua1 = true;
-        }
-        if (pontos[i].x <= inicio.x+2 && pontos[i].x >= inicio.x-2 && pontos[i].y <= inicio.y+2 && pontos[i].y >= inicio.y-2){
-            continua2 = true;
-        }
-        if (pontos[i].x <= fim.x+2 && pontos[i].x >= fim.x-2 && pontos[i].y <= fim.y+2 && pontos[i].y >= fim.y-2){
-            continua3 = true; 
-        }
-    }
-    
-    if(continua1&&continua2&&continua3){
-        continua=true;
-    }
-
-    if(continua){
-        if(line.getPointB().x == b.x && line.getPointB().y==b.y && pontoEsquerda(a,b) == a && line.getPointA().x<a.x){
-            return true;
-        }
-        else{
-            if(line.getPointB().x == b.x && line.getPointB().y==b.y && pontoEsquerda(a,b) == b && line.getPointA().x>a.x){
-                return true;
-            }
-            else{
-                if(line.getPointB().x == b.x && line.getPointB().y==b.y && pontoDeCima(a,b) == a && line.getPointA().y>a.y){
-                    return true; 
-                }
-                else{
-                    if (line.getPointB().x == b.x && line.getPointB().y==b.y && pontoDeCima(a,b) == b && line.getPointA().y<a.y){
-                        return true; 
-                    }
-                }
-            }
-        }
-    }
-    return false; 
-}
 
 function reta(a,b,line){ //Verifica se é uma reta que passa em a e em b 
     lineAux = new Phaser.Geom.Line(); 
@@ -5225,7 +5174,7 @@ function pontosParalelo(x,y,x1,y1){
     var z = dist(x,y,x1,y1);
     var iterations = 0; 
     var acaba = false;
-    while((pontoB.y<440 || pontoB.y>920 || pontoA.y<440 || pontoA.y>920||dist(pontoA.x,pontoA.y,x,y)<=250 || z<250)&&!acaba){
+    while((pontoB.y<460 || pontoB.y>920 || pontoA.y<460 || pontoA.y>920||dist(pontoA.x,pontoA.y,x,y)<=250 || z<250)&&!acaba){
 
         iterations += 1; 
         if(iterations==200){
@@ -5289,7 +5238,7 @@ function perpendicular(ponto1,ponto2){
     pointerLine.setTo(ponto1.x,ponto1.y,ponto2.x,ponto2.y);
     var normalAngle = Phaser.Geom.Line.NormalAngle(pointerLine);
     var ponto = pointerLine.getRandomPoint(); 
-    while((dist(ponto.x,ponto.y,ponto1.x,ponto1.y)<180 && dist(ponto.x,ponto.y,ponto2.x,ponto2.y)<180) || !entre(ponto,ponto1) ||
+    while((dist(ponto.x,ponto.y,ponto1.x,ponto1.y)<250 && dist(ponto.x,ponto.y,ponto2.x,ponto2.y)<250) || !entre(ponto,ponto1) ||
     !entre(ponto,ponto2)
     ){    
         ponto = pointerLine.getRandomPoint(); 
@@ -5302,7 +5251,7 @@ function perpendicular(ponto1,ponto2){
     var pontoA = perp.getPointA();
     var pontoB = perp.getPointB(); 
 
-    while (pontoB.x>1700 ||pontoA.x>1700 ||pontoB.y<440 || pontoB.y>920 || (dist(pontoB.x,pontoB.y,ponto1.x,ponto1.y)<180 && dist(pontoB.x,pontoB.y,ponto2.x,ponto2.y)<180) ||!entre(ponto,ponto1) ||
+    while (pontoB.x>1700 ||pontoA.x>1700 ||pontoB.y<460 || pontoB.y>920 || (dist(pontoB.x,pontoB.y,ponto1.x,ponto1.y)<250 && dist(pontoB.x,pontoB.y,ponto2.x,ponto2.y)<250) ||!entre(ponto,ponto1) ||
     !entre(ponto,ponto2) ){
         distancia -= 10;
         Phaser.Geom.Line.SetToAngle(perp,ponto.x,ponto.y,normalAngle,distancia);
@@ -5322,7 +5271,10 @@ function pontosAleatorios(){
 
     while(alphabet[Math.floor(rand)]=='Z'||alphabet[Math.floor(rand)]=='X'|| alphabet[Math.floor(rand)]=='Y'
     || alphabet[Math.floor(rand)]=='W'||alphabet[Math.floor(rand)]=='V' || alphabet[Math.floor(rand)]=='O' ||
-     alphabet[Math.floor(rand)]=='Q' || alphabet[Math.floor(rand)]=='U' || alphabet[Math.floor(rand)]=='V')  {
+     alphabet[Math.floor(rand)]=='Q' || alphabet[Math.floor(rand)]=='U' || alphabet[Math.floor(rand)]=='V'||
+      alphabet[Math.floor(rand)]=='L' || alphabet[Math.floor(rand)]=='N' || alphabet[Math.floor(rand)]=='M'
+      || alphabet[Math.floor(rand)]=='P' || alphabet[Math.floor(rand)]=='R' || alphabet[Math.floor(rand)]=='S'
+      || alphabet[Math.floor(rand)]=='T')   {
         rand = 0; 
     }
     return [alphabet[Math.floor(rand)],alphabet[Math.floor(rand)+1],
@@ -5336,7 +5288,7 @@ function generate2points(){
     let x1 =Math.random()*(2024 - 300) + 300;
     let y1 = Math.random()*(1200 - 300) + 300;
 
-    while (x>1700||x1>1700 || y > 920 || y<440 || y1>920 ||y1<440 || x==x1 || x==y || x==y1 || x1==y1 || y==x1 || y==y1 || dist(x,y,x1,y1)<=300){
+    while (x>1700||x1>1700 || y > 920 || y<460 || y1>920 ||y1<460 || x==x1 || x==y || x==y1 || x1==y1 || y==x1 || y==y1 || dist(x,y,x1,y1)<=300){
         x = Math.random()*(2024 - 300) + 300;
         y = Math.random()*(1200 - 300) + 300;
         x1 = Math.random()*(2024 - 300) + 300;
@@ -5352,7 +5304,7 @@ function generateExtraPointAlign(pontos){
 
     var ponto = linha.getRandomPoint(); 
 
-    while(dist(ponto.x,ponto.y,pontos[0].x,pontos[0].y)<70 ||dist(ponto.x,ponto.y,pontos[1].x,pontos[1].y)<70){
+    while(dist(ponto.x,ponto.y,pontos[0].x,pontos[0].y)<250 ||dist(ponto.x,ponto.y,pontos[1].x,pontos[1].y)<250){
         ponto = linha.getRandomPoint(); 
     }
     return ponto;
@@ -5381,7 +5333,7 @@ function generateExtraPoint(pontos,quantos){
     var continua = true; 
 
     if(point==null){
-        while(((b<y+100 && b>y-100) || (b<y1+50 && b>y1-50) ||a>1700||b>920 || b<440 || b==y || b==y1 || dist(a,b,point2.x,point2.y)<=180 || dist(a,b,point3.x,point3.y)<=180 ||(b<=teste.y+50 && b>=teste2.y-50))&&continua){
+        while(((b<y+100 && b>y-100) || (b<y1+50 && b>y1-50) ||a>1700||b>920 || b<460 || b==y || b==y1 || dist(a,b,point2.x,point2.y)<=250 || dist(a,b,point3.x,point3.y)<=250 ||(b<=teste.y+100 && b>=teste2.y-100))&&continua){
             a = Math.random();
             if(a<0.3){
                 a = x1;
@@ -5400,7 +5352,7 @@ function generateExtraPoint(pontos,quantos){
             if(iterations>300){
                 continua = false; 
                 a = x+x1/2; 
-                if(pontoDeCima(point2,point3).y<440){
+                if(pontoDeCima(point2,point3).y<460){
                     b = pontoDeCima(point2,point3).y+180;
                 }
                 else{
@@ -5424,14 +5376,14 @@ function generateExtraPoint(pontos,quantos){
     if(point!=null){
         a1 = point.x;
         b1=point.y;        
-        while(( (b<y+50 && b>y-50) || (b<y1+50 && b>y1-50) || a>1700||b>920 || b<440 ||a==x || a==x1 || b==y || b==y1 || a==a1 || a==b1 || dist(a,b,point2.x,point2.y)<=180 || dist(a,b,point3.x,point3.y)<=180 || dist(a,b,point.x,point.y)<=180||(b<=teste.y+50 && b>=teste2.y-50))&&continua){
+        while(( (b<y+50 && b>y-50) || (b<y1+50 && b>y1-50) || a>1700||b>920 || b<460 ||a==x || a==x1 || b==y || b==y1 || a==a1 || a==b1 || dist(a,b,point2.x,point2.y)<=250 || dist(a,b,point3.x,point3.y)<=250 || dist(a,b,point.x,point.y)<=250||(b<=teste.y+100 && b>=teste2.y-100))&&continua){
             a = Math.random()*(2024 - 300) + 300;
             b = Math.random()*(1200 - 300) + 300;
             iterations += 1; 
             if(iterations>300){
                 continua = false; 
                 a = pontoEsquerda(point3,point).x+50; 
-                if(pontoDeCima(point2,point3).y<440){
+                if(pontoDeCima(point2,point3).y<460){
                     b = pontoDeCima(point2,point3).y+180;
                 }
                 else{
