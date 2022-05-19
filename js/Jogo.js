@@ -5311,6 +5311,16 @@ function generateExtraPointAlign(pontos){
     return ponto;
 }
 
+function nearLine(a,b,x,y){
+    var pontos = getPointsOnLine(a,b);
+    for(i=0;i<pontos.length;i++){
+        if(dist(x,y,pontos[i].x,pontos[i].y)<=100){
+            return true; 
+        }
+    }
+    return false; 
+}
+
 function generateExtraPoint(pontos,quantos){
     var point2; var point3; 
     point2 = pontos[0]; 
@@ -5331,12 +5341,24 @@ function generateExtraPoint(pontos,quantos){
     if(teste==point2){
         teste2 = point3; 
     }
+
+    var dir = point2; 
+    var baixo = point2; 
+
+    if (pontoEsquerda(point2,point3) == point2){
+        esq = point3; 
+    }
+    if (pontoDeCima(point2,point3) == point2){
+        baixo = point3; 
+    }
+
     var iterations = 0; 
     var continua = true; 
 
     if(point==null){
-        while(((b<y+100 && b>y-100) || (b<y1+100 && b>y1-100) ||a>1700||b>920 || b<460 || b==y || b==y1 
-        || dist(a,b,point2.x,point2.y)<=250 || dist(a,b,point3.x,point3.y)<=250 || 
+        while(((b<y+50 && b>y-50) || (b<y1+50 && b>y1-50) ||a>1700||b>920 || b<460 || b==y || b==y1 
+        || dist(a,b,point2.x,point2.y)<=250 || dist(a,b,point3.x,point3.y)<=250 || nearLine(point2,point3,a,b)||
+        (a<dir+100 && a>pontoEsquerda(point2,point3)-100 && b>baixo+100 && b<pontoDeCima(point2,point3)-100) || 
         (b<=teste.y+100 && b>=teste2.y-100))&&continua){
             a = Math.random();
             if(a<0.3){
@@ -5352,19 +5374,45 @@ function generateExtraPoint(pontos,quantos){
             }
             
             b = Math.random()*(1200 - 300) + 300;
+            
             iterations += 1; 
             if(iterations>300){
                 continua = false; 
-                a = x+x1/2; 
+                a = (x+x1)/2; 
+
+                if((x<=x1+250 && x>=x1-250) || (x1<=x+250 && x1>=x-250)){
+                    if(dir<1200){
+                        a = dir + 200; 
+                    }
+                    else{
+                        a = pontoEsquerda(point2,point3) - 500;
+                    }
+                }
+                else{
+                    a = (x+x1)/2; 
+                }
+
+
                 if(pontoDeCima(point2,point3).y<460){
+
                     b = pontoDeCima(point2,point3).y+dist(point2.x,point2.y,point3.x,point3.y)/2;
                 }
                 else{
-                    if(teste2.y>600){
-                        b = teste2.y - 200; 
+                    if(teste2.y>700){
+                        if((y<=y1+150 && y>=y1-250) || (y1<=y+250 && y1>=y-250)){
+                            b = teste2.y-300; 
+                        }
+                        else{
+                            b = teste2.y; 
+                        }
                     }
                     else{
-                        b = teste2.y + 100; 
+                        if((y<=y1+250 && y>=y1-250) || (y1<=y+250 && y1>=y-250)){
+                            b = teste2.y+200; 
+                        }
+                        else{
+                            b = teste2.y; 
+                        }
                     }
                 }
             }
@@ -5373,14 +5421,13 @@ function generateExtraPoint(pontos,quantos){
         return ponto; 
     }
     
-    
     var iterations = 0; 
     var continua = true; 
 
     if(point!=null){
         a1 = point.x;
         b1=point.y;        
-        while(( (b<y+100 && b>y-100) || (b<y1+100 && b>y1-100) || a>1700||b>920 || b<460 ||a==x || a==x1 || b==y || b==y1 || a==a1 || a==b1 || dist(a,b,point2.x,point2.y)<=250 || dist(a,b,point3.x,point3.y)<=250 || dist(a,b,point.x,point.y)<=250||(b<=teste.y+100 && b>=teste2.y-100))&&continua){
+        while(( (b<y+50 && b>y-50) || (b<y1+50 && b>y1-50) || a>1700||b>920 || b<460 ||a==x || a==x1 || b==y || b==y1 || a==a1 || a==b1 || dist(a,b,point2.x,point2.y)<=250 || dist(a,b,point3.x,point3.y)<=250 || dist(a,b,point.x,point.y)<=250||(b<=teste.y+100 && b>=teste2.y-100))&&continua){
             a = Math.random()*(2024 - 300) + 300;
             b = Math.random()*(1200 - 300) + 300;
             iterations += 1; 
