@@ -14,7 +14,7 @@ var timer;
 var score = 0; 
 var textScore;
 var pause = false; 
-var level = 1; 
+var level =2; 
 var sim;
 var nao;
 var info;
@@ -2081,8 +2081,10 @@ class Jogo extends Phaser.Scene {
                     erro = true;
                     graphics.clear();
                     if(contador==0){
-                        lines.pop();
+                        lines.pop(); 
                     }
+                    contador = 1;
+
                     line = new Phaser.Geom.Line();
                     lines.push(line);
                 }
