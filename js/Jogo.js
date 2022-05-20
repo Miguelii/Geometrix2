@@ -14,7 +14,7 @@ var timer;
 var score = 0; 
 var textScore;
 var pause = false; 
-var level = 4; 
+var level = 20; 
 var sim;
 var nao;
 var info;
@@ -672,8 +672,8 @@ class Jogo extends Phaser.Scene {
                 break; 
             case 20: 
                 texto.setText([
-                    textoLevel(level) + letra1 + ' e ' + letra2
-                ]);
+                    textoLevel(level) + '|' + letra2 + letra3
+                ]);                
                 lines[j] = new Phaser.Geom.Line();
                 line = lines[j];
                 point5 = generateExtraPointAlign([point2,point3]);
@@ -691,6 +691,8 @@ class Jogo extends Phaser.Scene {
                 letrad.y = point4.y+12;
                 letrae.x = point5.x+12;
                 letrae.y = point5.y+12; 
+                pointsLine = getPointsOnLine(point3,point);
+
                 break; 
 
         }
@@ -3785,166 +3787,150 @@ class Jogo extends Phaser.Scene {
                                 }
                             }
                             contador = 1;
-                            if(reta(point2,point3,line)&&(!um)){
-                                um = true; 
-                                texto.x = 0.42 * game.config.width;
+                            
 
+                            if(semiReta(point3,point,line) && !um && !dois && !tres && !quatro && !cinco && !seis){
+                                um = true;
+                                graphics.clear(); 
+                                texto.x = 0.22 * game.config.width;
                                 texto.setText([
-                                    'Traça a semirreta |' + letra1 + letra3 
-                                ]);
+                                    'Traça a semirreta OPOSTA à semirreta com origem em ' + letra5 + ' e que passa por ' + letra2
+                                ]); 
                                 pointsLine = [];
-                                var pointsLine2 = getPointsOnLine(point2,point);
+                                var pointsLine2 = getPointsOnLine(point5,point2);
                                 for(var i=0;i<pointsLine2.length;i++){
                                     pointsLine.push(pointsLine2[i]);
                                 }
                             }
                             else{
-                                if(semiReta(point2,point,line) && um == true && !dois && !tres && !quatro && !cinco && !seis){
-                                    dois = true;
-                                    graphics.clear(); 
-                                    texto.x = 0.22 * game.config.width;
+                                if(semiReta(point5,point2,line)&&!dois && !tres && !quatro && !cinco && !seis){
+                                    dois = true; 
+                                    sgm = true; 
+                                    certas = 1; 
+                                    
+                                    for(var i= 0;i<lines.length;i++){
+                                        graphics.strokeLineShape(lines[i]);
+                                    }
+                                    texto.x = 0.38 * game.config.width;
+
                                     texto.setText([
-                                        'Traça a semirreta OPOSTA à semirreta com origem em ' + letra5 + ' e que passa por ' + letra2
+                                        'Traça o segmento de reta [' + letra2 + letra4 + ']'
                                     ]); 
                                     pointsLine = [];
-                                    var pointsLine2 = getPointsOnLine(point5,point2);
+                                    var pointsLine2 = getPointsOnLine(point3,point4);
                                     for(var i=0;i<pointsLine2.length;i++){
                                         pointsLine.push(pointsLine2[i]);
                                     }
                                 }
                                 else{
-                                    if(semiReta(point5,point2,line)&&dois==true && !tres && !quatro && !cinco && !seis){
+                                    if(segmentoReta(point3,point4,line)&&dois && !tres&&  !quatro && !cinco && !seis){
                                         tres = true; 
-                                        sgm = true; 
-                                        certas = 1; 
-                                        
-                                        for(var i= 0;i<lines.length;i++){
-                                            graphics.strokeLineShape(lines[i]);
-                                        }
-                                        texto.x = 0.38 * game.config.width;
+                                        naoMexe = true;
+                                        texto.x = 0.3 * game.config.width;
 
                                         texto.setText([
-                                            'Traça o segmento de reta [' + letra2 + letra4 + ']'
+                                            'Marca um ponto alinhado com ' + letra1 + ' e '  + letra3 +' e que não pertence a |' + letra1 + letra3 
                                         ]); 
-                                        pointsLine = [];
-                                        var pointsLine2 = getPointsOnLine(point3,point4);
-                                        for(var i=0;i<pointsLine2.length;i++){
-                                            pointsLine.push(pointsLine2[i]);
-                                        }
                                     }
                                     else{
-                                        if(segmentoReta(point3,point4,line)&&tres && !quatro && !cinco && !seis){
-                                            quatro = true; 
-                                            naoMexe = true;
-                                            texto.x = 0.3 * game.config.width;
+                                        if (sgm && !cinco && !seis){ 
+                                            if(midlePoint!=null && sgm==true){
+                                                posto = true;
+                                                graphics.lineStyle(7, color);
 
-                                            texto.setText([
-                                                'Marca um ponto alinhado com ' + letra1 + ' e '  + letra3 +' e que não pertence a |' + letra1 + letra3 
-                                            ]); 
-                                        }
-                                        else{
-                                            if (sgm && quatro && !cinco && !seis){ 
-                                                if(midlePoint!=null && sgm==true){
-                                                    posto = true;
-                                                    graphics.lineStyle(7, color);
+                                                graphics.strokeLineShape(line);
+                                            }
+                                            else{
+                                                graphics.clear();
+                                                posto = false;
+                                                graphics.lineStyle(7, color);
 
-                                                    graphics.strokeLineShape(line);
-                                                }
-                                                else{
-                                                    graphics.clear();
-                                                    posto = false;
-                                                    graphics.lineStyle(7, color);
+                                                graphics.strokeLineShape(line);
+                                            }
+                                            if(sgm && !cinco && !seis){
+                    
+                                                graphics.lineStyle(7, color);
 
-                                                    graphics.strokeLineShape(line);
-                                                }
-                                                if(sgm&& !cinco && !seis){
-                        
-                                                    graphics.lineStyle(7, color);
+                                                graphics.strokeLineShape(lines[0]);
 
-                                                    graphics.strokeLineShape(lines[0]);
-
-                                                    if(aceitaMidle && !cinco && !seis){
-                                                        var pointsLine2 = getPointsOnLine(point2,point5);
-                                                        for(var i=0;i<pointsLine2.length;i++){
-                                                            pointsLine.push(pointsLine2[i]);
-                                                        }
-                                                        texto.x = 0.38 * game.config.width;
-
+                                                if(aceitaMidle && !cinco && !seis){
+                                                    var pointsLine2 = getPointsOnLine(point2,point5);
+                                                    for(var i=0;i<pointsLine2.length;i++){
+                                                        pointsLine.push(pointsLine2[i]);
+                                                    }
+                                                    texto.x = 0.38 * game.config.width;
+                                                    if(!quatro){
                                                         texto.setText([
                                                             'Traça a reta SUPORTE da semirreta |' + letra1 + letra5
                                                         ]); 
-
-                                                        if(reta(point2,point5,line)&&quatro && !cinco && !seis){
-                                                            console.log(cinco);
-                                                            cinco=true;
-                                                            texto.x = 0.32 * game.config.width;
-                                                            certas += 1; 
-
-                                                            texto.setText([
-                                                                'Traça a reta paralela a ' + letra1 + letra2 + ' que passa por ' + letra3 
-                                                            ]); 
-                                                            var pointsLine2 = getPointsOnLine(point,point4);
-                                                            pointsLine = [];
-                                                            for(var i=0;i<pointsLine2.length;i++){
-                                                                pointsLine.push(pointsLine2[i]);
-                                                            }
-                                                        }
-                                                        else{
-                                                            console.log(reta(point,point4,line));
-                                                            if(reta(point,point4,line) && cinco && !seis){
-                                                                seis = true; 
-                                                                lines.push(line);
-                                                                aceita = true; 
-                                                                certas += 1; 
-                                                                if (segundos >= 100){
-                                                                    score += 5;
-                                                                    armazenado += 5;
-                                                                }
-                                                                else{
-                                                                    score += (100-segundos) * level;
-                                                                    armazenado += (100-segundos) * level;
-                                                                }
-                                                                clearInterval(contaTempo);
-                                                                contaTempo = setInterval(function(){ segundo() },1000);
-                                                                segundos = 0;
-                                                                }
-                                                            }
-                                                        }
-                                                else{
-                                                    midlePoint = null;
-                                                    if(signal&&changeLives){
-                                                        score -= 5; 
-                                                        vidas -= 1;
                                                     }
-                                                }
-                                            }
+                                                    if(reta(point2,point5,line)&&!quatro && !cinco && !seis){
+                                                        console.log(cinco);
+                                                        quatro=true;
+                                                        texto.x = 0.32 * game.config.width;
+                                                        texto.setText([
+                                                            'Traça a reta paralela a ' + letra1 + letra2 + ' que passa por ' + letra3 
+                                                        ]); 
+                                                        var pointsLine2 = getPointsOnLine(point,point4);
+                                                        pointsLine = [];
+                                                        for(var i=0;i<pointsLine2.length;i++){
+                                                            pointsLine.push(pointsLine2[i]);
+                                                        }
+                                                    }
+                                                    else{
+                                                        if(reta(point,point4,line) && !cinco && !seis){
+                                                            cinco = true; 
+                                                            lines.push(line);
+                                                            aceita = true; 
+                                                            certas += 1; 
+                                                            if (segundos >= 100){
+                                                                score += 5;
+                                                                armazenado += 5;
+                                                            }
+                                                            else{
+                                                                score += (100-segundos) * level;
+                                                                armazenado += (100-segundos) * level;
+                                                            }
+                                                            clearInterval(contaTempo);
+                                                            contaTempo = setInterval(function(){ segundo() },1000);
+                                                            segundos = 0;
+                                                            }
+                                                        }
+                                                    }
                                             else{
-                                                if(!aceitaMidle){
-                                                    midlePoint = null;
-                                                    posto = false;
-                                                }
-                                                if(!sgm){
-                                                    line = new Phaser.Geom.Line();
+                                                midlePoint = null;
+                                                if(signal&&changeLives){
+                                                    score -= 5; 
+                                                    vidas -= 1;
                                                 }
                                             }
                                         }
                                         else{
-                                            lines.pop();
-                                            if(changeLives){
-                                                score -= 5;
-                                                vidas -= 1;
+                                            if(!aceitaMidle){
+                                                midlePoint = null;
+                                                posto = false;
                                             }
-                                        } 
+                                            if(!sgm){
+                                                line = new Phaser.Geom.Line();
+                                            }
+                                        }
                                     }
+                                    else{
+                                        lines.pop();
+                                        if(changeLives){
+                                            score -= 5;
+                                            vidas -= 1;
+                                        }
+                                    } 
                                 }
                             }
-                        }                
+                        }              
                             for(var i= 0;i<lines.length;i++){
                                 graphics.strokeLineShape(lines[i]);
                             }
                             line = new Phaser.Geom.Line(); 
 
-                            if(um && dois && tres && quatro && cinco && seis){
+                            if(um && dois && tres && quatro && cinco){
                                 aceita=true;
                                 certas = 2; 
                                 if (segundos >= 100){
@@ -4034,7 +4020,9 @@ class Jogo extends Phaser.Scene {
                         y = point2.y; 
                         x1 = point3.x; 
                         y1 = point3.y;
+                        
                         pointsLine = getPointsOnLine(point2,point3);
+                        
                         switch (level){
                             case 1: 
                                 if(certas == 0){
@@ -4555,12 +4543,13 @@ class Jogo extends Phaser.Scene {
                                 segundos = 0; 
                                 break; 
                             case 20: 
-                                texto.x = 0.38 * game.config.width; 
+                                texto.x = 0.42 * game.config.width; 
+
 
                                 clearInterval(contaTempo); 
                                 
                                 texto.setText([
-                                    textoLevel(level) + letra1 + ' e ' + letra2
+                                    textoLevel(level) + '|' + letra2 + letra3
                                 ]);
                                 lines[j] = new Phaser.Geom.Line();
                                 line = lines[j];
@@ -4579,6 +4568,8 @@ class Jogo extends Phaser.Scene {
                                 letrad.y = point4.y+12;
                                 letrae.x = point5.x+12;
                                 letrae.y = point5.y+12; 
+                                pointsLine = getPointsOnLine(point3,point);
+
                                 contaTempo = setInterval(function(){ segundo() },1000); 
                                 segundos = 0;
                                 break; 
@@ -5550,7 +5541,7 @@ function textoLevel(level){
         case 19: 
             return 'Traça a reta que passa por ';
         case 20: 
-            return 'Traça a reta que passa por ';
+            return 'Traça a semirreta ';
     }
 }
 
