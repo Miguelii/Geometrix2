@@ -3364,7 +3364,6 @@ class Jogo extends Phaser.Scene {
                                 lines.push(line);
                             }
                             contador = 1;
-                            console.log(reta(point2,point3,line)&&!um&&!dois&&!tres);
 
                             if(reta(point2,point3,line)&&!um&&!dois&&!tres){
                                 pointsLine = [];
@@ -3788,7 +3787,6 @@ class Jogo extends Phaser.Scene {
                             }
                             contador = 1;
                             
-
                             if(semiReta(point3,point,line) && !um && !dois && !tres && !quatro && !cinco && !seis){
                                 um = true;
                                 graphics.clear(); 
@@ -3807,7 +3805,6 @@ class Jogo extends Phaser.Scene {
                                     dois = true; 
                                     sgm = true; 
                                     certas = 1; 
-                                    
                                     for(var i= 0;i<lines.length;i++){
                                         graphics.strokeLineShape(lines[i]);
                                     }
@@ -3833,11 +3830,10 @@ class Jogo extends Phaser.Scene {
                                         ]); 
                                     }
                                     else{
-                                        if (sgm && !cinco && !seis){ 
+                                        if (sgm &&tres && !cinco && !seis){ 
                                             if(midlePoint!=null && sgm==true){
                                                 posto = true;
                                                 graphics.lineStyle(7, color);
-
                                                 graphics.strokeLineShape(line);
                                             }
                                             else{
@@ -3847,13 +3843,13 @@ class Jogo extends Phaser.Scene {
 
                                                 graphics.strokeLineShape(line);
                                             }
-                                            if(sgm && !cinco && !seis){
-                    
+
+                                            if(sgm){    
                                                 graphics.lineStyle(7, color);
 
                                                 graphics.strokeLineShape(lines[0]);
 
-                                                if(aceitaMidle && !cinco && !seis){
+                                                if(aceitaMidle){
                                                     var pointsLine2 = getPointsOnLine(point2,point5);
                                                     for(var i=0;i<pointsLine2.length;i++){
                                                         pointsLine.push(pointsLine2[i]);
@@ -3865,7 +3861,6 @@ class Jogo extends Phaser.Scene {
                                                         ]); 
                                                     }
                                                     if(reta(point2,point5,line)&&!quatro && !cinco && !seis){
-                                                        console.log(cinco);
                                                         quatro=true;
                                                         texto.x = 0.32 * game.config.width;
                                                         texto.setText([
@@ -3895,10 +3890,27 @@ class Jogo extends Phaser.Scene {
                                                             contaTempo = setInterval(function(){ segundo() },1000);
                                                             segundos = 0;
                                                             }
+                                                            else{
+                                                                if(!quatro){
+                                                                    lines.pop();
+                                                                    midlePoint = null;
+                                                                    if(signal&&changeLives){
+                                                                        score -= 5; 
+                                                                        vidas -= 1;
+                                                                    }
+                                                                }
+                                                                
+                                                            }
                                                         }
                                                     }
                                             else{
                                                 midlePoint = null;
+
+                                                if(!signal && changeLives){
+                                                    lines.pop(); 
+                                                    score -= 5; 
+                                                    }
+                                                
                                                 if(signal&&changeLives){
                                                     score -= 5; 
                                                     vidas -= 1;
@@ -5325,14 +5337,26 @@ function generate2pointsTop(){
     let y = Math.random()*(1200 - 300) + 300;
     let x1 =Math.random()*(2024 - 300) + 300;
     let y1 = Math.random()*(1200 - 300) + 300;
-
-    while (x>1700||x1>1700 || y<460||y1<460|| y>560 ||y1>560 || x==x1 || x==y || x==y1 || x1==y1 || y==x1 || y==y1 || dist(x,y,x1,y1)<=300){
+    var iterations=199; 
+    var acaba = false; 
+    while ((x>1700||x1>1700 || y<460||y1<460|| y>560 ||y1>560 || x==x1 || x==y || x==y1 || x1==y1 || y==x1 || y==y1 || dist(x,y,x1,y1)<=300) &&!acaba){
         x = Math.random()*(2024 - 300) + 300;
         y = Math.random()*(1200 - 300) + 300;
         x1 = Math.random()*(2024 - 300) + 300;
         y1 = Math.random()*(1200 - 300) + 300;
+        iterations ++; 
+        if(iterations==200){
+            acaba = true; 
+            x = 400; 
+            y = 440; 
+            x1 = 1000; 
+            y1 = 560; 
+            var point2 = new Phaser.Geom.Point(x, y);
+            var point3 = new Phaser.Geom.Point(x1, y1);
+            return [point2,point3];
+        }
     }
-
+    
     var point2 = new Phaser.Geom.Point(x, y);
     var point3 = new Phaser.Geom.Point(x1, y1);
     return [point2,point3];
@@ -5344,9 +5368,16 @@ function generateExtraPointAlign(pontos){
     var linha = new Phaser.Geom.Line(pontos[0].x, pontos[0].y, pontos[1].x, pontos[1].y);
 
     var ponto = linha.getRandomPoint(); 
-
-    while(dist(ponto.x,ponto.y,pontos[0].x,pontos[0].y)<250 ||dist(ponto.x,ponto.y,pontos[1].x,pontos[1].y)<250){
+    var iterations = 0; 
+    var acaba = false; 
+    while((dist(ponto.x,ponto.y,pontos[0].x,pontos[0].y)<250 ||dist(ponto.x,ponto.y,pontos[1].x,pontos[1].y)<250) && !acaba){
+        iterations ++; 
+        
         ponto = linha.getRandomPoint(); 
+        if(iterations == 200){
+            ponto = Phaser.Geom.Line.GetMidPoint(linha);
+            acaba = true; 
+        }
     }
     return ponto;
 }
