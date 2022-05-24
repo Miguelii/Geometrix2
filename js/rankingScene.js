@@ -15,7 +15,7 @@ class rankingScene extends Phaser.Scene {
     preload(){
         this.load.image('titulo1', 'assets/titulo1.png');
         this.load.image('background', 'assets/background.png');  
-        this.load.scenePlugin('rexuiplugin', 'src/gridTable.min.js', 'rexUI', 'rexUI');
+        this.load.scenePlugin('rexuiplugin', 'gridTable.min.js', 'rexUI', 'rexUI');
 
     }
 
