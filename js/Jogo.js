@@ -2,7 +2,7 @@ var segundos = 0;
 function segundo(){
     segundos++;
 }
-
+var send = false; 
 var contador = 0;
 var lines = [];
 var j = 0; 
@@ -14,7 +14,7 @@ var timer;
 var score = 0; 
 var textScore;
 var pause = false; 
-var level = 20; 
+var level = 1; 
 var sim;
 var nao;
 var info;
@@ -42,6 +42,9 @@ var pts;
 var erro = false;
 var cinco = false; 
 var seis = false; 
+var perdeujogoquadro;
+var fimjogoquadro;
+var btfimjogomenu;
 class Jogo extends Phaser.Scene {
 
     constructor() {
@@ -187,15 +190,15 @@ class Jogo extends Phaser.Scene {
 
 
         /* Fim Jogo */
-        var fimjogoquadro = this.add.sprite(-10000,-100000, 'fimjogoquadro');
+        fimjogoquadro = this.add.sprite(-10000,-100000, 'fimjogoquadro');
         fimjogoquadro.name = "fimjogoquadro";
         //fimjogoquadro.visible = false;
 
-        var perdeujogoquadro = this.add.sprite(-10000,-100000, 'perdeujogoquadro');
+        perdeujogoquadro = this.add.sprite(-10000,-100000, 'perdeujogoquadro');
         perdeujogoquadro.name = "perdeujogoquadro";
         //perdeujogoquadro.visible = false;
 
-        var btfimjogomenu = this.add.sprite(-10000,-100000, 'btfimjogomenu');
+        btfimjogomenu = this.add.sprite(-10000,-100000, 'btfimjogomenu');
         btfimjogomenu.name = "btfimjogomenu";
         btfimjogomenu.setScale(1);
         //btfimjogomenu.visible = false;
@@ -733,7 +736,7 @@ class Jogo extends Phaser.Scene {
                         this.btnao.setInteractive({ useHandCursor: true });
                         this.btsim.visible = true;
                         this.btsim.setInteractive({ useHandCursor: true });
-                        escondePontos([letraa,letrab,letrac,letrad,ponto1,ponto2,ponto3,ponto4]);
+                        escondePontos([letraa,letrab,letrac,letrad,letrae, ponto1,ponto2,ponto3,ponto4,ponto5]);
                         clearInterval(contaTempo);
                         vidas += 1; 
                         //score += 5;
@@ -4848,17 +4851,22 @@ class Jogo extends Phaser.Scene {
                 this.coracaovazio1.visible = true;
                 this.coracaovazio2.visible = true;
                 this.coracaovazio3.visible = true;
-
-                if (infoUser.user != '') {
-                    gravaRecords(infoUser.user, infoUser.turma, infoUser.escola, score);
-                }
-
+                
                 perdeujogoquadro.x = 0.5 * game.config.width;
                 perdeujogoquadro.y = 0.6 * game.config.height;
-                btfimjogomenu.x = 0.56 * game.config.width;
-                btfimjogomenu.y = 0.70 * game.config.height;
+                send = true; 
+                setTimeout(() =>{
+
+                    escondePontos(perdeujogoquadro);
+                    
+                    this.scene.transition({ target: 'Menu', duration: 100 });  
+                    reset();
+                    aux = false;
+                },1000);
+                
                 
                 /*
+
                 this.scene.transition({ target: 'Menu', duration: 100 });  
                 reset();
                 aux = false;
@@ -4891,20 +4899,33 @@ class Jogo extends Phaser.Scene {
         }
         
         if(level==20 && certas == 2){
-            if (infoUser.user != '') {
-                gravaRecords(infoUser.user, infoUser.turma, infoUser.escola, score);
-            }
+            send = true; 
+            
 
             perdeujogoquadro.x = 0.5 * game.config.width;
             perdeujogoquadro.y = 0.6 * game.config.height;
-            btfimjogomenu.x = 0.56 * game.config.width;
-            btfimjogomenu.y = 0.70 * game.config.height;
+            
+            setTimeout(() =>{
+
+                escondePontos(perdeujogoquadro);
+                this.scene.transition({ target: 'Menu', duration: 100 });  
+                reset();
+                aux = false;
+            },1000);
             /*
             this.scene.transition({ target: 'Menu', duration: 100 });  
             reset();
             */
         }
+
+        if (send){
+            verificaRecords(infoUser.user, infoUser.turma, infoUser.escola, score, this);
         
+            if (infoUser.user != '') {
+                gravaRecords(infoUser.user, infoUser.turma, infoUser.escola, score);
+            }
+
+        }
         if(muda){
             this.btHome.disableInteractive();
             aux = true; 

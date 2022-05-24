@@ -60,12 +60,9 @@ class rankingScene extends Phaser.Scene {
         this.background = this.add.sprite(0.5 * game.config.width, 0.5 *game.config.height, 'background');
         this.background.setScale(1);
 
-        
-        
         //TABLEE
         var scrollMode = 0; // 0:vertical, 1:horizontal
-
-
+        
         this.table = this.rexUI.add.gridTable({
             x: 1138,
             y: 686,
@@ -172,7 +169,7 @@ class rankingScene extends Phaser.Scene {
             switch (gameObject.name) {
                 case 'btHome':
                     this.scene.transition({ target: 'Menu', duration: 100 });
-
+                    flag = false;
                     break;
 
                 default:
@@ -323,12 +320,6 @@ class rankingScene extends Phaser.Scene {
         this.aGrid.placeAtIndex(85, this.turma);
         this.aGrid.placeAtIndex(87, this.data);
     }
-
-
-
-
-
-
 
     /**
      * Create array from scene data

@@ -3,6 +3,19 @@ var y;
 var flag = false; 
 var nome;
 var nome2;  
+var d = new Date();
+var m = d.getMonth();
+var n = d.getFullYear();
+if (m > 7) {
+    var x = n;
+    var y = n +1;
+}
+else {
+    var x = n - 1;
+    var y = n;
+}
+let di = x+"-09-01";
+let df = y + "-08-31";
 var hide = false; 
 class Menu extends Phaser.Scene {
     constructor() {
@@ -258,6 +271,10 @@ class Menu extends Phaser.Scene {
                     break;
                 case 'top':
                     this.scene.transition({ target: 'rankingScene', duration: 100 });
+                        
+                    getTOP(di, df, "", "", this);
+                    
+                    flag = true; 
                     break;
                 case 'btlogin':
                     //Disable menu sprites
@@ -309,6 +326,7 @@ class Menu extends Phaser.Scene {
 
     update() {
 
+        
         if(hide){
             this.btclose.disableInteractive();
             this.btcloseLog.disableInteractive();
@@ -354,10 +372,13 @@ class Menu extends Phaser.Scene {
             if(!stop){
                 x.visible = false;
                 y.visible = false;
-                this.btcreditos.setInteractive();
-                this.btinfo.setInteractive();
-                this.bttop.setInteractive();
-                this.btplay.setInteractive();
+                if(!flag){
+                    this.btcreditos.setInteractive();
+                    this.btinfo.setInteractive();
+                    this.bttop.setInteractive();
+                    this.btplay.setInteractive();
+                }
+                
             }
 
             
