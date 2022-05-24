@@ -102,10 +102,11 @@ function getTOP(di, df, globalCodTurma, globalCodEscola,scene) {
     ({
         type: "POST",
         url: "https://www.hypatiamat.com/newHRecords.php",
-        data: "action=mostraNewA&anoLi=" + di + "&anoLf=" + df + "&mturma=" + globalCodTurma + "&mescola=" + globalCodEscola + "&flag=2"  + "&tC=geometrixTOP",
+        data: "action=mostraNewA&anoLi=" + di + "&anoLf=" + df + "&mturma=" + globalCodTurma + "&mescola=" + globalCodEscola + "&flag=2" + "&tip=1"  + "&tC=addTOP",
         crossDomain: true,
         cache: false,
         success: function (response) {
+            console.log(response);
             data = [];
             let j = 0;
             response = response.split('&');
@@ -130,6 +131,13 @@ function getTOP(di, df, globalCodTurma, globalCodEscola,scene) {
                 data.push(response[i]);
             }
 
+            scene.transition({
+                target: 'rankingScene',
+                data: data,
+                duration: 1000,
+                moveBelow: true,
+                onUpdate: scene.transitionUP
+            });
 
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -153,7 +161,7 @@ function updateTOP(di, df, globalCodTurma, globalCodEscola,flag,scene) {
     ({
         type: "POST",
         url: "https://www.hypatiamat.com/newHRecords.php",
-        data: "action=mostraNewA&anoLi=" + di + "&anoLf=" + df + "&mturma=" + globalCodTurma + "&mescola=" + globalCodEscola + "&flag="+flag + "&tC=geometrixTOP",
+        data: "action=mostraNewA&anoLi=" + di + "&anoLf=" + df + "&mturma=" + globalCodTurma + "&mescola=" + globalCodEscola + "&flag="+flag  + "&tip=1"+ "&tC=geometrixTOP",
         crossDomain: true,
         cache: false,
         success: function (response) {
@@ -206,7 +214,7 @@ function verificaRecords(username, globalCodTurma, globalCodEscola, pontuacao,sc
     ({
         type: "POST",
         url: "https://www.hypatiamat.com/newHRecords.php",
-        data: "action=maximoGlobal&codAl=" + username + "&codTurma=" + globalCodTurma + "&codEscola=" + globalCodEscola + "&pont=" + pontuacao + "&t=geometrixHypatiamat&tC=geometrixTOP",
+        data: "action=maximoGlobal&codAl=" + username + "&codTurma=" + globalCodTurma + "&codEscola=" + globalCodEscola + "&pont=" + pontuacao  + "&tip=1" + "&t=geometrixHypatiamat&tC=geometrixTOP",
         crossDomain: true,
         cache: false,
         success: function (response) {
@@ -239,7 +247,7 @@ function gravaRecords(username, globalCodTurma, globalCodEscola, pontuacao) {
     ({
         type: "POST",
         url: "https://www.hypatiamat.com/newHRecords.php",
-        data: "action=insereA&musername=" + username + "&mturma=" + globalCodTurma + "&mescola=" + globalCodEscola + "&mpontuacao=" + pontuacao  + "&t=geometrixHypatiamat&tC=geometrixTOP",
+        data: "action=insereA&musername=" + username + "&mturma=" + globalCodTurma + "&mescola=" + globalCodEscola + "&mpontuacao=" + pontuacao + "&tip=1" + "&t=geometrixHypatiamat&tC=geometrixTOP",
         crossDomain: true,
         cache: false,
         success: function (response) {
@@ -258,7 +266,7 @@ function getRecords(username, globalCodTurma, globalCodEscola, scene) {
     ({
         type: "POST",
         url: "https://www.hypatiamat.com/newHRecords.php",
-        data: "action=maximoGlobal&codAl=" + username + "&codTurma=" + globalCodTurma + "&codEscola=" + globalCodEscola + "&pont=" + 0 + "&tip=" + tipoTOP + "&t=geometrixHypatiamat&tC=geometrixTOP",
+        data: "action=maximoGlobal&codAl=" + username + "&codTurma=" + globalCodTurma + "&codEscola=" + globalCodEscola + "&pont=" + 0 + "&tip=1" + "&t=geometrixHypatiamat&tC=geometrixTOP",
         crossDomain: true,
         cache: false,
         success: function (response) {
