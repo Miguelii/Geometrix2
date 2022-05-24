@@ -297,6 +297,30 @@ class rankingScene extends Phaser.Scene {
         this.ano.setOrigin(0, 0.5);
         this.aGrid.placeAtIndex(73, this.ano);
 
+        this.todos = this.add.text(0, 0, 'Todos', { fontFamily: "myfont2", fontSize: 25, color: '#000000', align: 'left' });
+
+
+        this.todos.setOrigin(-0.5, 1.4);
+
+        this.aGrid.placeAtIndex(178, this.todos);
+        this.todos_icon = this.add.circle(0,0,10).setFillStyle('0xffffff');
+
+        this.todos_icon.setOrigin(0.5, 2);
+        this.aGrid.placeAtIndex(178, this.todos_icon);
+        this.todos.setInteractive({ useHandCursor: true });
+        this.todos.input.hitArea.setTo(-50, -5, this.todos.width + 60, this.todos.height);
+        this.todos.on('pointerdown', () => {
+
+            this.todos_icon.setFillStyle('0x000000');
+
+            //this.escola_icon.setFillStyle('0xffffff');
+
+            //this.turma_icon.setFillStyle('0xffffff');
+
+            this.flag = 2;
+            updateTOP(this.di, this.df, infoUser.turma, infoUser.escola, this.flag, this);
+
+        });
 
         this.jogador = this.add.text(0, 0, 'Jogador', { fontFamily: 'font1', fontSize: 40, color: '#000000' });
         this.jogador.setOrigin(0.4,1);

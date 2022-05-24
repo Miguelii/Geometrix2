@@ -270,7 +270,7 @@ class Menu extends Phaser.Scene {
                     this.btplay.visible = true;
                     break;
                 case 'top':
-                    this.scene.transition({ target: 'rankingScene', duration: 100 });
+                    //this.scene.transition({ target: 'rankingScene', duration: 100 });
                     console.log(di, df,this.turma, this.escola);
                     getTOP(di, df, "", "", this);
                     
