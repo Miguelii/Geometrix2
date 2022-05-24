@@ -22,6 +22,7 @@ class rankingScene extends Phaser.Scene {
      */
     preload(){
         this.load.image('titulo1', 'assets/titulo1.png');
+        this.load.image('btHome','assets/btHome.png');
         this.load.image('background', 'assets/background.png');  
         this.load.scenePlugin('rexuiplugin', 'gridTable.min.js', 'rexUI', 'rexUI');
 
@@ -73,7 +74,7 @@ class rankingScene extends Phaser.Scene {
 
             scrollMode: scrollMode,
 
-            background: this.rexUI.add.roundRectangle(0, 0, 20, 10, 10, 0xFFFF00).setAlpha(0.2),
+            background: this.rexUI.add.roundRectangle(0, 0, 20, 10, 10, 0xFF0000).setAlpha(0.2),
 
             table: {
                 cellWidth: 50,
@@ -148,14 +149,185 @@ class rankingScene extends Phaser.Scene {
         this.aGrid.placeAt(7, 8, this.table);
 
 
-        // O titulo nao aparece logo o programa nao chega aqui
         this.titulo1 = this.add.sprite(0, 0, 'titulo1');
         this.titulo1.setScale(0.9);
         this.aGrid.placeAtIndex(37, this.titulo1);
 
-        
+        this.btHome = this.add.sprite(0.05 * game.config.width, 0.9*game.config.height, "btHome");
+        this.btHome.setScale(1);
+        this.btHome.setInteractive({ useHandCursor: true });
+        this.btHome.name = 'btHome';
 
+        this.btHome.on('pointerover', () => {
+        this.btHome.displayHeight += 5;
+        this.btHome.displayWidth += 5;
+    
+        });
+        this.btHome.on('pointerout', () => {
+        this.btHome.displayHeight -= 5;
+        this.btHome.displayWidth -= 5;
+        });
+        
+        this.input.on('gameobjectdown', function(pointer, gameObject) {
+            switch (gameObject.name) {
+                case 'btHome':
+                    this.scene.transition({ target: 'Menu', duration: 100 });
+
+                    break;
+
+                default:
+                    break;
+            }
+        }, this); 
+
+
+
+        this.container = this.rexUI.add.roundRectangle(0, 0, 200, 700, 0, 0xFF0000).setAlpha(0.2);
+        this.container.setOrigin(0.15, 0.5);
+        this.aGrid.placeAtIndex(133, this.container);
+
+        this.lastclick;
+
+        this.dropdown = this.rexUI.add.gridTable({
+            x: 1911,
+            y: 490,
+            width: 180,
+            height: 250,
+
+            scrollMode: scrollMode,
+
+            table: {
+                cellWidth: 100,
+                cellHeight: 50,
+                columns: 1,
+
+                mask: {
+                    padding: 2,
+                    updateMode: 0,
+                },
+
+                reuseCellContainer: true,
+            },
+
+
+
+            slider: {
+                track: this.rexUI.add.roundRectangle(0, 0, 10, 10, 10, 0x260e04),
+                thumb: this.rexUI.add.roundRectangle(0, 0, 0, 0, 13, 0x7b5e57),
+            },
+            space: {
+                left: 20,
+                right: 0,
+                top: 20,
+                bottom: 20,
+
+                table: 10,
+                header: 10,
+                footer: 10,
+            },
+
+            createCellContainerCallback: function (cell, cellContainer) {
+
+                var scene = cell.scene,
+                    width = cell.width,
+                    height = cell.height,
+                    item = cell.item,
+                    index = cell.index,
+
+                cellContainer = scene.rexUI.add.label({
+                    width: width,
+                    height: height,
+
+                    orientation: 0,
+                    icon: scene.add.circle(0,50,10).setFillStyle('0xffffff'),
+                    text: scene.add.text(50, 50, item, { fontFamily: "font1", fontSize: 25, color: '#000000', align: 'center' }),
+                    align: 'center',
+                    space: {
+                        icon: 20,
+                    }
+                });
+
+
+                var m = d.getMonth();
+                var n = d.getFullYear();
+                if (m > 7) {
+                    var x = n;
+                    var y = n + 1;
+                }
+                else {
+                    var x = n - 1;
+                    var y = n;
+                }
+
+                x = "" + x;
+                y = "" + y;
+
+                cellContainer.setInteractive({ useHandCursor: true });
+                cellContainer.on('pointerdown', () => {
+                    if (scene.lastclick) {
+                        scene.lastclick.setFillStyle('0xffffff');
+                    }
+                    scene.lastclick = cellContainer.getElement('icon').setFillStyle('0x000000');
+
+                    if (cellContainer.getElement('text')._text != "Todos") {
+                        scene.di = "20" + cellContainer.getElement('text')._text.split('-')[0] + "-9-1";
+                        scene.df = "20"+cellContainer.getElement('text')._text.split('-')[1] + "-8-31";
+
+                    }
+                    else {
+                        scene.di = "2015-09-01"
+                        scene.df = new Date().toISOString().slice(0, 10)
+                    }
+                    
+                    updateTOP(scene.di, scene.df, infoUser.turma, infoUser.escola, scene.flag, scene);
+                });
+
+                let tmp = x.slice(2, 4) +"-" +y.slice(2,4);
+                if (cellContainer.getElement('text')._text == tmp) {
+                    scene.lastclick = cellContainer.getElement('icon').setFillStyle('0x000000');
+                }
+
+                return cellContainer;
+
+
+            },
+            items: this.selectYear()
+        })
+            .layout()
+
+
+        this.ano = this.add.text(0, 0, 'Ano letivo', { fontFamily: 'font1', fontSize: 25, color: '#000000' });
+        this.ano.setOrigin(0, 0.5);
+        this.aGrid.placeAtIndex(73, this.ano);
+
+
+        this.jogador = this.add.text(0, 0, 'Jogador', { fontFamily: 'font1', fontSize: 40, color: '#000000' });
+        this.jogador.setOrigin(0.4,1);
+
+        this.pontos = this.add.text(0, 0, 'Pontos', { fontFamily: 'font1', fontSize: 40, color: '#000000' });
+        this.pontos.setOrigin(0.55,1);
+
+        this.escola = this.add.text(0, 0, 'Escola', { fontFamily: 'font1', fontSize: 40, color: '#000000' });
+        this.escola.setOrigin(0.35,1);
+
+        this.turma = this.add.text(0, 0, 'Turma', { fontFamily: 'font1', fontSize: 40, color: '#000000' });
+        this.turma.setOrigin(-0.1,1);
+
+        this.data = this.add.text(0, 0, 'Data', { fontFamily: 'font1', fontSize: 40, color: '#000000' });
+        this.data.setOrigin(0.65,1);
+
+        this.aGrid.placeAtIndex(77, this.jogador);
+        this.aGrid.placeAtIndex(79, this.pontos);
+        this.aGrid.placeAtIndex(79, this.pontos);
+        this.aGrid.placeAtIndex(82, this.escola);
+        this.aGrid.placeAtIndex(85, this.turma);
+        this.aGrid.placeAtIndex(87, this.data);
     }
+
+
+
+
+
 
 
     /**
@@ -207,5 +379,6 @@ class rankingScene extends Phaser.Scene {
         data = data.reverse();
         return data;
     }
+
 
 }

@@ -14,7 +14,7 @@ var timer;
 var score = 0; 
 var textScore;
 var pause = false; 
-var level = 1; 
+var level = 20; 
 var sim;
 var nao;
 var info;
@@ -185,6 +185,28 @@ class Jogo extends Phaser.Scene {
         this.coracaovazio3.setScale(0.7);
         this.coracaovazio3.visible = false;
 
+
+        /* Fim Jogo */
+        var fimjogoquadro = this.add.sprite(-10000,-100000, 'fimjogoquadro');
+        fimjogoquadro.name = "fimjogoquadro";
+        //fimjogoquadro.visible = false;
+
+        var perdeujogoquadro = this.add.sprite(-10000,-100000, 'perdeujogoquadro');
+        perdeujogoquadro.name = "perdeujogoquadro";
+        //perdeujogoquadro.visible = false;
+
+        var btfimjogomenu = this.add.sprite(-10000,-100000, 'btfimjogomenu');
+        btfimjogomenu.name = "btfimjogomenu";
+        btfimjogomenu.setScale(1);
+        //btfimjogomenu.visible = false;
+
+        btfimjogomenu.setInteractive({ useHandCursor: true });
+
+        btfimjogomenu.on('pointerdown', () => {
+            this.scene.transition({ target: 'Menu', duration: 100 });
+            reset();
+        });
+        /* */
 
         sim = this.add.sprite(-10000,-100000, 'btsim');
         nao = this.add.sprite(-10000,-100000, 'btnao');
@@ -4830,9 +4852,17 @@ class Jogo extends Phaser.Scene {
                 if (infoUser.user != '') {
                     gravaRecords(infoUser.user, infoUser.turma, infoUser.escola, score);
                 }
+
+                perdeujogoquadro.x = 0.5 * game.config.width;
+                perdeujogoquadro.y = 0.6 * game.config.height;
+                btfimjogomenu.x = 0.56 * game.config.width;
+                btfimjogomenu.y = 0.70 * game.config.height;
+                
+                /*
                 this.scene.transition({ target: 'Menu', duration: 100 });  
                 reset();
                 aux = false;
+                */
                 break;
             case 1: 
                 this.coracaocheio3.visible = false;
@@ -4864,8 +4894,15 @@ class Jogo extends Phaser.Scene {
             if (infoUser.user != '') {
                 gravaRecords(infoUser.user, infoUser.turma, infoUser.escola, score);
             }
-            this.scene.transition({ target: 'Menu', duration: 100 });
+
+            perdeujogoquadro.x = 0.5 * game.config.width;
+            perdeujogoquadro.y = 0.6 * game.config.height;
+            btfimjogomenu.x = 0.56 * game.config.width;
+            btfimjogomenu.y = 0.70 * game.config.height;
+            /*
+            this.scene.transition({ target: 'Menu', duration: 100 });  
             reset();
+            */
         }
         
         if(muda){
