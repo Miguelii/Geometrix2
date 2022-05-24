@@ -70,6 +70,7 @@ class Menu extends Phaser.Scene {
 
         this.bttop = this.add.sprite(0.5 * game.config.width, 0.6*game.config.height, "bttop");
         this.bttop.setScale(1.3);
+        this.bttop.name = 'top';
         this.bttop.setInteractive({ useHandCursor: true });
 
         
@@ -255,7 +256,9 @@ class Menu extends Phaser.Scene {
                     this.bttop.visible = true;
                     this.btplay.visible = true;
                     break;
-
+                case 'top':
+                    this.scene.transition({ target: 'rankingScene', duration: 100 });
+                    break;
                 case 'btlogin':
                     //Disable menu sprites
                     this.btcreditos.disableInteractive();

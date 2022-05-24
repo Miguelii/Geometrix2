@@ -55,6 +55,8 @@
                 <script src="js/pleaserotate.js"></script> 
                 <script src="js/Menu.js"></script>
                 <script src="js/Jogo.js"></script>
+                <script src="js/rankingScene.js"></script>
+                <script src="js/AlignGrid.js"></script>
                 
             </div>
     </body>
@@ -83,7 +85,7 @@ var config={
     dom: {
         createContainer: true
     },
-    scene: [Menu, Jogo]
+    scene: [Menu, Jogo, rankingScene]
 };
 
 var game = new Phaser.Game(config);
