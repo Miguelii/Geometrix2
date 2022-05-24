@@ -8,7 +8,15 @@ class rankingScene extends Phaser.Scene {
      constructor() {
         super('rankingScene');
     }
- 
+    
+    /**
+     * Get data passed from calling scene
+     * @param {*} data Data 
+     */
+     init(data) {
+        this.array = data;
+    }
+    
     /**
      * Preload needed plugin
      */
