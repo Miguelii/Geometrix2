@@ -80,8 +80,6 @@ class rankingScene extends Phaser.Scene {
                 reuseCellContainer: true,
             },
 
-
-
             slider: {
                 track: this.rexUI.add.roundRectangle(0, 0, 20, 10, 10, 0x260e04),
             },
@@ -146,7 +144,9 @@ class rankingScene extends Phaser.Scene {
         this.titulo1 = this.add.sprite(0, 0, 'titulo1');
         this.titulo1.setScale(0.9);
         this.aGrid.placeAtIndex(37, this.titulo1);
+
         
+
     }
 
 

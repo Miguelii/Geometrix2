@@ -68,7 +68,7 @@ class Jogo extends Phaser.Scene {
         this.load.image('btExtra', 'assets/btExtra.png');
         this.load.image('erro', 'assets/x.png');
 
-        //this.load.image('circulo', 'assets/circulo.png');
+    
     }
         
     create (){
