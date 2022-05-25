@@ -102,7 +102,7 @@ function getTOP(di, df, globalCodTurma, globalCodEscola,scene) {
     ({
         type: "POST",
         url: "https://www.hypatiamat.com/newHRecords.php",
-        data: "action=mostraNew&anoLi=" + di + "&anoLf=" + df + "&mturma=" + globalCodTurma + "&mescola=" + globalCodEscola + "&flag=2" + "&tip=1"  + "&tC=geometrixTOP",
+        data: "action=mostraNew&anoLi=" + di + "&anoLf=" + df + "&mturma=" + globalCodTurma + "&mescola=" + globalCodEscola + "&flag=2" + "&tip=1"  + "&tC=addTOP",
         crossDomain: true,
         cache: false,
         success: function (response) {
@@ -161,7 +161,7 @@ function updateTOP(di, df, globalCodTurma, globalCodEscola,flag,scene) {
     ({
         type: "POST",
         url: "https://www.hypatiamat.com/newHRecords.php",
-        data: "action=mostraNew&anoLi=" + di + "&anoLf=" + df + "&mturma=" + globalCodTurma + "&mescola=" + globalCodEscola + "&flag="+flag  + "&tip=1"+ "&tC=geometrixTOP",
+        data: "action=mostraNew&anoLi=" + di + "&anoLf=" + df + "&mturma=" + globalCodTurma + "&mescola=" + globalCodEscola + "&flag="+flag  + "&tip=1"+ "&tC=addTOP",
         crossDomain: true,
         cache: false,
         success: function (response) {

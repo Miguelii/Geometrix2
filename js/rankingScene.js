@@ -275,7 +275,6 @@ class rankingScene extends Phaser.Scene {
                         scene.di = "2015-09-01"
                         scene.df = new Date().toISOString().slice(0, 10)
                     }
-                    
                     updateTOP(scene.di, scene.df, infoUser.turma, infoUser.escola, scene.flag, scene);
                 });
 
@@ -297,7 +296,7 @@ class rankingScene extends Phaser.Scene {
         this.ano.setOrigin(0, 0.5);
         this.aGrid.placeAtIndex(73, this.ano);
 
-        this.todos = this.add.text(0, 0, 'Todos', { fontFamily: "myfont2", fontSize: 25, color: '#000000', align: 'left' });
+        this.todos = this.add.text(0, 0, 'Todos', { fontFamily: "font1", fontSize: 25, color: '#000000', align: 'left' });
 
 
         this.todos.setOrigin(-0.5, 1.4);
@@ -308,19 +307,87 @@ class rankingScene extends Phaser.Scene {
         this.todos_icon.setOrigin(0.5, 2);
         this.aGrid.placeAtIndex(178, this.todos_icon);
         this.todos.setInteractive({ useHandCursor: true });
+        this.escola_icon = this.add.circle(0,0,10).setFillStyle('0xffffff');
+
+        this.escola_icon.setOrigin(0.5, -0.5);
+        this.aGrid.placeAtIndex(178, this.escola_icon);
+
+        this.turma_filtro = this.add.text(0, 0, 'Turma', { fontFamily: "font1", fontSize: 25, color: '#000000', align: 'left' });
+        this.turma_filtro.setOrigin(-0.5, -1.3);
+        this.aGrid.placeAtIndex(178, this.turma_filtro);
+        this.turma_icon = this.add.circle(0,0,10).setFillStyle('0xffffff');
+        this.escola_filtro = this.add.text(0, 0, 'Escola', { fontFamily: "font1", fontSize: 25, color: '#000000', align: 'left' });
+
+        this.escola_filtro.setOrigin(-0.45, -0.05);
+        this.aGrid.placeAtIndex(178, this.escola_filtro);
+
+        this.filtro = this.add.text(0, 0, 'Filtro', { fontFamily: 'font1', fontSize: 25, color: '#403217' });
+        this.filtro.setOrigin(0, 0.5);
+        this.aGrid.placeAtIndex(163.3, this.filtro);
+
+
+        this.turma_icon.setOrigin(0.5, -2.7);
+        this.aGrid.placeAtIndex(178, this.turma_icon);
+
         this.todos.input.hitArea.setTo(-50, -5, this.todos.width + 60, this.todos.height);
+
         this.todos.on('pointerdown', () => {
 
             this.todos_icon.setFillStyle('0x000000');
 
-            //this.escola_icon.setFillStyle('0xffffff');
+            this.escola_icon.setFillStyle('0xffffff');
 
-            //this.turma_icon.setFillStyle('0xffffff');
+            this.turma_icon.setFillStyle('0xffffff');
 
             this.flag = 2;
             updateTOP(this.di, this.df, infoUser.turma, infoUser.escola, this.flag, this);
 
         });
+        this.escola_filtro.setInteractive({ useHandCursor: true });
+        this.escola_filtro.input.hitArea.setTo(-50, -5, this.escola_filtro.width + 60, this.escola_filtro.height);
+        this.escola_filtro.on('pointerdown', () => {
+
+            this.todos_icon.setFillStyle('0xffffff');
+
+            this.escola_icon.setFillStyle('0x000000');
+
+            this.turma_icon.setFillStyle('0xffffff');
+
+            this.flag = 1;
+            updateTOP(this.di, this.df, infoUser.turma, infoUser.escola, this.flag, this);
+        });
+        this.turma_filtro.setInteractive({ useHandCursor: true });
+        this.turma_filtro.input.hitArea.setTo(-50, -5, this.turma_filtro.width + 60, this.turma_filtro.height);
+        this.turma_filtro.on('pointerdown', () => {
+            console.log("Ola");
+            this.todos_icon.setFillStyle('0xffffff');
+
+            this.escola_icon.setFillStyle('0xffffff');
+
+            this.turma_icon.setFillStyle('0x000000');
+
+            this.flag = 0;
+
+            updateTOP(this.di, this.df, infoUser.turma, infoUser.escola, this.flag, this);
+        });
+        this.todos.visible = false;
+        this.todos_icon.visible = false; 
+        this.escola_icon.visible = false; 
+        this.turma_icon.visible = false; 
+        this.turma_filtro.visible = false;
+        this.filtro.visible = false; 
+        this.escola_filtro.visible = false;
+
+        if (infoUser.user != '') {
+            this.todos.visible = true;
+            this.todos_icon.visible = true;
+            this.escola_icon.visible = true; 
+            this.turma_icon.visible = true; 
+            this.turma_filtro.visible = true; 
+            this.filtro.visible = true; 
+            this.escola_filtro.visible = true;
+
+        }
 
         this.jogador = this.add.text(0, 0, 'Jogador', { fontFamily: 'font1', fontSize: 40, color: '#000000' });
         this.jogador.setOrigin(0.4,1);
