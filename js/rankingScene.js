@@ -361,7 +361,6 @@ class rankingScene extends Phaser.Scene {
         this.turma_filtro.input.hitArea.setTo(-50, -5, this.turma_filtro.width + 60, this.turma_filtro.height);
 
         this.turma_filtro.on('pointerdown', () => {
-            console.log("Ola");
             this.todos_icon.setFillStyle('0xffffff');
 
             this.escola_icon.setFillStyle('0xffffff');
