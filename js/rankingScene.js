@@ -275,7 +275,7 @@ class rankingScene extends Phaser.Scene {
                         scene.di = "2015-09-01"
                         scene.df = new Date().toISOString().slice(0, 10)
                     }
-                    updateTOP(scene.di, scene.df, infoUser.turma, infoUser.escola, scene.flag, scene);
+                    updateTOP(scene.di, scene.df, infoUser.turma, infoUser.escola, 2, scene);
                 });
 
                 let tmp = x.slice(2, 4) +"-" +y.slice(2,4);
@@ -343,6 +343,7 @@ class rankingScene extends Phaser.Scene {
             updateTOP(this.di, this.df, infoUser.turma, infoUser.escola, this.flag, this);
 
         });
+
         this.escola_filtro.setInteractive({ useHandCursor: true });
         this.escola_filtro.input.hitArea.setTo(-50, -5, this.escola_filtro.width + 60, this.escola_filtro.height);
         this.escola_filtro.on('pointerdown', () => {
@@ -358,6 +359,7 @@ class rankingScene extends Phaser.Scene {
         });
         this.turma_filtro.setInteractive({ useHandCursor: true });
         this.turma_filtro.input.hitArea.setTo(-50, -5, this.turma_filtro.width + 60, this.turma_filtro.height);
+
         this.turma_filtro.on('pointerdown', () => {
             console.log("Ola");
             this.todos_icon.setFillStyle('0xffffff');
@@ -370,8 +372,8 @@ class rankingScene extends Phaser.Scene {
 
             updateTOP(this.di, this.df, infoUser.turma, infoUser.escola, this.flag, this);
         });
-        this.todos.visible = false;
-        this.todos_icon.visible = false; 
+        this.todos.visible = false; 
+        this.todos_icon.visible = false;
         this.escola_icon.visible = false; 
         this.turma_icon.visible = false; 
         this.turma_filtro.visible = false;
