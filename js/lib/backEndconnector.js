@@ -106,7 +106,6 @@ function getTOP(di, df, globalCodTurma, globalCodEscola,scene) {
         crossDomain: true,
         cache: false,
         success: function (response) {
-            console.log(response);
             data = [];
             let j = 0;
             response = response.split('&');
@@ -288,7 +287,6 @@ function gravaRecords(username, globalCodTurma, globalCodEscola, pontuacao) {
         crossDomain: true,
         cache: false,
         success: function (response) {
-            console.log(response);
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             alert("Falha de ligação, por favor verifique a sua conexão");
