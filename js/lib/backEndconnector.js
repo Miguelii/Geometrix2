@@ -102,7 +102,7 @@ function getTOP(di, df, globalCodTurma, globalCodEscola,scene) {
     ({
         type: "POST",
         url: "https://www.hypatiamat.com/newHRecords.php",
-        data: "action=mostraNew&anoLi=" + di + "&anoLf=" + df + "&mturma=" + globalCodTurma + "&mescola=" + globalCodEscola + "&flag=2" + "&tip=1"  + "&tC=addTOP",
+        data: "action=mostraNew&anoLi=" + di + "&anoLf=" + df + "&mturma=" + globalCodTurma + "&mescola=" + globalCodEscola + "&flag=2" + "&tip=1"  + "&tC=geometrixTOP",
         crossDomain: true,
         cache: false,
         success: function (response) {
@@ -161,7 +161,7 @@ function updateTOP(di, df, globalCodTurma, globalCodEscola,flag,scene) {
     ({
         type: "POST",
         url: "https://www.hypatiamat.com/newHRecords.php",
-        data: "action=mostraNew&anoLi=" + di + "&anoLf=" + df + "&mturma=" + globalCodTurma + "&mescola=" + globalCodEscola + "&flag="+flag  + "&tip=1"+ "&tC=addTOP",
+        data: "action=mostraNew&anoLi=" + di + "&anoLf=" + df + "&mturma=" + globalCodTurma + "&mescola=" + globalCodEscola + "&flag="+flag  + "&tip=1"+ "&tC=geometrixTOP",
         crossDomain: true,
         cache: false,
         success: function (response) {
@@ -224,40 +224,39 @@ function verificaRecords(username, globalCodTurma, globalCodEscola, pontuacao,sc
             data.push(parseFloat(response.split("vlMin2=")[1].split("&")[0])); //minimo da escola
             data.push(parseFloat(response.split("vlMin1=")[1].split("&")[0])); //minimo global - TOP 100 
             pontuacao = parseFloat(pontuacao);
-
-            if(pontuacao > 0 && scene.ended == 1) {
+            if(pontuacao >= 0 ) {
                 if (infoUser.user != '') {
                     if (data[0] > pontuacao && pontuacao>0) {
                         if (data[3] > pontuacao) {//top global
-                            return (username + ", conseguiste um novo record ABSOLUTO! Com " + pontuacao + " pontos. Vê o teu resultado no TOP 100 absoluto.");
+                            please =  (username + ", conseguiste um novo record ABSOLUTO!\n Com " + pontuacao + " pontos. Vê o teu resultado\n no TOP 100 absoluto.");
                         }
                         else if (data[2] > pontuacao) {//top escola
-                            return (username + ", conseguiste um novo record na tua escola!\n " + "Com " + pontuacao + " pontos. Vê o teu resultado no TOP 100 da tua escola.");
+                            please = (username + ", conseguiste um novo record\n na tua escola!\n " + "Com " + pontuacao + " pontos. Vê o teu\n resultado no TOP 100 da tua escola.");
                         }
                         else if (data[1] > pontuacao) { // top turma
-                            return (username + ", conseguiste um novo record na tua turma!\n" + "Com " + pontuacao + " pontos. Vê o teu resultado no TOP 100 da tua turma.");
+                            please = (username + ", conseguiste um novo record\n na tua turma!\n" + "Com " + pontuacao + " pontos. Vê o teu\n resultado no TOP 100 da tua turma.");
                         }
                         else { // top pessoal
-                            return (username + ", conseguiste melhorar o teu resultado  anterior, no entanto,\n ainda não conseguiste\nentrar no TOP 100.\nTenta outra vez.");
-
+                            please = (username + ", conseguiste melhorar o teu resultado\n  anterior, no entanto,\n ainda não conseguiste\nentrar no TOP 100.\nTenta outra vez.");
                         }
                     }
 
                     else {
-                        return(username + " obtiveste " + pontuacao + " pontos.\nNão conseguiste melhorar o \nteu resultado anterior (o teu melhor \nresultado é " + data[0] + " pontos).\n    Tenta outra vez.");
+                        please = (username + " obtiveste " + pontuacao + " pontos.\nNão conseguiste melhorar o \nteu resultado anterior \n(o teu melhor \nresultado é " + data[0] + " pontos).\n    Tenta outra vez.");
                     }
 
                 }
 
                 else {
+                    
                     if( data[3]>pontuacao && pontuacao>0){
-
-                       return("Se estivesses registado o teu nome figuraria no TOP 100 absoluto com " + pontuacao + " pontos.\nRegista - te em \nwww.hypatiamat.com.");
+                        please = ("Se estivesses registado o \nteu nome figuraria no TOP \n100 absoluto com " + pontuacao + " pontos.\nRegista - te em \nwww.hypatiamat.com.");
 
                     }
                     else{
-                        return("Para que o teu nome figure nos TOPs tens de estar registado.\n Regista - te em\n  www.hypatiamat.com.");
-
+                        
+                        please = ("Para que o teu nome figure \nnos TOPs tens de estar \nregistado. Regista - te em\n  www.hypatiamat.com.");
+                        
                     }
                 }
 

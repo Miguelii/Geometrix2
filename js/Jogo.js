@@ -2,6 +2,7 @@ var segundos = 0;
 function segundo(){
     segundos++;
 }
+var f = false;
 var send = false; 
 var contador = 0;
 var lines = [];
@@ -45,6 +46,21 @@ var seis = false;
 var perdeujogoquadro;
 var fimjogoquadro;
 var btfimjogomenu;
+var final; 
+var finalText; 
+var voltar; 
+var letraa;
+var letrab;
+var letrac;
+var letrad;
+var letrae;
+var ponto1 ;
+var ponto2 ;
+var ponto3 ;
+var ponto4;
+var ponto5;
+
+var pontoExtra ;
 class Jogo extends Phaser.Scene {
 
     constructor() {
@@ -70,6 +86,7 @@ class Jogo extends Phaser.Scene {
         this.load.image('coracao2', 'assets/coracao2.png');
         this.load.image('btExtra', 'assets/btExtra.png');
         this.load.image('erro', 'assets/x.png');
+        this.load.image('fim', 'assets/quadrologin.png');
 
         this.load.image('fimjogoquadro', 'assets/fimjogoquadro.png');
         this.load.image('perdeujogoquadro', 'assets/perdeujogoquadro.png');
@@ -120,6 +137,26 @@ class Jogo extends Phaser.Scene {
         this.btHome.displayWidth -= 5;
         });
 
+        final =  this.add.sprite(0.5 * game.config.width, 0.6 *game.config.height, "fim");
+        final.visible = false; 
+
+        voltar = this.add.sprite(0.5 * game.config.width, 0.75*game.config.height, "btHome");
+        voltar.setScale(0.7);
+        voltar.setInteractive({ useHandCursor: true });
+
+        voltar.on('pointerover', () => {
+        voltar.displayHeight += 5;
+        voltar.displayWidth += 5;
+    
+        });
+        voltar.on('pointerout', () => {
+        voltar.displayHeight -= 5;
+        voltar.displayWidth -= 5;
+        });
+        
+        voltar.visible = false; 
+
+
         //Exit
         this.infoexit = this.add.sprite(0.5 * game.config.width, 0.6 *game.config.height, "infoexit");
         this.infoexit.setScale(1.3);
@@ -158,7 +195,13 @@ class Jogo extends Phaser.Scene {
         textScore = this.add.text(0.89 * game.config.width, 0.06 * game.config.height, score,{
             fontFamily: 'font1',
         });
-        
+        finalText = this.add.text(0.39 * game.config.width, 0.46* game.config.height, "",{
+            fontFamily: 'font1',
+            color: '#0000FF', 
+            fixedHeight: 1000,
+        });
+        finalText.setFontSize(35);
+        finalText.visible = false;
         textScore.setFontSize(60);
 
         // --- vidas ---
@@ -220,8 +263,20 @@ class Jogo extends Phaser.Scene {
         sim.setInteractive({ useHandCursor: true});
         nao.setInteractive({ useHandCursor: true });
 
+        
+
+        voltar.on('pointerdown', () => {
+            reset();
+            changeLives = true;
+            finalText.setText("");
+            finalText.visible = false; 
+            final.visible = false; 
+            voltar.visible = false;
+            this.scene.transition({ target: 'Menu', duration: 100 });
+        });
         sim.on('pointerdown', () => {
             timeout = 0;
+            f = true;
             if(!changeLevel){
                 level += 1;
                 changeLevel = true;
@@ -270,19 +325,19 @@ class Jogo extends Phaser.Scene {
         var x1 = point3.x; 
         var y1 = point3.y; 
 
-        var letraa = this.add.text(x+12,y+12,letra1,{
+        letraa = this.add.text(x+12,y+12,letra1,{
             fontFamily: 'font1',
         });
-        var letrab = this.add.text(x1+12,y1+12,letra2,{
+        letrab = this.add.text(x1+12,y1+12,letra2,{
             fontFamily: 'font1',
         });
-        var letrac = this.add.text(-10000,-10000,letra3,{
+        letrac = this.add.text(-10000,-10000,letra3,{
             fontFamily: 'font1',
         });;
-        var letrad = this.add.text(-10000,-10000,letra4,{
+        letrad = this.add.text(-10000,-10000,letra4,{
             fontFamily: 'font1',
         });;
-        var letrae = this.add.text(-10000,-10000,letra5,{
+        letrae = this.add.text(-10000,-10000,letra5,{
             fontFamily: 'font1',
         });;
         letraa.setFontSize(30);
@@ -291,13 +346,13 @@ class Jogo extends Phaser.Scene {
         letrad.setFontSize(30);
         letrae.setFontSize(30);
 
-        var ponto1 = this.add.sprite(x,y, "ponto");
-        var ponto2 = this.add.sprite(x1,y1, "ponto");
-        var ponto3 = this.add.sprite(10000,10000,"ponto");
-        var ponto4 = this.add.sprite(10000,10000,"ponto");
-        var ponto5   = this.add.sprite(10000,10000,"ponto");
+        ponto1 = this.add.sprite(x,y, "ponto");
+        ponto2 = this.add.sprite(x1,y1, "ponto");
+        ponto3 = this.add.sprite(10000,10000,"ponto");
+        ponto4 = this.add.sprite(10000,10000,"ponto");
+        ponto5   = this.add.sprite(10000,10000,"ponto");
 
-        var pontoExtra = this.add.sprite(10000,10000,"btExtra");
+        pontoExtra = this.add.sprite(10000,10000,"btExtra");
         pontoExtra.setScale(0.8);
         ponto1.setScale(0.8);
         ponto2.setScale(0.8);
@@ -843,7 +898,7 @@ class Jogo extends Phaser.Scene {
 
 
         this.input.on('pointerdown', function (pointer) {
-            if(!muda){
+            if(!muda||!send){
                 erro = false; 
                 color = 0xffffff;
                 var ultimo = false;
@@ -1305,7 +1360,7 @@ class Jogo extends Phaser.Scene {
         });
 
         this.input.on('pointermove', function (pointer) { 
-            if(!muda){
+            if(!muda||!send){
                 signal = false; 
                 var p = false; 
                 if (pointer.isDown)
@@ -2108,7 +2163,7 @@ class Jogo extends Phaser.Scene {
         });
 
         this.input.on('pointerup', function (pointer) {
-            if(!muda){
+            if(!muda||!send){
                 if(line.x2==55 && line.y2==600){
                     erro = true;
                     graphics.clear();
@@ -2120,7 +2175,7 @@ class Jogo extends Phaser.Scene {
                     line = new Phaser.Geom.Line();
                     lines.push(line);
                 }
-                if(!erro){
+                if(!erro&&!f){
                     switch (level){
                         case 1: 
                             if (segmentoReta(point2,point3,line) && certas == 0){
@@ -2193,6 +2248,7 @@ class Jogo extends Phaser.Scene {
                             }
                             break; 
                         case 2: 
+
                             if (contador==1){
                                 lines.push(line);
                             }
@@ -4046,7 +4102,7 @@ class Jogo extends Phaser.Scene {
                         f1 = true;
                     }
 
-                    if(f1 || f2){  
+                    if(f1 || f2){ 
                         escondePontos([info,sim,nao]);
                         graphics.clear();
                         pon = generate2points();
@@ -4612,6 +4668,7 @@ class Jogo extends Phaser.Scene {
                                 contaTempo = setInterval(function(){ segundo() },1000); 
                                 segundos = 0;
                                 break; 
+                        
                         }
                     
                         ponto1.x=x;
@@ -4622,7 +4679,8 @@ class Jogo extends Phaser.Scene {
                         letraa.y = y+12;
                         letrab.x = x1+12;
                         letrab.y = y1+12;
-            
+                        f = false; 
+
                       
                     }
                 },timeout); 
@@ -4851,26 +4909,7 @@ class Jogo extends Phaser.Scene {
                 this.coracaovazio1.visible = true;
                 this.coracaovazio2.visible = true;
                 this.coracaovazio3.visible = true;
-                
-                perdeujogoquadro.x = 0.5 * game.config.width;
-                perdeujogoquadro.y = 0.6 * game.config.height;
                 send = true; 
-                setTimeout(() =>{
-
-                    escondePontos(perdeujogoquadro);
-                    
-                    this.scene.transition({ target: 'Menu', duration: 100 });  
-                    reset();
-                    aux = false;
-                },1000);
-                
-                
-                /*
-
-                this.scene.transition({ target: 'Menu', duration: 100 });  
-                reset();
-                aux = false;
-                */
                 break;
             case 1: 
                 this.coracaocheio3.visible = false;
@@ -4900,33 +4939,28 @@ class Jogo extends Phaser.Scene {
         
         if(level==20 && certas == 2){
             send = true; 
-            
 
-            perdeujogoquadro.x = 0.5 * game.config.width;
-            perdeujogoquadro.y = 0.6 * game.config.height;
-            
-            setTimeout(() =>{
-
-                escondePontos(perdeujogoquadro);
-                this.scene.transition({ target: 'Menu', duration: 100 });  
-                reset();
-                aux = false;
-            },1000);
-            /*
-            this.scene.transition({ target: 'Menu', duration: 100 });  
-            reset();
-            */
         }
 
         if (send){
+            if(score<0){
+                score = 0;
+            }
+            changeLives = false;
+            this.btHome.disableInteractive();
+            escondePontos([ponto1,ponto2,ponto3,ponto4,ponto5,pontoExtra,letraa,letrab,letrac,letrad,letrae]);
+            final.visible = true;
+            voltar.visible = true;
             verificaRecords(infoUser.user, infoUser.turma, infoUser.escola, score, this);
-        
+            finalText.setText(please);
+            finalText.visible = true;
             if (infoUser.user != '') {
                 gravaRecords(infoUser.user, infoUser.turma, infoUser.escola, score);
             }
-
         }
+
         if(muda){
+            changeLives = false;
             this.btHome.disableInteractive();
             aux = true; 
             
@@ -5637,6 +5671,7 @@ function textoLevel(level){
 }
 
 function reset(){
+    send = false;
     stop = false; 
     midlePoint = null;
     f1 = false; 
@@ -5660,5 +5695,6 @@ function reset(){
     aceita = false; 
     vidas = 3; 
     signal = false; 
+    changeLives = true;
     clearInterval(contaTempo);
 }  
