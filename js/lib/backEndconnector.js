@@ -214,7 +214,7 @@ function verificaRecords(username, globalCodTurma, globalCodEscola, pontuacao,sc
     ({
         type: "POST",
         url: "https://www.hypatiamat.com/newHRecords.php",
-        data: "action=maximoGlobal&codAl=" + username + "&codTurma=" + globalCodTurma + "&codEscola=" + globalCodEscola + "&pont=" + pontuacao  + "&tip=1" + "&t=geometrixHypatiamat&tC=geometrixTOP",
+        data: "action=minimoGlobal&codAl=" + username + "&codTurma=" + globalCodTurma + "&codEscola=" + globalCodEscola + "&pont=" + pontuacao  + "&tip=1" + "&t=geometrixHypatiamat&tC=geometrixTOP",
         crossDomain: true,
         cache: false,
         success: function (response) {
@@ -223,7 +223,45 @@ function verificaRecords(username, globalCodTurma, globalCodEscola, pontuacao,sc
             data.push(parseFloat(response.split("vlMin3=")[1].split("&")[0])); //minimo da turma
             data.push(parseFloat(response.split("vlMin2=")[1].split("&")[0])); //minimo da escola
             data.push(parseFloat(response.split("vlMin1=")[1].split("&")[0])); //minimo global - TOP 100 
-            
+            pontuacao = parseFloat(pontuacao);
+
+            if(pontuacao > 0 && scene.ended == 1) {
+                if (infoUser.user != '') {
+                    if (data[0] > pontuacao && pontuacao>0) {
+                        if (data[3] > pontuacao) {//top global
+                            return (username + ", conseguiste um novo record ABSOLUTO! Com " + pontuacao + " pontos. Vê o teu resultado no TOP 100 absoluto.");
+                        }
+                        else if (data[2] > pontuacao) {//top escola
+                            return (username + ", conseguiste um novo record na tua escola!\n " + "Com " + pontuacao + " pontos. Vê o teu resultado no TOP 100 da tua escola.");
+                        }
+                        else if (data[1] > pontuacao) { // top turma
+                            return (username + ", conseguiste um novo record na tua turma!\n" + "Com " + pontuacao + " pontos. Vê o teu resultado no TOP 100 da tua turma.");
+                        }
+                        else { // top pessoal
+                            return (username + ", conseguiste melhorar o teu resultado  anterior, no entanto,\n ainda não conseguiste\nentrar no TOP 100.\nTenta outra vez.");
+
+                        }
+                    }
+
+                    else {
+                        return(username + " obtiveste " + pontuacao + " pontos.\nNão conseguiste melhorar o \nteu resultado anterior (o teu melhor \nresultado é " + data[0] + " pontos).\n    Tenta outra vez.");
+                    }
+
+                }
+
+                else {
+                    if( data[3]>pontuacao && pontuacao>0){
+
+                       return("Se estivesses registado o teu nome figuraria no TOP 100 absoluto com " + pontuacao + " pontos.\nRegista - te em \nwww.hypatiamat.com.");
+
+                    }
+                    else{
+                        return("Para que o teu nome figure nos TOPs tens de estar registado.\n Regista - te em\n  www.hypatiamat.com.");
+
+                    }
+                }
+
+            }
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             if(scene.ended == 1){
@@ -247,10 +285,11 @@ function gravaRecords(username, globalCodTurma, globalCodEscola, pontuacao) {
     ({
         type: "POST",
         url: "https://www.hypatiamat.com/newHRecords.php",
-        data: "action=insereA&musername=" + username + "&mturma=" + globalCodTurma + "&mescola=" + globalCodEscola + "&mpontuacao=" + pontuacao + "&tip=1" + "&t=geometrixHypatiamat&tC=geometrixTOP",
+        data: "action=insere&musername=" + username + "&mturma=" + globalCodTurma + "&mescola=" + globalCodEscola + "&mpontuacao=" + pontuacao + "&mtipo=1" + "&t=geometrixHypatiamat&tC=geometrixTOP",
         crossDomain: true,
         cache: false,
         success: function (response) {
+            console.log(response);
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             alert("Falha de ligação, por favor verifique a sua conexão");
@@ -266,7 +305,7 @@ function getRecords(username, globalCodTurma, globalCodEscola, scene) {
     ({
         type: "POST",
         url: "https://www.hypatiamat.com/newHRecords.php",
-        data: "action=maximoGlobal&codAl=" + username + "&codTurma=" + globalCodTurma + "&codEscola=" + globalCodEscola + "&pont=" + 0 + "&tip=1" + "&t=geometrixHypatiamat&tC=geometrixTOP",
+        data: "action=minimoGlobal&codAl=" + username + "&codTurma=" + globalCodTurma + "&codEscola=" + globalCodEscola + "&pont=" + 0 + "&tip=1" + "&t=geometrixHypatiamat&tC=geometrixTOP",
         crossDomain: true,
         cache: false,
         success: function (response) {
