@@ -230,18 +230,18 @@ function verificaRecords(username, globalCodTurma, globalCodEscola, pontuacao,sc
                             please =  (username + ", conseguiste um novo record ABSOLUTO!\n Com " + pontuacao + " pontos. Vê o teu resultado\n no TOP 100 absoluto.");
                         }
                         else if (data[2] > pontuacao) {//top escola
-                            please = (username + ", conseguiste um novo record\n na tua escola!\n " + "Com " + pontuacao + " pontos. Vê o teu\n resultado no TOP 100 da tua escola.");
+                            please = (username + ",\n conseguiste um novo record\n na tua escola!\n " + "Com " + pontuacao + " pontos. Vê o teu\n resultado no TOP 100\n da tua escola.");
                         }
                         else if (data[1] > pontuacao) { // top turma
-                            please = (username + ", conseguiste um novo record\n na tua turma!\n" + "Com " + pontuacao + " pontos. Vê o teu\n resultado no TOP 100 da tua turma.");
+                            please = (username + ",\n conseguiste um novo record\n na tua turma!\n" + "Com " + pontuacao + " pontos. Vê o teu\n resultado no TOP 100\n da tua turma.");
                         }
                         else { // top pessoal
-                            please = (username + ", conseguiste melhorar o teu resultado\n  anterior, no entanto,\n ainda não conseguiste\nentrar no TOP 100.\nTenta outra vez.");
+                            please = (username + ",\n conseguiste melhorar o teu resultado\n  anterior, no entanto,\n ainda não conseguiste\nentrar no TOP 100.\nTenta outra vez.");
                         }
                     }
 
                     else {
-                        please = (username + " obtiveste " + pontuacao + " pontos.\nNão conseguiste melhorar o \nteu resultado anterior \n(o teu melhor \nresultado é " + data[0] + " pontos).\n    Tenta outra vez.");
+                        please = (username + ",\n obtiveste " + pontuacao + " pontos.\nNão conseguiste melhorar o \nteu resultado anterior \n(o teu melhor resultado é\n" + data[0] + " pontos).\n Tenta outra vez.");
                     }
 
                 }
