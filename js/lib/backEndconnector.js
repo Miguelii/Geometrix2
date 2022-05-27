@@ -227,21 +227,21 @@ function verificaRecords(username, globalCodTurma, globalCodEscola, pontuacao,sc
                 if (infoUser.user != '') {
                     if (data[0] > pontuacao && pontuacao>0) {
                         if (data[3] > pontuacao) {//top global
-                            please =  (username + ", conseguiste um novo record ABSOLUTO!\n Com " + pontuacao + " pontos. Vê o teu resultado\n no TOP 100 absoluto.");
+                            please =  (username + ",\nconseguiste um novo record ABSOLUTO!\n Com " + pontuacao + " pontos. Vê o teu resultado\n no TOP 100 absoluto.");
                         }
                         else if (data[2] > pontuacao) {//top escola
-                            please = (username + ",\n conseguiste um novo record\n na tua escola!\n " + "Com " + pontuacao + " pontos. Vê o teu\n resultado no TOP 100\n da tua escola.");
+                            please = (username + ",\nconseguiste um novo record\n na tua escola!\n " + "Com " + pontuacao + " pontos. Vê o teu\n resultado no TOP 100\n da tua escola.");
                         }
                         else if (data[1] > pontuacao) { // top turma
-                            please = (username + ",\n conseguiste um novo record\n na tua turma!\n" + "Com " + pontuacao + " pontos. Vê o teu\n resultado no TOP 100\n da tua turma.");
+                            please = (username + ",\nconseguiste um novo record\n na tua turma!\n" + "Com " + pontuacao + " pontos. Vê o teu\n resultado no TOP 100\n da tua turma.");
                         }
                         else { // top pessoal
-                            please = (username + ",\n conseguiste melhorar o teu resultado\n  anterior, no entanto,\n ainda não conseguiste\nentrar no TOP 100.\nTenta outra vez.");
+                            please = (username + ",\nconseguiste melhorar o teu resultado\n  anterior, no entanto,\n ainda não conseguiste\nentrar no TOP 100.\nTenta outra vez.");
                         }
                     }
 
                     else {
-                        please = (username + ",\n obtiveste " + pontuacao + " pontos.\nNão conseguiste melhorar o \nteu resultado anterior \n(o teu melhor resultado é\n" + data[0] + " pontos).\n Tenta outra vez.");
+                        please = (username + ",\nobtiveste " + pontuacao + " pontos.\nNão conseguiste melhorar o \nteu resultado anterior \n(o teu melhor resultado é\n" + data[0] + " pontos).\n Tenta outra vez.");
                     }
 
                 }

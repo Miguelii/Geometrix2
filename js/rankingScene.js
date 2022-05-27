@@ -32,7 +32,8 @@ class rankingScene extends Phaser.Scene {
      * Create needed images and get ranking values
      */
     create() {
-
+        var color1 = '#FFD700';
+        var color2 = '#FFEBCD';
         var gridConfig = {
             'scene': this,
             'cols': 15,
@@ -67,7 +68,7 @@ class rankingScene extends Phaser.Scene {
             x: 1138,
             y: 686,
             width:1575,
-            height:706,
+            height:640,
 
             scrollMode: scrollMode,
 
@@ -87,7 +88,8 @@ class rankingScene extends Phaser.Scene {
             },
 
             slider: {
-                track: this.rexUI.add.roundRectangle(0, 0, 20, 10, 10, 0x260e04),
+                track: this.rexUI.add.roundRectangle(0, 0, 10, 10, 10, 0x260e04),
+                thumb: this.rexUI.add.roundRectangle(0, 0, 0, 0, 13, 0x7b5e57),
             },
             space: {
                 left: 10,
@@ -99,6 +101,7 @@ class rankingScene extends Phaser.Scene {
                 header: 10,
                 footer: 10,
             },
+            
 
             createCellContainerCallback: function (cell, cellContainer) {
                 let newwith ;
@@ -134,7 +137,7 @@ class rankingScene extends Phaser.Scene {
                             height: height,
 
                             orientation: 'top-to-bottom',
-                            text: scene.add.text(50, 50, item.name, { fontFamily: "font1", fontSize: 21, color: '#000000', align: 'center' }),
+                            text: scene.add.text(50, 50, item.name, { fontFamily: "font1", fontSize: 21, color: color2, align: 'center' }),
                             align: 'center',
                         });
 
@@ -179,7 +182,7 @@ class rankingScene extends Phaser.Scene {
 
 
 
-        this.container = this.rexUI.add.roundRectangle(0, 0, 200, 700, 0, 0xFF0000).setAlpha(0.2);
+        this.container = this.rexUI.add.roundRectangle(0, 0, 200, 640, 0, 0xFF0000).setAlpha(0.2);
         this.container.setOrigin(0.15, 0.5);
         this.aGrid.placeAtIndex(133, this.container);
 
@@ -187,7 +190,7 @@ class rankingScene extends Phaser.Scene {
 
         this.dropdown = this.rexUI.add.gridTable({
             x: 1911,
-            y: 490,
+            y: 555,
             width: 180,
             height: 250,
 
@@ -237,7 +240,7 @@ class rankingScene extends Phaser.Scene {
 
                     orientation: 0,
                     icon: scene.add.circle(0,50,10).setFillStyle('0xffffff'),
-                    text: scene.add.text(50, 50, item, { fontFamily: "font1", fontSize: 25, color: '#000000', align: 'center' }),
+                    text: scene.add.text(50, 50, item, { fontFamily: "font1", fontSize: 25, color: color1, align: 'center' }),
                     align: 'center',
                     space: {
                         icon: 20,
@@ -292,31 +295,34 @@ class rankingScene extends Phaser.Scene {
             .layout()
 
 
-        this.ano = this.add.text(0, 0, 'Ano letivo', { fontFamily: 'font1', fontSize: 25, color: '#000000' });
+        this.ano = this.add.text(0, 0, 'Ano letivo', { fontFamily: 'font1', fontSize: 25, color: color1 });
         this.ano.setOrigin(0, 0.5);
         this.aGrid.placeAtIndex(73, this.ano);
-
-        this.todos = this.add.text(0, 0, 'Todos', { fontFamily: "font1", fontSize: 25, color: '#000000', align: 'left' });
-
+        this.ano.y = 418;
+            
+        this.todos = this.add.text(0, 0, 'Todos', { fontFamily: "font1", fontSize: 25, color: color1, align: 'left' });
+        
 
         this.todos.setOrigin(-0.5, 1.4);
 
         this.aGrid.placeAtIndex(178, this.todos);
+        
         this.todos_icon = this.add.circle(0,0,10).setFillStyle('0xffffff');
 
         this.todos_icon.setOrigin(0.5, 2);
         this.aGrid.placeAtIndex(178, this.todos_icon);
+        
         this.todos.setInteractive({ useHandCursor: true });
         this.escola_icon = this.add.circle(0,0,10).setFillStyle('0xffffff');
 
         this.escola_icon.setOrigin(0.5, -0.5);
         this.aGrid.placeAtIndex(178, this.escola_icon);
 
-        this.turma_filtro = this.add.text(0, 0, 'Turma', { fontFamily: "font1", fontSize: 25, color: '#000000', align: 'left' });
+        this.turma_filtro = this.add.text(0, 0, 'Turma', { fontFamily: "font1", fontSize: 25, color: color1, align: 'left' });
         this.turma_filtro.setOrigin(-0.5, -1.3);
         this.aGrid.placeAtIndex(178, this.turma_filtro);
         this.turma_icon = this.add.circle(0,0,10).setFillStyle('0xffffff');
-        this.escola_filtro = this.add.text(0, 0, 'Escola', { fontFamily: "font1", fontSize: 25, color: '#000000', align: 'left' });
+        this.escola_filtro = this.add.text(0, 0, 'Escola', { fontFamily: "font1", fontSize: 25, color: color1, align: 'left' });
 
         this.escola_filtro.setOrigin(-0.45, -0.05);
         this.aGrid.placeAtIndex(178, this.escola_filtro);
@@ -330,6 +336,7 @@ class rankingScene extends Phaser.Scene {
         this.aGrid.placeAtIndex(178, this.turma_icon);
 
         this.todos.input.hitArea.setTo(-50, -5, this.todos.width + 60, this.todos.height);
+        
 
         this.todos.on('pointerdown', () => {
 
@@ -390,19 +397,19 @@ class rankingScene extends Phaser.Scene {
 
         }
 
-        this.jogador = this.add.text(0, 0, 'Jogador', { fontFamily: 'font1', fontSize: 40, color: '#000000' });
+        this.jogador = this.add.text(0, 0, 'Jogador', { fontFamily: 'font1', fontSize: 40, color: color1 });
         this.jogador.setOrigin(0.4,1);
 
-        this.pontos = this.add.text(0, 0, 'Pontos', { fontFamily: 'font1', fontSize: 40, color: '#000000' });
+        this.pontos = this.add.text(0, 0, 'Pontos', { fontFamily: 'font1', fontSize: 40, color: color1 });
         this.pontos.setOrigin(0.55,1);
 
-        this.escola = this.add.text(0, 0, 'Escola', { fontFamily: 'font1', fontSize: 40, color: '#000000' });
+        this.escola = this.add.text(0, 0, 'Escola', { fontFamily: 'font1', fontSize: 40, color: color1 });
         this.escola.setOrigin(0.35,1);
 
-        this.turma = this.add.text(0, 0, 'Turma', { fontFamily: 'font1', fontSize: 40, color: '#000000' });
+        this.turma = this.add.text(0, 0, 'Turma', { fontFamily: 'font1', fontSize: 40, color: color1});
         this.turma.setOrigin(-0.1,1);
 
-        this.data = this.add.text(0, 0, 'Data', { fontFamily: 'font1', fontSize: 40, color: '#000000' });
+        this.data = this.add.text(0, 0, 'Data', { fontFamily: 'font1', fontSize: 40, color: color1 });
         this.data.setOrigin(0.65,1);
 
         this.aGrid.placeAtIndex(77, this.jogador);
