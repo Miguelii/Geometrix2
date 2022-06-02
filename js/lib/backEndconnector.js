@@ -209,11 +209,12 @@ function verificaRecords(username, globalCodTurma, globalCodEscola, pontuacao,sc
     ({
         type: "POST",
         url: "https://www.hypatiamat.com/newHRecords.php",
-        data: "action=minimoGlobal&codAl=" + username + "&codTurma=" + globalCodTurma + "&codEscola=" + globalCodEscola + "&pont=" + pontuacao  + "&tip=1" + "&t=geometrixHypatiamat&tC=geometrixTOP",
+        data: "action=maximoGlobal&codAl=" + username + "&codTurma=" + globalCodTurma + "&codEscola=" + globalCodEscola + "&pont=" + pontuacao  + "&tip=1" + "&t=geometrixHypatiamat&tC=geometrixTOP",
         crossDomain: true,
         cache: false,
         success: function (response) {
-            var data = []            
+            console.log(response);
+            var data = []       
             data.push(parseFloat(response.split("vlMin4=")[1]));               //melhor resultado pessoal
             data.push(parseFloat(response.split("vlMin3=")[1].split("&")[0])); //minimo da turma
             data.push(parseFloat(response.split("vlMin2=")[1].split("&")[0])); //minimo da escola
@@ -223,7 +224,7 @@ function verificaRecords(username, globalCodTurma, globalCodEscola, pontuacao,sc
                 if (infoUser.user != '') {
                     if (data[0] < pontuacao && pontuacao>0) {
                         if (data[3] < pontuacao) {//top global
-                            please =  (username + ",\nconseguiste um novo record ABSOLUTO!\n Com " + pontuacao + " pontos. Vê o teu resultado\n no TOP 100 absoluto.");
+                            please =  (username + ",\nconseguiste um novo\nrecord ABSOLUTO!\n Com " + pontuacao + " pontos.\nVê o teu resultado\n no TOP 100 absoluto.");
                         }
                         else if (data[2] < pontuacao) {//top escola
                             please = (username + ",\nconseguiste um novo record\n na tua escola!\n " + "Com " + pontuacao + " pontos. Vê o teu\n resultado no TOP 100\n da tua escola.");
@@ -232,7 +233,7 @@ function verificaRecords(username, globalCodTurma, globalCodEscola, pontuacao,sc
                             please = (username + ",\nconseguiste um novo record\n na tua turma!\n" + "Com " + pontuacao + " pontos. Vê o teu\n resultado no TOP 100\n da tua turma.");
                         }
                         else { // top pessoal
-                            please = (username + ",\nconseguiste melhorar o teu resultado\n  anterior, no entanto,\n ainda não conseguiste\nentrar no TOP 100.\nTenta outra vez.");
+                            please = (username + ",\nconseguiste melhorar o teu\n resultado anterior, no \nentanto,\n ainda não conseguiste\nentrar no TOP 100.\nTenta outra vez.");
                         }
                     }
 
@@ -241,15 +242,11 @@ function verificaRecords(username, globalCodTurma, globalCodEscola, pontuacao,sc
                     }
 
                 }
-
                 else {
-                    
                     if( data[3]<pontuacao && pontuacao>0){
-                        please = ("Se estivesses registado o \nteu nome figuraria no TOP \n100 absoluto com " + pontuacao + " pontos.\nRegista - te em \nwww.hypatiamat.com.");
-
+                        please = ("Se estivesses registado o \nteu nome figuraria no TOP \n100 absoluto\ncom " + pontuacao + " pontos.\nRegista - te em \nwww.hypatiamat.com.");
                     }
                     else{
-                        
                         please = ("Para que o teu nome figure \nnos TOPs tens de estar \nregistado. Regista - te em\n  www.hypatiamat.com.");
                         
                     }

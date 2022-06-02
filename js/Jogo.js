@@ -4963,6 +4963,12 @@ class Jogo extends Phaser.Scene {
                     gravaOnce = true;
                 }
             }
+            else{
+                if(!gravaOnce){
+                    verificaRecords("","","", score, this);
+                    gravaOnce = true;
+                }
+            }
         }
 
         if(muda){
