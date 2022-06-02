@@ -59,7 +59,7 @@ var ponto2 ;
 var ponto3 ;
 var ponto4;
 var ponto5;
-
+var gravaOnce = false;
 var pontoExtra ;
 class Jogo extends Phaser.Scene {
 
@@ -197,8 +197,9 @@ class Jogo extends Phaser.Scene {
         });
         finalText = this.add.text(0.39 * game.config.width, 0.46* game.config.height, "",{
             fontFamily: 'font1',
-            color: '#0000FF', 
+            color: '#A93226', 
             fixedHeight: 1000,
+            align: 'center',
         });
         finalText.setFontSize(35);
         finalText.visible = false;
@@ -4946,16 +4947,21 @@ class Jogo extends Phaser.Scene {
             if(score<0){
                 score = 0;
             }
+            clearInterval(contaTempo); 
+            segundos = 0;
             changeLives = false;
             this.btHome.disableInteractive();
             escondePontos([ponto1,ponto2,ponto3,ponto4,ponto5,pontoExtra,letraa,letrab,letrac,letrad,letrae]);
             final.visible = true;
             voltar.visible = true;
-            verificaRecords(infoUser.user, infoUser.turma, infoUser.escola, score, this);
             finalText.setText(please);
             finalText.visible = true;
             if (infoUser.user != '') {
-                gravaRecords(infoUser.user, infoUser.turma, infoUser.escola, score);
+                if(!gravaOnce){
+                    verificaRecords(infoUser.user, infoUser.turma, infoUser.escola, score, this);
+                    gravaRecords(infoUser.user, infoUser.turma, infoUser.escola, score);
+                    gravaOnce = true;
+                }
             }
         }
 
@@ -5671,6 +5677,7 @@ function textoLevel(level){
 }
 
 function reset(){
+    gravaOnce = false;
     send = false;
     stop = false; 
     midlePoint = null;
