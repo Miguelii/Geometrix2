@@ -133,9 +133,7 @@ function getTOP(di, df, globalCodTurma, globalCodEscola,scene) {
             scene.scene.transition({
                 target: 'rankingScene',
                 data: data,
-                duration: 1000,
-                moveBelow: true,
-                onUpdate: scene.transitionUP
+                duration: 100,
             });
 
         },
@@ -145,9 +143,7 @@ function getTOP(di, df, globalCodTurma, globalCodEscola,scene) {
             scene.scene.transition({
                 target: 'rankingScene',
                 data: data,
-                duration: 1000,
-                moveBelow: true,
-                onUpdate: scene.transitionUP
+                duration: 100,
             });
         }
     })
@@ -225,14 +221,14 @@ function verificaRecords(username, globalCodTurma, globalCodEscola, pontuacao,sc
             pontuacao = parseFloat(pontuacao);
             if(pontuacao >= 0 ) {
                 if (infoUser.user != '') {
-                    if (data[0] > pontuacao && pontuacao>0) {
-                        if (data[3] > pontuacao) {//top global
+                    if (data[0] < pontuacao && pontuacao>0) {
+                        if (data[3] < pontuacao) {//top global
                             please =  (username + ",\nconseguiste um novo record ABSOLUTO!\n Com " + pontuacao + " pontos. Vê o teu resultado\n no TOP 100 absoluto.");
                         }
-                        else if (data[2] > pontuacao) {//top escola
+                        else if (data[2] < pontuacao) {//top escola
                             please = (username + ",\nconseguiste um novo record\n na tua escola!\n " + "Com " + pontuacao + " pontos. Vê o teu\n resultado no TOP 100\n da tua escola.");
                         }
-                        else if (data[1] > pontuacao) { // top turma
+                        else if (data[1] < pontuacao) { // top turma
                             please = (username + ",\nconseguiste um novo record\n na tua turma!\n" + "Com " + pontuacao + " pontos. Vê o teu\n resultado no TOP 100\n da tua turma.");
                         }
                         else { // top pessoal
@@ -248,7 +244,7 @@ function verificaRecords(username, globalCodTurma, globalCodEscola, pontuacao,sc
 
                 else {
                     
-                    if( data[3]>pontuacao && pontuacao>0){
+                    if( data[3]<pontuacao && pontuacao>0){
                         please = ("Se estivesses registado o \nteu nome figuraria no TOP \n100 absoluto com " + pontuacao + " pontos.\nRegista - te em \nwww.hypatiamat.com.");
 
                     }

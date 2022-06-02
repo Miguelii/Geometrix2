@@ -354,7 +354,7 @@ class Menu extends Phaser.Scene {
 
         if(infoUser.user!='') {
             nome = infoUser.firstName.split(" ");
-            nome2 = nome[0] + " " + nome[nome.length - 1];
+            nome2 = nome[0];
             this.ola.setText(['Olá ' + nome2]);
 
             this.ola.visible = true;

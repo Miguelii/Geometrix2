@@ -327,17 +327,22 @@ class rankingScene extends Phaser.Scene {
         this.escola_filtro.setOrigin(-0.45, -0.05);
         this.aGrid.placeAtIndex(178, this.escola_filtro);
 
-        this.filtro = this.add.text(0, 0, 'Filtro', { fontFamily: 'font1', fontSize: 25, color: '#403217' });
+        this.filtro = this.add.text(0, 0, 'Filtro', { fontFamily: 'font1', fontSize: 25, color: color1 });
         this.filtro.setOrigin(0, 0.5);
         this.aGrid.placeAtIndex(163.3, this.filtro);
-
+        this.filtro.y -= 50;
 
         this.turma_icon.setOrigin(0.5, -2.7);
         this.aGrid.placeAtIndex(178, this.turma_icon);
 
         this.todos.input.hitArea.setTo(-50, -5, this.todos.width + 60, this.todos.height);
         
-
+        this.todos.y -=50;
+        this.escola_filtro.y -= 50;
+        this.turma_filtro.y -=50;
+        this.todos_icon.y -=40;
+        this.turma_icon.y -= 50;
+        this.escola_icon.y -=50;
         this.todos.on('pointerdown', () => {
 
             this.todos_icon.setFillStyle('0x000000');
@@ -356,6 +361,7 @@ class rankingScene extends Phaser.Scene {
         this.escola_filtro.on('pointerdown', () => {
 
             this.todos_icon.setFillStyle('0xffffff');
+            
 
             this.escola_icon.setFillStyle('0x000000');
 
@@ -394,6 +400,7 @@ class rankingScene extends Phaser.Scene {
             this.turma_filtro.visible = true; 
             this.filtro.visible = true; 
             this.escola_filtro.visible = true;
+            this.todos_icon.setFillStyle('0x000000');
 
         }
 
