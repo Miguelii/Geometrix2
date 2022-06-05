@@ -4067,7 +4067,12 @@ class Jogo extends Phaser.Scene {
                         escondePontos([ponto3,ponto4,letrac,letrad]);
                         vidas = 3; 
                         certas = -1;
-                        muda = true; 
+                        if(level==20){
+                            send = true;
+                        }
+                        else{
+                            muda = true; 
+                        }
                         f1 = false; 
                     }
                     else{
@@ -4909,11 +4914,7 @@ class Jogo extends Phaser.Scene {
             aux = true;},1000);
         }
         
-        if(level==20 && certas == 2){
-            send = true; 
-
-        }
-
+        
         if (send){
             if(score<0){
                 score = 0;
@@ -4946,19 +4947,13 @@ class Jogo extends Phaser.Scene {
             changeLives = false;
             this.btHome.disableInteractive();
             aux = true; 
-            
-            if(level>20){
-                this.scene.transition({ target: 'Menu', duration: 100 });  
-                reset();
-            }
-            else{
+          
                 info.x = 0.5 * game.config.width;
                 info.y = 0.6 *game.config.height;
                 sim.x = 0.56 * game.config.width;
                 sim.y = 0.70 * game.config.height;
                 nao.x = 0.44 * game.config.width;
                 nao.y = 0.70 * game.config.height;
-            }
         }
 
         if((aux&&!muda)){
@@ -4969,6 +4964,7 @@ class Jogo extends Phaser.Scene {
         if(score<=5){
             score = 0;
         }
+        
     }
 }
 
