@@ -122,7 +122,7 @@ class Menu extends Phaser.Scene {
 
         //LOGIN
         this.btlogin = this.add.sprite(0.95 * game.config.width ,0.11 * game.config.height, "btlogin");
-        this.btlogin.setScale(0.8);
+        this.btlogin.setScale(1);
         this.btlogin.setInteractive({ useHandCursor: true });
         this.btlogin.name = 'btlogin';
 
@@ -130,14 +130,14 @@ class Menu extends Phaser.Scene {
         this.quadrologin.setScale(1.5);
         this.quadrologin.visible = false;
 
-        this.loginfinal = this.add.sprite(0.5 * game.config.width, 0.58 * game.config.height, "btlogin");
+        this.loginfinal = this.add.sprite(0.5 * game.config.width, 0.60 * game.config.height, "btlogin");
         this.loginfinal.setInteractive({ useHandCursor: true });
-        this.loginfinal.setScale(0.8);
+        this.loginfinal.setScale(1);
         this.loginfinal.visible = false;
 
         this.logout = this.add.sprite(0.95 * game.config.width ,0.11 * game.config.height, "btlogout");
         this.logout.setInteractive({ useHandCursor: true });
-        this.logout.setScale(0.8);
+        this.logout.setScale(1);
         this.logout.visible = false;
         this.logout.name = 'logout';
 
@@ -200,13 +200,13 @@ class Menu extends Phaser.Scene {
         y.visible = false;
         ////
 
-        this.btclose = this.add.sprite(0.69 * game.config.width, 0.18 * game.config.height, 'btclose');
-        this.btclose.setScale(0.9);
+        this.btclose = this.add.sprite(0.69 * game.config.width, 0.17 * game.config.height, 'btclose');
+        this.btclose.setScale(1);
         this.btclose.visible = false;
         this.btclose.name = 'btclose';
 
-        this.btcloseLog = this.add.sprite(0.69 * game.config.width, 0.18 * game.config.height, 'btclose');
-        this.btcloseLog.setScale(0.9);
+        this.btcloseLog = this.add.sprite(0.69 * game.config.width, 0.17 * game.config.height, 'btclose');
+        this.btcloseLog.setScale(1);
         this.btcloseLog.visible = false;
         this.btclose.name = 'btcloseLog';
 
