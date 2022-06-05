@@ -35,7 +35,7 @@ class Menu extends Phaser.Scene {
         this.load.image('btlogin', 'assets/login.png');
         this.load.image('quadrologin', 'assets/quadrologin.png');
         this.load.image('btlogout', 'assets/logout.png');
-
+        this.load.image('quadroinfo', 'assets/infoB.png');
     }
 
 
@@ -99,6 +99,7 @@ class Menu extends Phaser.Scene {
 
         this.btinfo = this.add.sprite(0.7 * game.config.width, 0.5*game.config.height, "btinfo");
         this.btinfo.setScale(1.3);
+        this.btinfo.name = 'btinfo';
         this.btinfo.setInteractive({ useHandCursor: true });
 
         this.btinfo.on('pointerover', () => {
@@ -109,6 +110,11 @@ class Menu extends Phaser.Scene {
             this.btinfo.displayHeight -= 5;
             this.btinfo.displayWidth -= 5;
         });
+
+        this.quadroinfo = this.add.sprite(0.5 * game.config.width, 0.4 * game.config.height, 'quadroinfo');
+        this.quadroinfo.setScale(1.5);
+        this.quadroinfo.visible = false;
+        this.quadroinfo.name = 'quadroinfo';
 
         this.nave = this.add.sprite(0.87 * game.config.width ,0.8 * game.config.height, "nave");
         this.nave.setScale(1);
@@ -192,8 +198,6 @@ class Menu extends Phaser.Scene {
         y = this.add.dom(0.5 * game.config.width, 0.45 * game.config.height).createFromHTML(pass);
         y.setScale(2.5);
         y.visible = false;
-
-        
         ////
 
         this.btclose = this.add.sprite(0.69 * game.config.width, 0.18 * game.config.height, 'btclose');
@@ -251,7 +255,18 @@ class Menu extends Phaser.Scene {
                         hide = true; 
                     }, this);
                     break;
-
+                case 'btinfo':
+                    this.quadroinfo.visible = true;
+                    this.btclose.visible = true;
+                    this.btcreditos.visible = false;
+                    this.btinfo.visible = false;
+                    this.bttop.visible = false;
+                    this.btplay.visible = false;
+                    this.btclose.setInteractive({ useHandCursor: true });
+                    this.btclose.on('pointerup', function () {
+                        hide = true; 
+                    }, this);
+                    break;
                 case 'btclose':
                     //Enable menu sprites
                     this.btclose.disableInteractive();
@@ -336,6 +351,7 @@ class Menu extends Phaser.Scene {
             this.creditos.visible = false;
             this.btclose.visible = false;
 
+            this.quadroinfo.visible = false;
             this.btcloseLog.visible = false;
             this.quadrologin.visible = false;
             this.loginfinal.visible = false;

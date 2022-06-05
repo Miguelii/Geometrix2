@@ -43,9 +43,6 @@ var pts;
 var erro = false;
 var cinco = false; 
 var seis = false; 
-var perdeujogoquadro;
-var fimjogoquadro;
-var btfimjogomenu;
 var final; 
 var finalText; 
 var voltar; 
@@ -88,9 +85,6 @@ class Jogo extends Phaser.Scene {
         this.load.image('erro', 'assets/x.png');
         this.load.image('fim', 'assets/quadrologin.png');
 
-        this.load.image('fimjogoquadro', 'assets/fimjogoquadro.png');
-        this.load.image('perdeujogoquadro', 'assets/perdeujogoquadro.png');
-        this.load.image('btfimjogomenu', 'assets/btfimjogomenu.png');
     }
         
     create (){
@@ -233,28 +227,6 @@ class Jogo extends Phaser.Scene {
         this.coracaovazio3.visible = false;
 
 
-        /* Fim Jogo */
-        fimjogoquadro = this.add.sprite(-10000,-100000, 'fimjogoquadro');
-        fimjogoquadro.name = "fimjogoquadro";
-        //fimjogoquadro.visible = false;
-
-        perdeujogoquadro = this.add.sprite(-10000,-100000, 'perdeujogoquadro');
-        perdeujogoquadro.name = "perdeujogoquadro";
-        //perdeujogoquadro.visible = false;
-
-        btfimjogomenu = this.add.sprite(-10000,-100000, 'btfimjogomenu');
-        btfimjogomenu.name = "btfimjogomenu";
-        btfimjogomenu.setScale(1);
-        //btfimjogomenu.visible = false;
-
-        btfimjogomenu.setInteractive({ useHandCursor: true });
-
-        btfimjogomenu.on('pointerdown', () => {
-            this.scene.transition({ target: 'Menu', duration: 100 });
-            reset();
-        });
-        /* */
-
         sim = this.add.sprite(-10000,-100000, 'btsim');
         nao = this.add.sprite(-10000,-100000, 'btnao');
         sim.name = 'sim';
@@ -265,7 +237,6 @@ class Jogo extends Phaser.Scene {
         nao.setInteractive({ useHandCursor: true });
 
         
-
         voltar.on('pointerdown', () => {
             reset();
             changeLives = true;
