@@ -337,6 +337,7 @@ class Jogo extends Phaser.Scene {
         var point4;
         var point5; 
         var pointsLine = getPointsOnLine(point2,point3);
+        var controler = false; 
 
         switch(level){
             case 1:
@@ -871,6 +872,9 @@ class Jogo extends Phaser.Scene {
 
         this.input.on('pointerdown', function (pointer) {
             if(!muda||!send){
+                if(level==20){
+                    controler = true;
+                }
                 erro = false; 
                 color = 0xffffff;
                 var ultimo = false;
@@ -2133,7 +2137,7 @@ class Jogo extends Phaser.Scene {
                 }
             }
         });
-
+        var ccontroler = false; 
         this.input.on('pointerup', function (pointer) {
             if(!muda||!send){
                 if(line.x2==55 && line.y2==600){
@@ -3519,7 +3523,7 @@ class Jogo extends Phaser.Scene {
                                 }
                                     if (sgm){
                                         if(midlePoint!=null && sgm==true){
-                                            
+                                            console.log("Ola");
                                             posto = true;
                                             graphics.lineStyle(7, color);
 
@@ -3905,6 +3909,11 @@ class Jogo extends Phaser.Scene {
                                                 graphics.strokeLineShape(lines[0]);
 
                                                 if(aceitaMidle){
+                                                    if(!ccontroler){
+                                                        controler = false; 
+                                                        ccontroler = true;
+                                                    }
+                                                    signal = true;
                                                     var pointsLine2 = getPointsOnLine(point2,point5);
                                                     for(var i=0;i<pointsLine2.length;i++){
                                                         pointsLine.push(pointsLine2[i]);
@@ -3946,10 +3955,12 @@ class Jogo extends Phaser.Scene {
                                                             segundos = 0;
                                                             }
                                                             else{
-                                                                if(!quatro){
-                                                                    lines.pop();
+                                                                if(!quatro || (quatro && !cinco)){
+                                                                    if(!quatro && !cinco){
+                                                                        lines.pop();
+                                                                    }
                                                                     midlePoint = null;
-                                                                    if(signal&&changeLives){
+                                                                    if(signal&&changeLives&&controler){
                                                                         score -= 5; 
                                                                         vidas -= 1;
                                                                     }
@@ -5089,16 +5100,16 @@ function getPretendedLine (level,ponto1,ponto2){
 
 function segmentoReta(a,b,line){ //Verifica se é um segmento de reta de A para b 
 
-    if ((line.getPointB().x <= b.x+30 && line.getPointB().x >= b.x-30 )&& 
-    (line.getPointB().y <= b.y+30 && line.getPointB().y >= b.y-30 )&& 
-    (line.getPointA().x<=a.x+30 && line.getPointA().x>=a.x-30 ) && 
-    (line.getPointA().y<=a.y+30 && line.getPointA().y>=a.y-30 )){
+    if ((line.getPointB().x <= b.x+15 && line.getPointB().x >= b.x-15 )&& 
+    (line.getPointB().y <= b.y+15 && line.getPointB().y >= b.y-15 )&& 
+    (line.getPointA().x<=a.x+15 && line.getPointA().x>=a.x-15 ) && 
+    (line.getPointA().y<=a.y+15 && line.getPointA().y>=a.y-15 )){
         return true; 
     }
-    if ((line.getPointA().x <= b.x+30 && line.getPointA().x >= b.x-30 )&& 
-    (line.getPointA().y <= b.y+30 && line.getPointA().y >= b.y-30 )&& 
-    (line.getPointB().x<=a.x+30 && line.getPointB().x>=a.x-30 ) && 
-    (line.getPointB().y<=a.y+30 && line.getPointB().y>=a.y-30 )){
+    if ((line.getPointA().x <= b.x+15 && line.getPointA().x >= b.x-15 )&& 
+    (line.getPointA().y <= b.y+15 && line.getPointA().y >= b.y-15 )&& 
+    (line.getPointB().x<=a.x+15 && line.getPointB().x>=a.x-15 ) && 
+    (line.getPointB().y<=a.y+15 && line.getPointB().y>=a.y-15 )){
         return true; 
     }
 
@@ -5130,7 +5141,7 @@ function semiReta(a,b,line){ //Verifica se é semi-reta que começa em a e passa
         }
         if (pontos[i].x <= inicio.x+20 && pontos[i].x >= inicio.x-20 && pontos[i].y <= inicio.y+20 && pontos[i].y >= inicio.y-20){
             continua2 = true;
-        }
+        }15
         if (pontos[i].x <= fim.x+20 && pontos[i].x >= fim.x-20 && pontos[i].y <= fim.y+20 && pontos[i].y >= fim.y-20){
             continua3 = true; 
         }
@@ -5140,23 +5151,23 @@ function semiReta(a,b,line){ //Verifica se é semi-reta que começa em a e passa
         continua=true;
     }
     if(continua){
-        if (pontoEsquerda(a,b)== a && (line.getPointA().x<=a.x+30 && line.getPointA().x>=a.x-30)
-        &&  (line.getPointA().y<=a.y+30 && line.getPointA().y>=a.y-30 )&& line.getPointB().x>b.x){
+        if (pontoEsquerda(a,b)== a && (line.getPointA().x<=a.x+30 && line.getPointA().x>=a.x-15)
+        &&  (line.getPointA().y<=a.y+15 && line.getPointA().y>=a.y-15 )&& line.getPointB().x>b.x){
             return true; 
         }
         else{
-            if (pontoEsquerda(a,b) == b &&  (line.getPointA().x<=a.x+30 && line.getPointA().x>=a.x-30)
-            &&  (line.getPointA().y<=a.y+30 && line.getPointA().y>=a.y-30 ) && line.getPointB().x<b.x){
+            if (pontoEsquerda(a,b) == b &&  (line.getPointA().x<=a.x+15 && line.getPointA().x>=a.x-15)
+            &&  (line.getPointA().y<=a.y+15 && line.getPointA().y>=a.y-15 ) && line.getPointB().x<b.x){
                 return true;
             }
             else{
-                if (pontoDeCima(a,b)==a &&  (line.getPointA().x<=a.x+30 && line.getPointA().x>=a.x-30)
-                &&  (line.getPointA().y<=a.y+30 && line.getPointA().y>=a.y-30 )&& line.getPointB().y>b.y){
+                if (pontoDeCima(a,b)==a &&  (line.getPointA().x<=a.x+15 && line.getPointA().x>=a.x-15)
+                &&  (line.getPointA().y<=a.y+15 && line.getPointA().y>=a.y-15 )&& line.getPointB().y>b.y){
                     return true;
                 }
                 else{
-                    if (pontoDeCima(a,b)==b &&  (line.getPointA().x<=a.x+30 && line.getPointA().x>=a.x-30)
-                    &&  (line.getPointA().y<=a.y+30 && line.getPointA().y>=a.y-30 ) && line.getPointB().y<b.y){
+                    if (pontoDeCima(a,b)==b &&  (line.getPointA().x<=a.x+15 && line.getPointA().x>=a.x-15)
+                    &&  (line.getPointA().y<=a.y+15 && line.getPointA().y>=a.y-15 ) && line.getPointB().y<b.y){
                         return true;
                     }
                 }
@@ -5352,6 +5363,7 @@ function perpendicular(ponto1,ponto2){
     var perp = new Phaser.Geom.Line();
     var perpInverse = new Phaser.Geom.Line();
     var distancia = 300; 
+    var k = false; 
     Phaser.Geom.Line.SetToAngle(perp,ponto.x,ponto.y,normalAngle,distancia);
     Phaser.Geom.Line.SetToAngle(perpInverse,ponto.x,ponto.y,normalAngle+3.14,distancia);
     var pontoA = perp.getPointA();
@@ -5359,6 +5371,10 @@ function perpendicular(ponto1,ponto2){
 
     while (pontoB.x>1700 ||pontoA.x>1700 ||pontoB.y<460 || pontoB.y>920 || (dist(pontoB.x,pontoB.y,ponto1.x,ponto1.y)<250 && dist(pontoB.x,pontoB.y,ponto2.x,ponto2.y)<250) ||!entre(ponto,ponto1) ||
     !entre(ponto,ponto2) ){
+        if(distancia<75 && !k){
+            distancia = -75; 
+            k = true;
+        }
         distancia -= 10;
         Phaser.Geom.Line.SetToAngle(perp,ponto.x,ponto.y,normalAngle,distancia);
         pontoA = perp.getPointA();
