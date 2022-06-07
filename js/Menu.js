@@ -122,7 +122,7 @@ class Menu extends Phaser.Scene {
 
         //LOGIN
         this.btlogin = this.add.sprite(0.95 * game.config.width ,0.11 * game.config.height, "btlogin");
-        this.btlogin.setScale(1);
+        this.btlogin.setScale(0.9);
         this.btlogin.setInteractive({ useHandCursor: true });
         this.btlogin.name = 'btlogin';
 
