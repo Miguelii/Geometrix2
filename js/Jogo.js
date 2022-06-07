@@ -15,7 +15,7 @@ var timer;
 var score = 0; 
 var textScore;
 var pause = false; 
-var level = 1; 
+var level = 19; 
 var sim;
 var nao;
 var info;
@@ -3523,7 +3523,6 @@ class Jogo extends Phaser.Scene {
                                 }
                                     if (sgm){
                                         if(midlePoint!=null && sgm==true){
-                                            console.log("Ola");
                                             posto = true;
                                             graphics.lineStyle(7, color);
 
@@ -4036,11 +4035,18 @@ class Jogo extends Phaser.Scene {
                 line = new Phaser.Geom.Line(); 
             }
             if (aceita){
+                clearLetras(letra1);
+                clearLetras(letra2);
+                clearLetras(letra3);
+                clearLetras(letra4);
+                clearLetras(letra5);
+
                 letras = pontosAleatorios(); 
                 letra1 = letras[0];
                 letra2 = letras[1];
                 letra3 = letras[2];
                 letra4 = letras[3];
+                letra5 = letras[4];
                 clearInterval(contaTempo);
                 setTimeout(() =>{
                     letraa.text = letra1; 
@@ -5170,6 +5176,34 @@ function semiReta(a,b,line){ //Verifica se é semi-reta que começa em a e passa
                     &&  (line.getPointA().y<=a.y+15 && line.getPointA().y>=a.y-15 ) && line.getPointB().y<b.y){
                         return true;
                     }
+                    else{
+                        if (pontoEsquerda(a,b)== a && line.getPointA().x>b.x 
+                        &&  (line.getPointB().y<=a.y+15 && line.getPointB().y>=a.y-15 )
+                        && (line.getPointB().x<=a.x+30 && line.getPointB().x>=a.x-15)){
+                            return true; 
+                        }
+                        else{
+                            if (pontoEsquerda(a,b) == b &&line.getPointA().x<b.x  
+                            &&  (line.getPointB().y<=a.y+15 && line.getPointB().y>=a.y-15 ) 
+                            &&(line.getPointB().x<=a.x+15 && line.getPointB().x>=a.x-15) ){
+                                return true;
+                            }
+                            else{
+                                if (pontoDeCima(a,b)==a &&  line.getPointA().y>b.y
+                                &&  (line.getPointB().y<=a.y+15 && line.getPointB().y>=a.y-15 )
+                                &&  (line.getPointB().x<=a.x+15 && line.getPointB().x>=a.x-15)){
+                                    return true;
+                                }
+                                else{
+                                    if (pontoDeCima(a,b)==b &&  line.getPointA().y<b.y             
+                                    &&  (line.getPointB().y<=a.y+15 && line.getPointB().y>=a.y-15 ) 
+                                    &&(line.getPointB().x<=a.x+15 && line.getPointB().x>=a.x-15)){
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -5694,3 +5728,7 @@ function reset(){
     changeLives = true;
     clearInterval(contaTempo);
 }  
+
+function clearLetras(letra){
+    letra = '';
+}
