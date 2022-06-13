@@ -893,7 +893,7 @@ class Jogo extends Phaser.Scene {
                     pontosLine= getPretendedLine(level,point4,point);
                 }
 
-                if (((level == 1||level==5||level==7||level==8||level==9||level==13||level==15||level==17||level==19||level==20) && certas ==1)){
+                if (((level == 1||level==5||level==7||level==8||level==9||level==13||level==15||level==19||level==20) && certas ==1 || (level == 17 && certas == 1.5))){
                     if(posto==false){
                         signal = true; 
                         for(var i=0;i<pontosLine.length;i++){
@@ -3522,6 +3522,7 @@ class Jogo extends Phaser.Scene {
                                     lines.pop();
                                 }
                                     if (sgm){
+                                        certas = 1.5;
                                         if(midlePoint!=null && sgm==true){
                                             posto = true;
                                             graphics.lineStyle(7, color);
@@ -3557,7 +3558,7 @@ class Jogo extends Phaser.Scene {
                                             }
                                         else{
                                             midlePoint = null;
-                                            if(signal){
+                                            if(signal&&changeLives){
                                                 score -= 5; 
                                                 vidas -= 1;
                                             }
@@ -3585,7 +3586,7 @@ class Jogo extends Phaser.Scene {
                             }
                             line = new Phaser.Geom.Line(); 
 
-                            if(um && dois && tres && quatro){
+                            if(um && dois && quatro){
                                 aceita=true;
                                 certas = 2; 
                                 if (segundos >= 100){
@@ -5665,7 +5666,7 @@ function textoLevel(level){
         case 4: 
             return 'Traça o segmento de reta com extremos em ';
         case 5: 
-            return 'Traça a reta que passa por ';
+            return 'Traça a reta ';
         case 6:
             return 'Traça a reta que passa por ';
         case 7: 
