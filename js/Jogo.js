@@ -4248,6 +4248,7 @@ class Jogo extends Phaser.Scene {
 
                                 escondePontos([ponto3,ponto4,letrac,letrad]); 
                                 if(certas == 0 || certas == 1){
+                                    texto.x = 0.43* game.config.width;;
                                     texto.setText([
                                         "Traça a reta " + letra1 + letra2
                                     ]);
