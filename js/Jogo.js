@@ -3253,7 +3253,7 @@ class Jogo extends Phaser.Scene {
                                 ]);
                             }
                             else{
-                                if(reta(point,point4,line) && um == true &&!tres&&!dois){
+                                if(retaPerp(point,point4,line) && um == true &&!tres&&!dois){
                                     dois = true; 
                                     texto.x = 0.38 * game.config.width;
 
@@ -3322,7 +3322,7 @@ class Jogo extends Phaser.Scene {
                                 }
                             }
                             else{
-                                if(reta(point4,point,line) && um == true &&!tres&&!dois&&!quatro){
+                                if(retaPerp(point4,point,line) && um == true &&!tres&&!dois&&!quatro){
                                     dois = true;
                                     naoMexe = true;
                                     texto.x = 0.3 * game.config.width;
@@ -3622,7 +3622,7 @@ class Jogo extends Phaser.Scene {
                                 ]);
                             }
                             else{
-                                if(reta(point,point4,line) && um == true &&!tres&&!dois&&!quatro){
+                                if(retaPerp(point,point4,line) && um == true &&!tres&&!dois&&!quatro){
                                     dois = true; 
                                     
                                     texto.setText([
@@ -4249,7 +4249,7 @@ class Jogo extends Phaser.Scene {
                                 escondePontos([ponto3,ponto4,letrac,letrad]); 
                                 if(certas == 0 || certas == 1){
                                     texto.setText([
-                                        textoLevel(level) + letra1 + ' e ' + letra2
+                                        "Traça a reta " + letra1 + letra2
                                     ]);
                                     clearInterval(contaTempo);
                                     ponto1.x=x;
@@ -5247,7 +5247,40 @@ function reta(a,b,line){ //Verifica se é uma reta que passa em a e em b
     return continua; 
 }
 
+function retaPerp(a,b,line){ //Verifica se é uma reta que passa em a e em b 
+    lineAux = new Phaser.Geom.Line(); 
+    lineAux.setTo(a.x,a.y,b.x,b.y);
+    var midPoint = Phaser.Geom.Line.GetMidPoint(lineAux);
+    var inicio = lineAux.getPointA(); 
+    var fim = lineAux.getPointB(); 
+    var pontos = line.getPoints(1000); 
+    var continua = false;
+    var continua1 = false;
+    var continua2 = false;
+    var continua3 = false; 
 
+    for (var i=0;i<pontos.length;i++){
+        if (pontos[i].x <= midPoint.x+20 && pontos[i].x >= midPoint.x-20 && pontos[i].y <= midPoint.y+20 && pontos[i].y >= midPoint.y-20){
+            continua1 = true;
+        }
+        if (pontos[i].x <= inicio.x+5 && pontos[i].x >= inicio.x-5 && pontos[i].y <= inicio.y+5 && pontos[i].y >= inicio.y-5){
+            continua2 = true;
+        }
+        if (pontos[i].x <= fim.x+5 && pontos[i].x >= fim.x-5 && pontos[i].y <= fim.y+5 && pontos[i].y >= fim.y-5){
+            continua3 = true; 
+        }
+    }    
+
+    if(continua1&&continua2&&continua3) {
+        continua=true;   
+    }
+
+    if(line.getPointA().x == a.x || line.getPointA().x == b.x || line.getPointB().x == a.x || line.getPointA().x == b.x||
+    line.getPointB().x == a.x || line.getPointB().x == b.x ){
+        continua = false;
+    }
+    return continua; 
+}
 function getPointsOnLine(a,b){
     x = a.x; 
     y = a.y; 
@@ -5666,7 +5699,7 @@ function textoLevel(level){
         case 4: 
             return 'Traça o segmento de reta com extremos em ';
         case 5: 
-            return 'Traça a reta ';
+            return 'Traça a reta que passa por ';
         case 6:
             return 'Traça a reta que passa por ';
         case 7: 
