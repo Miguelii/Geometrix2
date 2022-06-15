@@ -871,7 +871,8 @@ class Jogo extends Phaser.Scene {
 
 
         this.input.on('pointerdown', function (pointer) {
-            if(!muda||!send){
+            console.log(muda,send);
+            if(!muda&&!send){
                 if(level==20){
                     controler = true;
                 }
@@ -886,7 +887,11 @@ class Jogo extends Phaser.Scene {
                 if(level==1||level==5||level==7||level==9||level==13||level==19){
                     pontosLine= getPretendedLine(level,point2,point3);
                 }
-                if(level==8||level==20){
+                if(level == 20){
+                    pontosLine= getPretendedLine(level,point2,point5);
+
+                }
+                if(level==8){
                     pontosLine= getPretendedLine(level,point2,point);
                 }
                 if(level==15||level==17){
@@ -931,6 +936,7 @@ class Jogo extends Phaser.Scene {
                                 level == 10 || level==11 || level==12||level==13||level==16||level==17||level==19||level==20
                                 ) && pointer.x <= point.x+50 && pointer.x >= point.x-50 && pointer.y <= point.y+50 && pointer.y >= point.y-50){
                                 line.setTo(point.x, point.y, point.x, point.y);
+                                
                             }
                             else{ 
                                 if((level==3 ||level==4||level==8||level==12||level==13
@@ -961,7 +967,7 @@ class Jogo extends Phaser.Scene {
 
                         graphics.strokeLineShape(line);
                         if(certas==1){
-                            graphics.strokeLineShape(lines[0]); 
+                            graphics.strokeLineShape(line); 
                             if(midlePoint!=null){
 
                                 graphics.clear();
@@ -1012,7 +1018,7 @@ class Jogo extends Phaser.Scene {
 
                         graphics.strokeLineShape(line);
                         if(certas==1){
-                            graphics.strokeLineShape(lines[0]); 
+                            graphics.strokeLineShape(line); 
                             if(midlePoint!=null){
                                 graphics.clear();
                                 
@@ -2139,7 +2145,7 @@ class Jogo extends Phaser.Scene {
         });
         var ccontroler = false; 
         this.input.on('pointerup', function (pointer) {
-            if(!muda||!send){
+            if(!muda&&!send){
                 if(line.x2==55 && line.y2==600){
                     erro = true;
                     graphics.clear();
@@ -3885,7 +3891,7 @@ class Jogo extends Phaser.Scene {
                                         texto.x = 0.3 * game.config.width;
 
                                         texto.setText([
-                                            'Marca um ponto alinhado com ' + letra1 + ' e '  + letra3 +' e que não pertence a |' + letra1 + letra3 
+                                            'Marca um ponto alinhado com ' + letra1 + ' e '  + letra5 +' e que não pertence a |' + letra1 + letra5 
                                         ]); 
                                     }
                                     else{
@@ -4967,12 +4973,13 @@ class Jogo extends Phaser.Scene {
             this.btHome.disableInteractive();
             aux = true; 
           
-                info.x = 0.5 * game.config.width;
-                info.y = 0.6 *game.config.height;
-                sim.x = 0.56 * game.config.width;
-                sim.y = 0.70 * game.config.height;
-                nao.x = 0.44 * game.config.width;
-                nao.y = 0.70 * game.config.height;
+            info.x = 0.5 * game.config.width;
+            info.y = 0.6 *game.config.height;
+            sim.x = 0.56 * game.config.width;
+            sim.y = 0.70 * game.config.height;
+            nao.x = 0.44 * game.config.width;
+            nao.y = 0.70 * game.config.height;
+            
         }
 
         if((aux&&!muda)){
