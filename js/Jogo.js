@@ -871,7 +871,6 @@ class Jogo extends Phaser.Scene {
 
 
         this.input.on('pointerdown', function (pointer) {
-            console.log(muda,send);
             if(!muda&&!send){
                 if(level==20){
                     controler = true;
