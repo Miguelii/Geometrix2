@@ -213,7 +213,6 @@ function verificaRecords(username, globalCodTurma, globalCodEscola, pontuacao,sc
         crossDomain: true,
         cache: false,
         success: function (response) {
-            console.log(response);
             var data = []       
             data.push(parseFloat(response.split("vlMin4=")[1]));               //melhor resultado pessoal
             data.push(parseFloat(response.split("vlMin3=")[1].split("&")[0])); //minimo da turma
