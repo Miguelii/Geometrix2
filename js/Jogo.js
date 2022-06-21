@@ -58,6 +58,9 @@ var ponto4;
 var ponto5;
 var gravaOnce = false;
 var pontoExtra ;
+var texto;
+var finish = false;
+
 class Jogo extends Phaser.Scene {
 
     constructor() {
@@ -101,7 +104,7 @@ class Jogo extends Phaser.Scene {
         this.x.setScale(0.5);
 
         var color =  0xffffff;
-        var texto = this.add.text(0.31 * game.config.width, 0.255 *game.config.height, '', { fontFamily: 'font1',align: 'right', fixedHeight: 300 
+        texto = this.add.text(0.31 * game.config.width, 0.255 *game.config.height, '', { fontFamily: 'font1',align: 'right', fixedHeight: 300 
     });
         texto.setFontSize(35);
 
@@ -131,10 +134,10 @@ class Jogo extends Phaser.Scene {
         this.btHome.displayWidth -= 5;
         });
 
-        final =  this.add.sprite(0.5 * game.config.width, 0.6 *game.config.height, "fim");
+        final =  this.add.sprite(0.5 * game.config.width, 0.5 *game.config.height, "fim");
         final.visible = false; 
 
-        voltar = this.add.sprite(0.5 * game.config.width, 0.75*game.config.height, "btHome");
+        voltar = this.add.sprite(0.5 * game.config.width, 0.65*game.config.height, "btHome");
         voltar.setScale(0.7);
         voltar.setInteractive({ useHandCursor: true });
 
@@ -189,7 +192,7 @@ class Jogo extends Phaser.Scene {
         textScore = this.add.text(0.89 * game.config.width, 0.06 * game.config.height, score,{
             fontFamily: 'font1',
         });
-        finalText = this.add.text(0.39 * game.config.width, 0.46* game.config.height, "",{
+        finalText = this.add.text(0.39 * game.config.width, 0.383* game.config.height, "",{
             fontFamily: 'font1',
             color: '#A93226', 
             fixedHeight: 1000,
@@ -3923,8 +3926,9 @@ class Jogo extends Phaser.Scene {
                                                     for(var i=0;i<pointsLine2.length;i++){
                                                         pointsLine.push(pointsLine2[i]);
                                                     }
-                                                    texto.x = 0.38 * game.config.width;
                                                     if(!quatro){
+                                                        texto.x = 0.38 * game.config.width;
+
                                                         texto.setText([
                                                             'Traça a reta SUPORTE da semirreta |' + letra1 + letra5
                                                         ]); 
@@ -4092,6 +4096,7 @@ class Jogo extends Phaser.Scene {
                         certas = -1;
                         if(level==20){
                             send = true;
+                            finish = true;
                         }
                         else{
                             muda = true; 
@@ -4639,6 +4644,7 @@ class Jogo extends Phaser.Scene {
                                 segundos = 0; 
                                 break; 
                             case 20: 
+                                
                                 texto.x = 0.42 * game.config.width; 
 
 
@@ -4940,8 +4946,13 @@ class Jogo extends Phaser.Scene {
         
         
         if (send){
+            texto.setText("");
+            if(level==20 && finish){
+                levelText.x = 0.45 * game.config.width;
+                levelText.setText("Parabéns!");
+            }
             if(score<0){
-                score = 0;
+                score = 0;  
             }
             clearInterval(contaTempo); 
             segundos = 0;
@@ -5741,6 +5752,7 @@ function textoLevel(level){
 }
 
 function reset(){
+    finish = false;
     gravaOnce = false;
     send = false;
     stop = false; 
